@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../app/constants/strings.dart';
@@ -29,29 +30,31 @@ class SignInViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final isLoading =
         context.select((SignInViewModel viewModel) => viewModel.isLoading);
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text(
-              Strings.signInMessage,
-              style: Theme.of(context).textTheme.headline4,
+    return SafeArea(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                Strings.signInMessage,
+                style: Theme.of(context).textTheme.headline4,
+              ),
             ),
-          ),
-          Expanded(
-            child: isLoading ? _loadingIndicator() : _signInButtons(context),
-          ),
-        ],
+            Expanded(
+              child: isLoading ? _loadingIndicator() : _signInButtons(context),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Center _loadingIndicator() {
-    return const Center(
-      child: CircularProgressIndicator(),
+    return Center(
+      child: PlatformCircularProgressIndicator(),
     );
   }
 

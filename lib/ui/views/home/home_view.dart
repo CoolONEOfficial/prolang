@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../../../app/constants/strings.dart';
 import '../../../app/services/firebase_auth_service.dart';
@@ -9,7 +11,10 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PlatformScaffold(
+      appBar: PlatformAppBar(
+        title: Text("title").tr(context: context),
+      ),
       body: Center(
         child: Column(
           children: <Widget>[
