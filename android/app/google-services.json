@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "134973824575",
+    "firebase_url": "https://prolang-fb440.firebaseio.com",
+    "project_id": "prolang-fb440",
+    "storage_bucket": "prolang-fb440.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:134973824575:android:d5a40af8fdccc603d0a28a",
+        "android_client_info": {
+          "package_name": "ru.coolone.prolang"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "134973824575-orhjmd9s5r07i755ms9fm5emqtjidnm6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.coolone.prolang",
+            "certificate_hash": "096da55fece099a2d8f0dbecc6ce48548c504c2e"
+          }
+        },
+        {
+          "client_id": "134973824575-cthj1d66i1rq3l4u5queb1u422q4pe6b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZHKRi8EWu_Al87-4we0g9fExCH_kHFKQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "134973824575-cthj1d66i1rq3l4u5queb1u422q4pe6b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "134973824575-p0rf1uio577fnf287koahkhahiloj7kr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "ru.coolone.prolang"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

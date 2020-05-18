@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>134973824575-p0rf1uio577fnf287koahkhahiloj7kr.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.134973824575-p0rf1uio577fnf287koahkhahiloj7kr</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>134973824575-orhjmd9s5r07i755ms9fm5emqtjidnm6.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyANpoAN184JYssdFalNdvRR4TV7laVmAUo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>134973824575</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>ru.coolone.prolang</string>
+	<key>PROJECT_ID</key>
+	<string>prolang-fb440</string>
+	<key>STORAGE_BUCKET</key>
+	<string>prolang-fb440.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:134973824575:ios:91af9e888082c6f2d0a28a</string>
+	<key>DATABASE_URL</key>
+	<string>https://prolang-fb440.firebaseio.com</string>
+</dict>
+</plist>
