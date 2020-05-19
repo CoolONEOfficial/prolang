@@ -56,12 +56,11 @@ class LangListViewBody extends StatelessWidget {
     final material = isMaterial(context);
     return ResponsiveGridList(
       desiredItemWidth: material ? 170.0 : 150.0,
-      minSpacing: material ? 15 : 10,
+      minSpacing: 0,
       children: langList
           .map(
             (lang) => Padding(
-              padding:
-                  material ? const EdgeInsets.only(top: 15.0) : EdgeInsets.zero,
+              padding: const EdgeInsets.all(16.0),
               child: PlatformCard(
                 semanticContainer: true,
                 clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -70,13 +69,10 @@ class LangListViewBody extends StatelessWidget {
                   aspectRatio: 1,
                   child: Container(
                     decoration: BoxDecoration(
-                      gradient: RadialGradient(
-                        colors: [
-                          Colors.transparent,
-                          Colors.black38,
-                        ],
-                        radius: 0.8
-                      ),
+                      gradient: RadialGradient(colors: [
+                        Colors.transparent,
+                        Colors.black38,
+                      ], radius: 0.8),
                     ),
                     child: PlatformWidget(
                         android: (context) =>
@@ -132,7 +128,6 @@ class LangListViewBody extends StatelessWidget {
     return AutoSizeText(
       lang.title[context.locale.languageCode],
       style: TextStyle(fontSize: 28, color: Colors.white),
-      minFontSize: 18,
       maxLines: 1,
     );
   }

@@ -46,6 +46,7 @@ class PlatformCard extends PlatformWidgetBase<CupertinoButton, Card> {
   @override
   CupertinoButton createIosWidget(BuildContext context) {
     return CupertinoButton(
+      padding: EdgeInsets.zero,
       onPressed: onPressed,
       child: Container(
         width: double.infinity,
