@@ -1,8 +1,41 @@
 {
     "title": "ProLang",
+    "subtitle": "Start speaking\na foreign language",
+    "next": "Next",
+    "skip": "Skip",
     "auth": {
         "anonymous": "Anonimous sign in",
         "google": "Sign in with Google"
+    },
+    "intro": {
+        "baloon": {
+            "title": "NO LANGUAGE BARRIER",
+            "description": "You start speaking a foreign language right from the first lessons. Using schemes and specific sets of words, you make up your own phrases, ask questions and answer them."
+        },
+        "water": {
+            "title": "WITHOUT WATER",
+            "description": "You do not waste time explaining the material and understanding the rules. The whole grammar is broken into small pieces. In each lesson we take a small piece presented in the diagram (explanation time 5-10 minutes), practice it and bring the application of the rule to automatism."
+        },
+        "world": {
+            "title": "NO TEXTBOOKS,\nNO BORING EXERCISES",
+            "description": "You do not need to look for information in textbooks or on the Internet, you do not need to do exercises in your notebook. We did everything for you! All you need is a smartphone/computer and internet access. You train and memorize words and rules right during the video lesson!"
+        },
+        "feedback": {
+            "title": "FEEDBACK",
+            "description": "Although these are online courses, the instructor always answers your questions and gives you feedback on the creative tasks you have completed."
+        },
+        "rumour": {
+            "title": "AUDIBLE\nAWARENESS",
+            "description": "We begin to practice listening comprehension of foreign speech right from the first lessons. You listen to the phrases that were written by a native speaker yourself, recognize them and immediately translate them into Russian."
+        },
+        "groups": {
+            "title": "ENVIRONMENT\nSUPPORT",
+            "description": "You are trained in groups. You are among like-minded people and immediately start communicating in a foreign language."
+        },
+        "auth": {
+            "title": "AUTHENTICATION",
+            "description": "To start learning, log in with Google or try out basic functionality using the anonymous login."
+        }
     },
     "select_lang": {
         "title": "Select language"

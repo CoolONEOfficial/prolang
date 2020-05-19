@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:prolang/ui/views/authentication/sign_in/sign_in_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
+
+import '../intro_view_model.dart';
 
 class AnonymousSignInButton extends StatelessWidget {
   const AnonymousSignInButton({
@@ -12,10 +13,10 @@ class AnonymousSignInButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return RaisedButton(
       onPressed: () {
-        context.read<SignInViewModel>().signInAnonymously();
+        context.read<IntroViewModel>().signInAnonymously();
       },
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      color: Colors.red[900],
+      color: Colors.deepPurple[600],
       child: Text(
         "auth.anonymous".tr(),
         textAlign: TextAlign.center,

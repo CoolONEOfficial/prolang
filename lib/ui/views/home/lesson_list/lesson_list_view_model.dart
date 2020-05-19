@@ -1,23 +1,25 @@
 import 'package:flutter/foundation.dart';
 import 'package:prolang/app/models/lang.dart';
+import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/services/firestore_service.dart';
 import 'package:provider/provider.dart';
 
-class LangListViewModel extends ChangeNotifier {
-  LangListViewModel(this.locator) {
-    loadLangList();
+class LessonListViewModel extends ChangeNotifier {
+  LessonListViewModel(this.locator, this.lang) {
+    loadLessonList();
   }
 
   final Locator locator;
+  final Lang lang;
 
   bool _isLoading = true;
   bool get isLoading => _isLoading;
 
-  List<Lang> langList;
+  List<Lesson> lessonList;
 
-  Future<void> loadLangList() async {
+  Future<void> loadLessonList() async {
     _setLoading();
-    langList = await locator<FirestoreService>().loadLangList();
+    lessonList = await locator<FirestoreService>().loadLessonList(lang);
     _setNotLoading();
   }
 

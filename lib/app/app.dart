@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:prolang/app/models/user.dart';
 import 'package:prolang/main.dart';
-import 'package:prolang/ui/views/authentication/sign_in/sign_in_view.dart';
 import 'package:prolang/ui/views/home/lang_list/lang_list_view.dart';
+import 'package:prolang/ui/views/intro/intro_view.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tuple/tuple.dart';
+
+import 'constants/ThemeColors.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -20,14 +22,22 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         EasyLocalization.of(context).delegate,
       ],
+      
       android: (context) => MaterialAppData(
-          theme: ThemeData(
-              primaryColor: Colors.deepPurple[400],
-              accentColor: Colors.orangeAccent[300])),
+        theme: ThemeData(
+          primaryColor: ThemeColors.primary,
+          accentColor: ThemeColors.accent,
+          textTheme: Theme.of(context).textTheme.apply(
+            fontFamily: 'TTNorms'
+          )
+        ),
+      ),
       ios: (context) => CupertinoAppData(
-          theme: CupertinoThemeData(
-              primaryColor: Colors.deepPurple[400],
-              primaryContrastingColor: Colors.orangeAccent[300])),
+        theme: CupertinoThemeData(
+          primaryColor: ThemeColors.primary,
+          primaryContrastingColor: ThemeColors.accent,
+        ),
+      ),
       home: Consumer<Tuple2<UserState, User>>(
         builder: (_, user, __) {
           switch (user.item1) {

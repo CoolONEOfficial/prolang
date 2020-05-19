@@ -1,14 +1,16 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:prolang/app/extensions/Color.dart';
 import 'package:prolang/app/models/lang.dart';
-import 'package:prolang/ui/views/home/lang_list/lang_list_model.dart';
+import 'package:prolang/app/services/firebase_auth_service.dart';
 import 'package:prolang/ui/views/widgets/PlatformCard.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:prolang/ui/views/widgets/ResponsiveSafeArea.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_grid/responsive_grid.dart';
+
+import 'lang_list_view_model.dart';
 
 class LangListView extends StatelessWidget {
   const LangListView({Key key}) : super(key: key);
@@ -37,6 +39,14 @@ class LangListViewBody extends StatelessWidget {
       appBar: PlatformAppBar(
         title: Text("select_lang.title").tr(context: context),
         android: (context) => MaterialAppBarData(centerTitle: true),
+        trailingActions: <Widget>[
+          PlatformButton(
+            child: Text("Signout"),
+            onPressed: () {
+              context.read<FirebaseAuthService>().signOut();
+            },
+          )
+        ],
       ),
       body: ResponsiveSafeArea(
         child: isLoading ? _loadingIndicator() : _langList(context),

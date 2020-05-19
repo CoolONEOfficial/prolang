@@ -26,6 +26,8 @@ dependencies:
   json_annotation: ^3.0.1
   responsive_builder: ^0.2.0+2
   tuple: ^1.0.3
+  intro_slider: ^2.3.1
+  flutter_icons: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -44,6 +46,7 @@ flutter:
 
   assets:
     - assets/translations/
+    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -56,6 +59,13 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family: TTNorms
+      fonts:
+        - asset: assets/fonts/TTNorms-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/TTNorms-Regular.ttf
+          weight: 500
   # fonts:
   #   - family: Schyler
   #     fonts:
