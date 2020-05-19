@@ -2,9 +2,16 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:prolang/app/services/firestore_service.dart';
 import 'package:provider/provider.dart';
+import 'package:tuple/tuple.dart';
 
 import 'app/app.dart';
+import 'app/models/user.dart';
 import 'app/services/firebase_auth_service.dart';
+
+enum UserState {
+  Loading,
+  Done
+}
 
 void main() => runApp(
   EasyLocalization(
@@ -26,6 +33,7 @@ void main() => runApp(
             create: (_) => FirestoreService(),
           ),
           StreamProvider(
+            initialData: Tuple2<UserState, User>(UserState.Loading, null),
             create: (context) =>
                 context.read<FirebaseAuthService>().onAuthStateChanged,
           ),

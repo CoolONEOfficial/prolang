@@ -6,6 +6,7 @@ import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/ui/views/home/lang_list/lang_list_model.dart';
 import 'package:prolang/ui/views/widgets/PlatformCard.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:prolang/ui/views/widgets/ResponsiveSafeArea.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 
@@ -34,9 +35,10 @@ class LangListViewBody extends StatelessWidget {
         context.select((LangListViewModel viewModel) => viewModel.isLoading);
     return PlatformScaffold(
       appBar: PlatformAppBar(
-        title: Text("title").tr(context: context),
+        title: Text("select_lang.title").tr(context: context),
+        android: (context) => MaterialAppBarData(centerTitle: true),
       ),
-      body: SafeArea(
+      body: ResponsiveSafeArea(
         child: isLoading ? _loadingIndicator() : _langList(context),
       ),
     );
@@ -53,17 +55,37 @@ class LangListViewBody extends StatelessWidget {
         context.select((LangListViewModel viewModel) => viewModel.langList);
     final material = isMaterial(context);
     return ResponsiveGridList(
-      squareCells: true,
-      desiredItemWidth: material ? 130 : 150,
-      minSpacing: 10,
+      desiredItemWidth: material ? 170.0 : 150.0,
+      minSpacing: material ? 15 : 10,
       children: langList
           .map(
-            (lang) => PlatformCard(
-              color: HexColor.fromHex(lang.color),
-              child: PlatformWidget(
-                  android: (context) => _materialCardContent(context, lang),
-                  ios: (context) => _cupertinoCardContent(context, lang)),
-              onPressed: () {},
+            (lang) => Padding(
+              padding:
+                  material ? const EdgeInsets.only(top: 15.0) : EdgeInsets.zero,
+              child: PlatformCard(
+                semanticContainer: true,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                color: HexColor.fromHex(lang.color),
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: RadialGradient(
+                        colors: [
+                          Colors.transparent,
+                          Colors.black38,
+                        ],
+                        radius: 0.8
+                      ),
+                    ),
+                    child: PlatformWidget(
+                        android: (context) =>
+                            _materialCardContent(context, lang),
+                        ios: (context) => _cupertinoCardContent(context, lang)),
+                  ),
+                ),
+                onPressed: () {},
+              ),
             ),
           )
           .toList(),

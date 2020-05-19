@@ -3,5 +3,8 @@
     "auth": {
         "anonymous": "Войти анонимно",
         "google": "Войти с Google"
+    },
+    "select_lang": {
+        "title": "Выберите язык"
     }
 }

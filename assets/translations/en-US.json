@@ -3,5 +3,8 @@
     "auth": {
         "anonymous": "Anonimous sign in",
         "google": "Sign in with Google"
+    },
+    "select_lang": {
+        "title": "Select language"
     }
 }
