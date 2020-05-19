@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:prolang/app/services/firestore_service.dart';
 import 'package:provider/provider.dart';
 
 import 'app/app.dart';
@@ -20,6 +21,9 @@ void main() => runApp(
         providers: [
           Provider(
             create: (_) => FirebaseAuthService(),
+          ),
+          Provider(
+            create: (_) => FirestoreService(),
           ),
           StreamProvider(
             create: (context) =>

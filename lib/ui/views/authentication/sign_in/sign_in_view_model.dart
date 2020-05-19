@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:prolang/app/services/firebase_auth_service.dart';
 import 'package:provider/provider.dart';
-
-import '../../../../app/services/firebase_auth_service.dart';
 
 class SignInViewModel extends ChangeNotifier {
   SignInViewModel(this.locator);

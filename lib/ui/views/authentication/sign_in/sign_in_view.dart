@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 
-import '../../../../app/constants/strings.dart';
 import 'sign_in_view_model.dart';
 import 'widgets/anonymous_sign_in_button.dart';
 import 'widgets/google_sign_in_button.dart';
@@ -39,9 +39,9 @@ class SignInViewBody extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(16),
               child: Text(
-                Strings.signInMessage,
+                "title",
                 style: Theme.of(context).textTheme.headline4,
-              ),
+              ).tr(),
             ),
             Expanded(
               child: isLoading ? _loadingIndicator() : _signInButtons(context),

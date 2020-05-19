@@ -14,6 +14,40 @@
                 "--web-port",
                 "5000",
             ]
+        },
+        {
+            "name": "Android",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "emulator-5554"
+        },
+        {
+            "name": "iPhone",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "FA84B314-DFBE-49B3-AB8C-0746955DADC8"
+        },
+        {
+            "name": "Chrome",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "chrome",
+            "args": [
+                "--web-hostname",
+                "localhost",
+                "--web-port",
+                "5000",
+            ]
+        },
+    ],
+    "compounds": [
+        {
+            "name": "All Devices",
+            "configurations": ["Android", "iPhone", "Chrome"],
+        },
+        {
+            "name": "Phones",
+            "configurations": ["Android", "iPhone"],
         }
     ]
 }
