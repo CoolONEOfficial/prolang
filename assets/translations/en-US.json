@@ -37,7 +37,10 @@
             "description": "To start learning, log in with Google or try out basic functionality using the anonymous login."
         }
     },
-    "select_lang": {
-        "title": "Select language"
+    "lang_list": {
+        "title": "Languages"
+    },
+    "lesson_list": {
+        "title": "Lessons"
     }
 }

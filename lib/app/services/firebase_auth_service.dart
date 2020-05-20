@@ -28,10 +28,7 @@ class FirebaseAuthService {
   }
 
   Stream<Tuple2<UserState, User>> get onAuthStateChanged {
-    return _firebaseAuth.onAuthStateChanged.map((event) {
-      debugPrint("its from onAuthStateChanged $event");
-      return event;
-    }).map(_userFromFirebase);
+    return _firebaseAuth.onAuthStateChanged.map(_userFromFirebase);
   }
 
   Future<User> signInAnonymously() async {

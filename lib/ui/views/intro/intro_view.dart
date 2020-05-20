@@ -1,14 +1,11 @@
-import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'package:prolang/app/constants/ThemeColors.dart';
-import 'package:prolang/ui/views/widgets/ResponsiveSafeArea.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -18,8 +15,8 @@ import 'intro_view_model.dart';
 import 'widgets/anonymous_sign_in_button.dart';
 import 'widgets/google_sign_in_button.dart';
 
-class SignInView extends StatelessWidget {
-  const SignInView({Key key}) : super(key: key);
+class IntroView extends StatelessWidget {
+  const IntroView({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,21 +24,21 @@ class SignInView extends StatelessWidget {
       create: (_) => IntroViewModel(context.read),
       builder: (_, child) {
         return const Scaffold(
-          body: SignInViewBody._(),
+          body: _IntroViewBody._(),
         );
       },
     );
   }
 }
 
-class SignInViewBody extends StatefulWidget {
-  const SignInViewBody._({Key key}) : super(key: key);
+class _IntroViewBody extends StatefulWidget {
+  const _IntroViewBody._({Key key}) : super(key: key);
 
   @override
   _SignInViewBodyState createState() => _SignInViewBodyState();
 }
 
-class _SignInViewBodyState extends State<SignInViewBody> {
+class _SignInViewBodyState extends State<_IntroViewBody> {
   static const List<Tuple3<String, IconData, Color>> slidesMap = [
     Tuple3("baloon", MaterialCommunityIcons.balloon, Color(0xff03a9f4)),
     Tuple3("water", MaterialCommunityIcons.water_off, Color(0xff4caf50)),
@@ -73,7 +70,7 @@ class _SignInViewBodyState extends State<SignInViewBody> {
             maxLineTitle: 2,
             description: "subtitle".tr(),
             pathImage: "assets/images/logo.png",
-            backgroundColor: ThemeColors.primary,
+            backgroundColor: Theme.of(context).primaryColor,
             styleTitle: TextStyle(
               fontSize: 40,
               fontWeight: FontWeight.bold,
@@ -129,7 +126,7 @@ class _SignInViewBodyState extends State<SignInViewBody> {
               ],
             ),
             marginTitle: _marginTitle(context),
-            backgroundColor: ThemeColors.primary,
+            backgroundColor: Theme.of(context).primaryColor,
             widgetDescription: _signInButtons(),
           )
         ];
@@ -172,12 +169,10 @@ class _SignInViewBodyState extends State<SignInViewBody> {
 
   static Row _signInButtons() {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        const Spacer(),
         const AnonymousSignInButton(),
-        const Spacer(),
         const GoogleSignInButton(),
-        const Spacer(),
       ],
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prolang/app/constants/ThemeColors.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -16,7 +17,7 @@ class AnonymousSignInButton extends StatelessWidget {
         context.read<IntroViewModel>().signInAnonymously();
       },
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      color: Colors.deepPurple[600],
+      color: ThemeColors.primaryDarken(context),
       child: Text(
         "auth.anonymous".tr(),
         textAlign: TextAlign.center,

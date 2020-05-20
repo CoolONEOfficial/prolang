@@ -6,51 +6,90 @@ import 'package:prolang/app/models/user.dart';
 import 'package:prolang/main.dart';
 import 'package:prolang/ui/views/home/lang_list/lang_list_view.dart';
 import 'package:prolang/ui/views/intro/intro_view.dart';
+import 'package:prolang/ui/views/widgets/loading_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tuple/tuple.dart';
 
 import 'constants/ThemeColors.dart';
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangePlatformBrightness() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    return PlatformApp(
-      title: 'Material App',
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        EasyLocalization.of(context).delegate,
-      ],
-      
-      android: (context) => MaterialAppData(
-        theme: ThemeData(
-          primaryColor: ThemeColors.primary,
-          accentColor: ThemeColors.accent,
-          textTheme: Theme.of(context).textTheme.apply(
-            fontFamily: 'TTNorms'
-          )
-        ),
-      ),
-      ios: (context) => CupertinoAppData(
-        theme: CupertinoThemeData(
-          primaryColor: ThemeColors.primary,
-          primaryContrastingColor: ThemeColors.accent,
-        ),
-      ),
-      home: Consumer<Tuple2<UserState, User>>(
-        builder: (_, user, __) {
-          switch (user.item1) {
-            case UserState.Loading:
-              return Center(
-                child: PlatformCircularProgressIndicator(),
-              );
-            case UserState.Done:
-              return user.item2 == null
-                  ? const SignInView()
-                  : const LangListView();
-          }
+    final lightTheme = ThemeData(
+        //textTheme: Theme.of(context).textTheme.apply(fontFamily: 'TTNorms'),
+        primaryColor: ThemeColors.primaryLight,
+        accentColor: ThemeColors.accentLight);
+    return Theme(
+      data: lightTheme,
+      child: PlatformApp(
+        title: 'Material App',
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          EasyLocalization.of(context).delegate,
+        ],
+        android: (context) {
+          return MaterialAppData(
+            theme: lightTheme,
+            darkTheme: lightTheme.copyWith(
+              brightness: Brightness.dark,
+              primaryColor: ThemeColors.primaryDark,
+              accentColor: ThemeColors.accentDark,
+            ),
+          );
         },
+        ios: (context) {
+          return CupertinoAppData(
+            theme: CupertinoThemeData(
+              primaryColor: ThemeColors.primaryLight,
+              primaryContrastingColor: ThemeColors.accentLight,
+              textTheme: CupertinoTextThemeData(
+                textStyle: TextStyle(
+                  fontFamily: 'TTNorms',
+                  color: WidgetsBinding.instance.window.platformBrightness ==
+                          Brightness.light
+                      ? Colors.black87
+                      : Colors.white,
+                ),
+              ),
+            ),
+          );
+        },
+        home: Consumer<Tuple2<UserState, User>>(
+          builder: (_, user, __) {
+            switch (user.item1) {
+              case UserState.Loading:
+                return LoadingIndicator();
+              case UserState.Done:
+                return user.item2 == null
+                    ? const IntroView()
+                    : const LangListView();
+            }
+          },
+        ),
       ),
     );
   }

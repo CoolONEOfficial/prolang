@@ -8,10 +8,16 @@ part 'lesson.g.dart';
 @immutable
 class Lesson {
   const Lesson({
+    this.number,
+    this.section,
+    this.documentId,
     this.title,
   });
 
   final String title;
+  final int number;
+  final int section;
+  final String documentId;
 
   factory Lesson.fromSnapshot(DocumentSnapshot snapshot) {
     snapshot.data["documentId"] = snapshot.documentID;

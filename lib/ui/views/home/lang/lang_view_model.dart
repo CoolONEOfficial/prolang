@@ -4,8 +4,8 @@ import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/services/firestore_service.dart';
 import 'package:provider/provider.dart';
 
-class LessonListViewModel extends ChangeNotifier {
-  LessonListViewModel(this.locator, this.lang) {
+class LangViewModel extends ChangeNotifier {
+  LangViewModel(this.locator, this.lang) {
     loadLessonList();
   }
 
