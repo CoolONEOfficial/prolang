@@ -41,7 +41,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     final lightTheme = ThemeData(
       primaryColor: ThemeColors.primaryLight,
       accentColor: ThemeColors.accentLight,
-      cardColor: ThemeColors.cardColor(context)
+      cardColor: ThemeColors.cardColor(context),
+      fontFamily: 'TTNorms'
     );
     return Theme(
       data: lightTheme,

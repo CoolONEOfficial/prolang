@@ -8,10 +8,10 @@ part of 'lesson.dart';
 
 Lesson _$LessonFromJson(Map<String, dynamic> json) {
   return Lesson(
-    number: json['number'] as int,
-    section: json['section'] as int,
-    documentId: json['documentId'] as String,
-    title: json['title'] as String,
+    json['number'] as int,
+    json['section'] as int,
+    json['documentId'] as String,
+    json['title'] as String,
   );
 }
 

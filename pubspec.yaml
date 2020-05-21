@@ -33,6 +33,7 @@ dependencies:
   collection: ^1.14.12
   flutter_sticky_header: ^0.4.2
   sliver_fab: ^1.0.0
+  expandable: ^4.1.4
 
 dev_dependencies:
   flutter_test:

@@ -7,12 +7,12 @@ part 'lesson.g.dart';
 @JsonSerializable(nullable: false)
 @immutable
 class Lesson {
-  const Lesson({
+  const Lesson(
     this.number,
     this.section,
     this.documentId,
     this.title,
-  });
+  );
 
   final String title;
   final int number;

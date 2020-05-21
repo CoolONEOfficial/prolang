@@ -22,10 +22,16 @@
             "deviceId": "emulator-5554"
         },
         {
-            "name": "iPhone",
+            "name": "iPhone11ProMax",
             "request": "launch",
             "type": "dart",
-            "deviceId": "FA84B314-DFBE-49B3-AB8C-0746955DADC8"
+            "deviceId": "82287290-D01B-477F-BF65-49490404B16B"
+        },
+        {
+            "name": "iPhoneSE",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "D4024F78-2DC8-4311-B2EE-967894D469A6"
         },
         {
             "name": "Chrome",
@@ -43,11 +49,15 @@
     "compounds": [
         {
             "name": "All Devices",
-            "configurations": ["Android", "iPhone", "Chrome"],
+            "configurations": ["Android", "iPhone11ProMax", "Chrome"],
         },
         {
             "name": "Phones",
-            "configurations": ["Android", "iPhone"],
+            "configurations": ["Android", "iPhone11ProMax"],
+        },
+        {
+            "name": "iPhones",
+            "configurations": ["iPhoneSE", "iPhone11ProMax"],
         }
     ]
 }

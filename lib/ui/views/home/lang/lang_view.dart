@@ -5,13 +5,13 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:prolang/app/constants/ThemeColors.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
+import 'package:prolang/ui/views/home/lang/widgets/lesson_appbar.dart';
 import 'package:prolang/ui/views/widgets/firebase_image.dart';
 import 'package:prolang/ui/views/widgets/loading_indicator.dart';
 import 'package:prolang/ui/views/widgets/responsive_safe_area.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:sliver_fab/sliver_fab.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 import 'lang_view_model.dart';
 import 'widgets/lesson_sliver.dart';
@@ -82,6 +82,11 @@ class _LangViewBody extends StatelessWidget {
     );
     final lang = context.watch<Lang>();
     final basePath = "langs/${lang.documentId}";
+    final headTextAlign = getValueForScreenType(
+      context: context,
+      mobile: CrossAxisAlignment.center,
+      tablet: CrossAxisAlignment.start,
+    );
 
     return ScrollConfiguration(
       behavior: ClampingBehavior(),
@@ -91,9 +96,10 @@ class _LangViewBody extends StatelessWidget {
           width: avatarSize,
           margin: EdgeInsets.only(left: 7.5),
           child: ClipOval(
-              child: FirebaseImage(
-            '$basePath/avatar.png',
-          )),
+            child: FirebaseImage(
+              '$basePath/avatar.png',
+            ),
+          ),
         ),
         floatingPosition: FloatingPosition(
           left: media - 10,
@@ -102,67 +108,23 @@ class _LangViewBody extends StatelessWidget {
         expandedHeight: expandedHeight,
         slivers: <Widget>[
               SliverPadding(
-                padding: EdgeInsets.only(bottom: avatarSize / 2),
-                sliver: SliverAppBar(
-                  expandedHeight: expandedHeight,
-                  pinned: true,
-                  flexibleSpace: FlexibleSpaceBar(
-                    titlePadding: EdgeInsets.zero,
-                    title: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Flexible(
-                          flex: isMaterial(context) ? 2 : 3,
-                          child: Container(),
-                        ),
-                        Flexible(
-                          flex: 1,
-                          child: Text(
-                            lang.title[context.locale.languageCode],
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Flexible(
-                          flex: 1,
-                          child: Container(),
-                        ),
-                      ],
-                    ),
-                    background: Container(
-                      foregroundDecoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              const Color(0xCC000000),
-                              const Color(0x88000000),
-                              Theme.of(context).primaryColor
-                            ],
-                            stops: [
-                              0.2,
-                              0.6,
-                              1
-                            ]),
-                      ),
-                      child: FirebaseImage(
-                        '$basePath/header' +
-                            getValueForScreenType<String>(
-                              context: context,
-                              mobile: "_400x400",
-                              tablet: "_400x400",
-                              desktop: "",
-                            ) +
-                            '.jpg',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                padding: EdgeInsets.only(
+                  bottom: getValueForScreenType(
+                    context: context,
+                    mobile: avatarSize / 2,
+                    tablet: 0,
                   ),
+                ),
+                sliver: LessonAppBar(
+                  expandedHeight: expandedHeight,
+                  basePath: basePath,
                 ),
               ),
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
+                    crossAxisAlignment: headTextAlign,
                     children: <Widget>[
                       Text(
                         "Преподаватель",
@@ -170,7 +132,6 @@ class _LangViewBody extends StatelessWidget {
                             .textTheme
                             .bodyText2
                             .copyWith(color: ThemeColors.textColor(context)),
-                        textAlign: TextAlign.center,
                       ),
                       Text(
                         lang.teacher,
@@ -178,7 +139,6 @@ class _LangViewBody extends StatelessWidget {
                             .textTheme
                             .headline4
                             .copyWith(color: ThemeColors.textColor(context)),
-                        textAlign: TextAlign.center,
                       ),
                     ],
                   ),

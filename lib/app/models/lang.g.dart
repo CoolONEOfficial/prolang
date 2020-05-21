@@ -8,13 +8,17 @@ part of 'lang.dart';
 
 Lang _$LangFromJson(Map<String, dynamic> json) {
   return Lang(
-    title: parseJsonMap(json['title']),
-    flag: json['flag'] as String,
-    color: json['color'] as String,
-    documentId: json['documentId'] as String,
-    sections:
-        (json['sections'] as List)?.map((e) => e as String)?.toList() ?? [],
-    teacher: json['teacher'] as String,
+    parseJsonMap(json['title']),
+    json['flag'] as String,
+    json['color'] as String,
+    json['documentId'] as String,
+    (json['sections'] as List)
+            ?.map((e) => e == null
+                ? null
+                : LessonSection.fromJson(e as Map<String, dynamic>))
+            ?.toList() ??
+        [],
+    json['teacher'] as String,
   );
 }
 
