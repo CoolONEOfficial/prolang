@@ -11,6 +11,9 @@ class ThemeColors {
   static Color primaryDarken(BuildContext context) => _color(context,
       light: Colors.deepPurple[600], dark: Colors.deepPurple[800]);
 
+  static Color cardColor(BuildContext context) =>
+      _color(context, light: Colors.white, dark: Colors.grey[900]);
+
   static Color textColor(BuildContext context) =>
       _color(context, light: Colors.black87, dark: Colors.white);
 
@@ -22,7 +25,7 @@ class ThemeColors {
     Color light,
     Color dark,
   }) {
-    switch (MediaQuery.of(context).platformBrightness) {
+    switch (WidgetsBinding.instance.window.platformBrightness) {
       case Brightness.dark:
         return dark;
       case Brightness.light:

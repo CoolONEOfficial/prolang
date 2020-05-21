@@ -39,9 +39,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final lightTheme = ThemeData(
-        //textTheme: Theme.of(context).textTheme.apply(fontFamily: 'TTNorms'),
-        primaryColor: ThemeColors.primaryLight,
-        accentColor: ThemeColors.accentLight);
+      primaryColor: ThemeColors.primaryLight,
+      accentColor: ThemeColors.accentLight,
+      cardColor: ThemeColors.cardColor(context)
+    );
     return Theme(
       data: lightTheme,
       child: PlatformApp(
@@ -69,10 +70,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               textTheme: CupertinoTextThemeData(
                 textStyle: TextStyle(
                   fontFamily: 'TTNorms',
-                  color: WidgetsBinding.instance.window.platformBrightness ==
-                          Brightness.light
-                      ? Colors.black87
-                      : Colors.white,
+                  color: ThemeColors.textColor(context),
                 ),
               ),
             ),

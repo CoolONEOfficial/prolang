@@ -59,6 +59,7 @@ class _LangViewBody extends StatelessWidget {
     return ResponsiveSafeArea(
       child: isLoading ? LoadingIndicator() : _lang(context),
       top: false,
+      bottom: false,
     );
   }
 
@@ -94,8 +95,10 @@ class _LangViewBody extends StatelessWidget {
             '$basePath/avatar.png',
           )),
         ),
-        floatingPosition:
-            FloatingPosition(left: media - 10, top: -(avatarSize / 2 - 22)),
+        floatingPosition: FloatingPosition(
+          left: media - 10,
+          top: -(avatarSize / 2 - 22),
+        ),
         expandedHeight: expandedHeight,
         slivers: <Widget>[
               SliverPadding(
@@ -114,8 +117,10 @@ class _LangViewBody extends StatelessWidget {
                         ),
                         Flexible(
                           flex: 1,
-                          child: Text(lang.title[context.locale.languageCode],
-                              textAlign: TextAlign.center),
+                          child: Text(
+                            lang.title[context.locale.languageCode],
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                         Flexible(
                           flex: 1,
@@ -140,7 +145,14 @@ class _LangViewBody extends StatelessWidget {
                             ]),
                       ),
                       child: FirebaseImage(
-                        '$basePath/header.jpg',
+                        '$basePath/header' +
+                            getValueForScreenType<String>(
+                              context: context,
+                              mobile: "_400x400",
+                              tablet: "_400x400",
+                              desktop: "",
+                            ) +
+                            '.jpg',
                         fit: BoxFit.cover,
                       ),
                     ),

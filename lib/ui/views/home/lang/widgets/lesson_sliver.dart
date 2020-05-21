@@ -19,7 +19,10 @@ class LessonSliver extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverStickyHeader(
-      header: LessonHeader(title: context.watch<Lang>().sections[section.key]),
+      header: Padding(
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: LessonHeader(title: context.watch<Lang>().sections[section.key]),
+      ),
       sliver: SliverList(
         delegate: SliverChildListDelegate.fixed([
           ResponsiveGridRow(
@@ -28,7 +31,14 @@ class LessonSliver extends StatelessWidget {
                   (lesson) => ResponsiveGridCol(
                     lg: 6,
                     md: 12,
-                    child: LessonEntry(lesson),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: 8.0,
+                        left: 8.0,
+                        right: 8.0,
+                      ),
+                      child: LessonEntry(lesson),
+                    ),
                   ),
                 )
                 .toList(),
