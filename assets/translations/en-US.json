@@ -42,5 +42,11 @@
     },
     "lesson_list": {
         "title": "Lessons"
+    },
+    "lesson_create": {
+        "title": "Add lesson"
+    },
+    "lesson_section_create": {
+        "title": "Add section"
     }
 }

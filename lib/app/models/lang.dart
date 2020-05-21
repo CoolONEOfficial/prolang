@@ -1,38 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/widgets.dart';
-import 'package:meta/meta.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:prolang/app/helpers/add_doc_id.dart';
 import 'package:prolang/app/helpers/parse_json_map.dart';
-import 'package:prolang/app/models/lesson_section.dart';
 
+import 'lesson_section.dart';
+
+part 'lang.freezed.dart';
 part 'lang.g.dart';
 
-@JsonSerializable(nullable: false)
-@immutable
-class Lang {
-  const Lang(
-    this.title,
-    this.flag,
-    this.color,
-    this.documentId,
-    this.sections,
-    this.teacher,
-  );
-
+@freezed
+abstract class Lang with _$Lang {
+  factory Lang({
   @JsonKey(fromJson: parseJsonMap)
-  final Map<String, String> title;
+  Map<String, String> title,
   @JsonKey(nullable: true, defaultValue: [])
-  final List<LessonSection> sections;
-  final String flag;
-  final String color;
-  final String documentId;
-  final String teacher;
+  List<LessonSection> sections,
+  String flag,
+  String color,
+  String documentId,
+  String teacher,
+  }) = _Lang;
 
-  factory Lang.fromSnapshot(DocumentSnapshot snapshot) {
-    final data = snapshot.data;
-    data["documentId"] = snapshot.documentID;
-    return Lang.fromJson(data);
-  }
+  factory Lang.fromSnapshot(DocumentSnapshot snapshot) => Lang.fromJson(dataWithDocId(snapshot));
   factory Lang.fromJson(Map<String, dynamic> json) => _$LangFromJson(json);
-  Map<String, dynamic> toJson() => _$LangToJson(this);
 }

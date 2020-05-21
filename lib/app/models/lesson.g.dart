@@ -6,16 +6,16 @@ part of 'lesson.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Lesson _$LessonFromJson(Map<String, dynamic> json) {
-  return Lesson(
-    json['number'] as int,
-    json['section'] as int,
-    json['documentId'] as String,
-    json['title'] as String,
+_$_Lesson _$_$_LessonFromJson(Map<String, dynamic> json) {
+  return _$_Lesson(
+    title: json['title'] as String,
+    number: json['number'] as int,
+    section: json['section'] as int,
+    documentId: json['documentId'] as String,
   );
 }
 
-Map<String, dynamic> _$LessonToJson(Lesson instance) => <String, dynamic>{
+Map<String, dynamic> _$_$_LessonToJson(_$_Lesson instance) => <String, dynamic>{
       'title': instance.title,
       'number': instance.number,
       'section': instance.section,

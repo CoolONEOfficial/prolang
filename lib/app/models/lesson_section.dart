@@ -1,20 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:meta/meta.dart';
+import 'package:prolang/app/helpers/add_doc_id.dart';
 
+part 'lesson_section.freezed.dart';
 part 'lesson_section.g.dart';
 
-@JsonSerializable(nullable: false)
-@immutable
-class LessonSection {
-  const LessonSection(
-    this.title,
-    this.description,
-  );
+@freezed
+abstract class LessonSection with _$LessonSection {
+  factory LessonSection({
+    final String title,
+    final String description,
+  }) = _LessonSection;
 
-  final String title;
-  final String description;
-
-  factory LessonSection.fromJson(Map<String, dynamic> json) =>
-      _$LessonSectionFromJson(json);
-  Map<String, dynamic> toJson() => _$LessonSectionToJson(this);
+  factory LessonSection.fromSnapshot(DocumentSnapshot snapshot) => LessonSection.fromJson(dataWithDocId(snapshot));
+  factory LessonSection.fromJson(Map<String, dynamic> json) => _$LessonSectionFromJson(json);
 }

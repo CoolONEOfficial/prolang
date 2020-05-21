@@ -42,5 +42,11 @@
     },
     "lesson_list": {
         "title": "Уроки"
+    },
+    "lesson_create": {
+        "title": "Добавить урок"
+    },
+    "lesson_section_create": {
+        "title": "Добавить секцию"
     }
 }

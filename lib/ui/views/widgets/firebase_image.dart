@@ -31,6 +31,7 @@ class _FirebaseStorageImageState extends State<FirebaseImage>
     this.path,
     this.errorWidget,
   ) {
+    debugPrint("pathhg: $path");
     var url = FireStorageService.loadFromStorage(context, path);
     this._imageDownloadState = ImageDownloadState.GettingURL;
     url.then(this._setImageData).catchError((err) {

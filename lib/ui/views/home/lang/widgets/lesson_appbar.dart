@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:prolang/app/models/lang.dart';
+import 'package:prolang/ui/views/home/lang/create/lesson_create.dart';
 import 'package:prolang/ui/views/widgets/firebase_image.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -20,6 +21,17 @@ class LessonAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
+      actions: <Widget>[
+        PlatformIconButton(
+          icon: Icon(PlatformIcons(context).create),
+          onPressed: () {
+            Navigator.of(context).push(platformPageRoute(
+              context: context,
+              builder: (context) => LessonCreate(),
+            ));
+          },
+        ),
+      ],
       shape: getValueForScreenType(
         context: context,
         mobile: null,
