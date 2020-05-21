@@ -51,12 +51,12 @@ class LessonHeader extends StatelessWidget {
                 ),
               ),
               ExpandableTheme(
-                data: ExpandableThemeData(useInkWell: isMaterial(context)),
+                data: ExpandableThemeData(
+                  useInkWell: isMaterial(context),
+                  iconColor: Colors.white,
+                ),
                 child: ExpandableButton(
-                  child: Icon(
-                    PlatformIcons(context).info,
-                    color: Colors.white,
-                  ),
+                  child: ExpandableIcon(),
                 ),
               )
             ],
