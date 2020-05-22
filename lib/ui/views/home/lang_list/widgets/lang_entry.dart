@@ -6,7 +6,7 @@ import 'package:prolang/app/extensions/Color.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/ui/views/home/lang/lang_view.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:prolang/ui/views/widgets/platform_card.dart';
+import 'package:prolang/ui/widgets/platform_card.dart';
 
 class LangEntry extends StatelessWidget {
   final Lang lang;

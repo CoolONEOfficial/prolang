@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
+import 'package:prolang/app/models/lesson_section.dart';
 
 class FirestoreService {
   final Firestore _firestore;
@@ -24,13 +25,21 @@ class FirestoreService {
         .orderBy('number')
         .getDocuments();
 
-    debugPrint("lang id: ${lang.documentId}");
-    
-    return langListSnapshot.documents
-        .map((langSnapshot) {
-          debugPrint("data: ${langSnapshot.data}");
-          return Lesson.fromSnapshot(langSnapshot);
-        })
-        .toList();
+    return langListSnapshot.documents.map((langSnapshot) {
+      debugPrint("data: ${langSnapshot.data}");
+      return Lesson.fromSnapshot(langSnapshot);
+    }).toList();
+  }
+
+  insertLessonSection([
+    Lang lang,
+    LessonSection section,
+    int index,
+  ]) {
+    lang.sections.insert(index, section);
+    _firestore
+        .collection('langs')
+        .document(lang.documentId)
+        .updateData(lang.toJson());
   }
 }

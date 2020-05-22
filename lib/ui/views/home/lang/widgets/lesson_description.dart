@@ -14,14 +14,14 @@ class LessonDescription extends StatelessWidget {
         softWrap: true,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
-        style: TextStyle(color: ThemeColors.textColor(context)),
+        style: TextStyle(color: ThemeColors.textColor()),
       ),
       expanded: Text(
         section.description,
         softWrap: true,
         textAlign: TextAlign.justify,
         style: TextStyle(
-          color: ThemeColors.textColor(context),
+          color: ThemeColors.textColor(),
           fontSize: 20,
         ),
       ),

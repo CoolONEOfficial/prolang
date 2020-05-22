@@ -17,7 +17,7 @@ class AnonymousSignInButton extends StatelessWidget {
         context.read<IntroViewModel>().signInAnonymously();
       },
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      color: ThemeColors.primaryDarken(context),
+      color: ThemeColors.primaryDarken(),
       child: Text(
         "auth.anonymous".tr(),
         textAlign: TextAlign.center,

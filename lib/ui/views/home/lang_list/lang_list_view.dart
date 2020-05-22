@@ -3,8 +3,8 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:prolang/app/services/firebase_auth_service.dart';
 import 'package:prolang/ui/views/home/lang_list/widgets/lang_entry.dart';
-import 'package:prolang/ui/views/widgets/loading_indicator.dart';
-import 'package:prolang/ui/views/widgets/responsive_safe_area.dart';
+import 'package:prolang/ui/widgets/loading_indicator.dart';
+import 'package:prolang/ui/widgets/responsive_safe_area.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 

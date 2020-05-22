@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:prolang/app/models/lesson.dart';
+import 'package:provider/provider.dart';
 
-class LessonCreate extends StatefulWidget {
+class LessonCreateView extends StatefulWidget {
   @override
   _LessonCreateState createState() => _LessonCreateState();
 }
 
-class _LessonCreateState extends State<LessonCreate> {
+class _LessonCreateState extends State<LessonCreateView> {
   var _lessonModel = Lesson();
 
   // once the form submits, this is flipped to true, and fields can then go into autovalidate mode.
@@ -48,6 +49,7 @@ class _LessonCreateState extends State<LessonCreate> {
 
   CardSettings _buildPortraitLayout() {
     return CardSettings.sectioned(
+      
       labelWidth: 100,
       children: <CardSettingsSection>[
         CardSettingsSection(

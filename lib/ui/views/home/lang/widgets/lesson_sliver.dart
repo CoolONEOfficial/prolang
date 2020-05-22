@@ -12,7 +12,7 @@ import 'lesson_entry.dart';
 import 'lesson_header.dart';
 
 class LessonSliver extends StatelessWidget {
-  final MapEntry<int, List<Lesson>> section;
+  final MapEntry<LessonSection, List<Lesson>> section;
 
   const LessonSliver(
     this.section, {
@@ -22,8 +22,8 @@ class LessonSliver extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpandableNotifier(
-      child: ProxyProvider<Lang, LessonSection>(
-        update: (_, lang, __) => lang.sections[section.key],
+      child: Provider<LessonSection>(
+        create: (_) => section.key,
         child: SliverStickyHeader(
           header: LessonHeader(),
           sliver: SliverList(

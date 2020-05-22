@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:prolang/app/models/lang.dart';
-import 'package:prolang/ui/views/home/lang/create/lesson_create.dart';
-import 'package:prolang/ui/views/widgets/firebase_image.dart';
+import 'package:prolang/ui/views/home/lang/create/lesson_create_view.dart';
+import 'package:prolang/ui/widgets/firebase_image.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
@@ -23,11 +23,14 @@ class LessonAppBar extends StatelessWidget {
     return SliverAppBar(
       actions: <Widget>[
         PlatformIconButton(
-          icon: Icon(PlatformIcons(context).create),
+          icon: Icon(
+            PlatformIcons(context).create,
+            color: Colors.white,
+          ),
           onPressed: () {
             Navigator.of(context).push(platformPageRoute(
               context: context,
-              builder: (context) => LessonCreate(),
+              builder: (context) => LessonCreateView(),
             ));
           },
         ),

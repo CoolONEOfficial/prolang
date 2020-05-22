@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:prolang/app/constants/ThemeColors.dart';
 import 'package:prolang/app/models/lesson.dart';
-import 'package:prolang/ui/views/widgets/platform_card.dart';
+import 'package:prolang/ui/widgets/platform_card.dart';
 
 class LessonEntry extends StatelessWidget {
   final Lesson lesson;
@@ -22,7 +22,7 @@ class LessonEntry extends StatelessWidget {
           lesson.title,
           style: TextStyle(
             fontSize: 30,
-            color: ThemeColors.textColor(context),
+            color: ThemeColors.textColor(),
           ),
         ),
       ),

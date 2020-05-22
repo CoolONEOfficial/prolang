@@ -4,18 +4,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:prolang/app/models/lesson.dart';
+import 'package:prolang/app/services/firestore_service.dart';
+import 'package:provider/provider.dart';
 import 'package:prolang/app/models/lesson_section.dart';
 
-class LessonSectionCreate extends StatefulWidget {
+class LessonSectionCreateView extends StatefulWidget {
+  final int insertPosition;
+
+  const LessonSectionCreateView(
+    this.insertPosition, {
+    Key key,
+  }) : super(key: key);
+
   @override
   _LessonSectionCreateState createState() => _LessonSectionCreateState();
 }
 
-class _LessonSectionCreateState extends State<LessonSectionCreate> {
+class _LessonSectionCreateState extends State<LessonSectionCreateView> {
   var _sectionModel = LessonSection();
-
-  // once the form submits, this is flipped to true, and fields can then go into autovalidate mode.
-  bool _autoValidate = false;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -32,7 +38,14 @@ class _LessonSectionCreateState extends State<LessonSectionCreate> {
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: PlatformAppBar(
         title: Text("lesson_create.title").tr(),
-       
+        trailingActions: <Widget>[
+          PlatformIconButton(
+            icon: Icon(PlatformIcons(context).done),
+            onPressed: () {
+              context.read<FirestoreService>();
+            },
+          )
+        ],
       ),
       body: Form(
         key: _formKey,
@@ -103,7 +116,6 @@ class _LessonSectionCreateState extends State<LessonSectionCreate> {
       hintText: 'something cute...',
       initialValue: _sectionModel.title,
       requiredIndicator: Text('*', style: TextStyle(color: Colors.red)),
-      autovalidate: _autoValidate,
       validator: (value) {
         if (value == null || value.isEmpty) return 'Name is required.';
         return null;
