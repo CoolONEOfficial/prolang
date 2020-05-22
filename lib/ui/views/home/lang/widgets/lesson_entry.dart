@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:prolang/app/constants/ThemeColors.dart';
+import 'package:prolang/app/constants/theme_colors.dart';
 import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/ui/widgets/platform_card.dart';
 

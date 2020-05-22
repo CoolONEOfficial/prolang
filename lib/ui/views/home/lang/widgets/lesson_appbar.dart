@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:prolang/app/models/lang.dart';
-import 'package:prolang/ui/views/home/lang/create/lesson_create_view.dart';
 import 'package:prolang/ui/widgets/firebase_image.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
+
+import '../lang_view.dart';
 
 class LessonAppBar extends StatelessWidget {
   final String basePath;
@@ -20,6 +21,7 @@ class LessonAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final lang = context.watch<Lang>();
     return SliverAppBar(
       actions: <Widget>[
         PlatformIconButton(
@@ -27,12 +29,10 @@ class LessonAppBar extends StatelessWidget {
             PlatformIcons(context).create,
             color: Colors.white,
           ),
-          onPressed: () {
-            Navigator.of(context).push(platformPageRoute(
-              context: context,
-              builder: (context) => LessonCreateView(),
-            ));
-          },
+          onPressed: () => LangView.createSection(
+            context,
+            lang: lang,
+          ),
         ),
       ],
       shape: getValueForScreenType(
@@ -65,7 +65,7 @@ class LessonAppBar extends StatelessWidget {
               Flexible(
                 flex: 3,
                 child: Text(
-                  context.watch<Lang>().title[context.locale.languageCode],
+                  lang.title[context.locale.languageCode],
                   textAlign: TextAlign.center,
                 ),
               ),

@@ -4,18 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:prolang/app/models/lesson.dart';
-import 'package:provider/provider.dart';
+import 'package:prolang/ui/widgets/required_indicator.dart';
 
-class LessonCreateView extends StatefulWidget {
+class LessonFormView extends StatefulWidget {
   @override
-  _LessonCreateState createState() => _LessonCreateState();
+  _LessonFormState createState() => _LessonFormState();
 }
 
-class _LessonCreateState extends State<LessonCreateView> {
+class _LessonFormState extends State<LessonFormView> {
   var _lessonModel = Lesson();
-
-  // once the form submits, this is flipped to true, and fields can then go into autovalidate mode.
-  bool _autoValidate = false;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -27,20 +24,18 @@ class _LessonCreateState extends State<LessonCreateView> {
 
   @override
   Widget build(BuildContext context) {
+    var orientation = MediaQuery.of(context).orientation;
     return PlatformScaffold(
       key: _scaffoldKey,
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: PlatformAppBar(
-        title: Text("lesson_create.title").tr(),
-       
+        title: Text("lesson_form.title").tr(),
       ),
       body: Form(
         key: _formKey,
-        child: OrientationBuilder(
-          builder: (context, orientation) => orientation == Orientation.portrait
-              ? _buildPortraitLayout()
-              : _buildLandscapeLayout(),
-        ),
+        child: orientation == Orientation.portrait
+            ? _buildPortraitLayout()
+            : _buildLandscapeLayout(),
       ),
     );
   }
@@ -49,21 +44,14 @@ class _LessonCreateState extends State<LessonCreateView> {
 
   CardSettings _buildPortraitLayout() {
     return CardSettings.sectioned(
-      
       labelWidth: 100,
       children: <CardSettingsSection>[
         CardSettingsSection(
           header: CardSettingsHeader(
-            label: 'Bio',
+            label: 'lesson_form.general.label'.tr(),
           ),
           children: <Widget>[
-            _buildCardSettingsText_Name(),
-            // _buildCardSettingsListPicker_Type(),
-            // _buildCardSettingsRadioPicker_Gender(),
-            // _buildCardSettingsNumberPicker_Age(),
-            // _buildCardSettingsParagraph_Description(5),
-            // _buildCardSettingsCheckboxPicker_Hobbies(),
-            // _buildCardSettingsDateTimePicker_Birthday(),
+            _buildCardSettingsText_Title(),
           ],
         ),
       ],
@@ -76,11 +64,10 @@ class _LessonCreateState extends State<LessonCreateView> {
       children: <CardSettingsSection>[
         CardSettingsSection(
           header: CardSettingsHeader(
-            label: 'Bio',
+            label: 'lesson_form.general.label'.tr(),
           ),
           children: <Widget>[
-            _buildCardSettingsText_Name(),
-            // _buildCardSettingsListPicker_Type(),
+            _buildCardSettingsText_Title(),
             // CardFieldLayout(
             //   <Widget>[
             //     _buildCardSettingsRadioPicker_Gender(),
@@ -88,25 +75,21 @@ class _LessonCreateState extends State<LessonCreateView> {
             //   ],
             //   flexValues: [2, 1],
             // ),
-            // _buildCardSettingsParagraph_Description(3),
-            // _buildCardSettingsCheckboxPicker_Hobbies(),
-            // _buildCardSettingsDateTimePicker_Birthday(),
           ],
         ),
       ],
     );
   }
 
-  CardSettingsText _buildCardSettingsText_Name() {
+  CardSettingsText _buildCardSettingsText_Title() {
     return CardSettingsText(
       key: _nameKey,
-      label: 'Name',
-      hintText: 'something cute...',
+      label: 'lesson_form.general.title.label'.tr(),
+      hintText: 'lesson_form.general.title.hint'.tr(),
       initialValue: _lessonModel.title,
-      requiredIndicator: Text('*', style: TextStyle(color: Colors.red)),
-      autovalidate: _autoValidate,
+      requiredIndicator: RequiredIndicator(),
       validator: (value) {
-        if (value == null || value.isEmpty) return 'Name is required.';
+        if (value == null || value.isEmpty) return 'required_field'.tr();
         return null;
       },
       onSaved: (value) => _lessonModel = _lessonModel.copyWith(title: value),
@@ -114,7 +97,6 @@ class _LessonCreateState extends State<LessonCreateView> {
         setState(() {
           _lessonModel = _lessonModel.copyWith(title: value);
         });
-        //_showSnackBar('Name', value);
       },
     );
   }

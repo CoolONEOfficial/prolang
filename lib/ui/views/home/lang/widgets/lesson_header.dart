@@ -1,17 +1,63 @@
 import 'package:expandable/expandable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson_section.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
+
+import '../lang_view.dart';
 
 class LessonHeader extends StatelessWidget {
   const LessonHeader({Key key}) : super(key: key);
 
+  onDeletePressed(
+    BuildContext context,
+    Lang lang,
+    LessonSection section,
+  ) =>
+      showPlatformDialog(
+        context: context,
+        builder: (_) => PlatformAlertDialog(
+          title: Text("lang.lesson.delete.confirmation".tr()),
+          actions: <Widget>[
+            PlatformDialogAction(
+              child: PlatformText(
+                "cancel".tr(),
+                style: TextStyle(color: Theme.of(context).primaryColor),
+              ),
+              onPressed: () => Navigator.pop(context),
+            ),
+            PlatformDialogAction(
+              ios: (c) => CupertinoDialogActionData(
+                isDestructiveAction: true,
+              ),
+              child: PlatformText(
+                "delete".tr(),
+                style: TextStyle(color: Theme.of(context).primaryColor),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+                return LangView.deleteSection(
+                  context,
+                  lang: lang,
+                  section: section,
+                );
+              },
+            )
+          ],
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     final section = context.watch<LessonSection>();
+    final lang = context.watch<Lang>();
+    final material = isMaterial(context);
     return Padding(
       padding: getValueForScreenType(
         context: context,
@@ -31,11 +77,10 @@ class LessonHeader extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            vertical: 8.0,
+            vertical: 0.0,
             horizontal: 16.0,
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
                 section.title,
@@ -50,10 +95,32 @@ class LessonHeader extends StatelessWidget {
                   mobile: TextAlign.left,
                 ),
               ),
+              Spacer(),
+              PlatformIconButton(
+                icon: Icon(
+                  PlatformIcons(context).delete,
+                  color: Colors.white,
+                ),
+                onPressed: () => onDeletePressed(context, lang, section),
+              ),
+              PlatformIconButton(
+                icon: Icon(
+                  PlatformIcons(context).add,
+                  color: Colors.white,
+                ),
+                onPressed: () => LangView.createSection(
+                  context,
+                  lang: lang,
+                  insertPosition: section.index,
+                ),
+              ),
               ExpandableTheme(
                 data: ExpandableThemeData(
                   useInkWell: isMaterial(context),
                   iconColor: Colors.white,
+                  collapseIcon: material ? null : EvilIcons.chevron_up,
+                  expandIcon: material ? null : EvilIcons.chevron_down,
+                  iconSize: 28,
                 ),
                 child: ExpandableButton(
                   child: ExpandableIcon(),

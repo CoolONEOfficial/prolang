@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tuple/tuple.dart';
 
-import 'constants/ThemeColors.dart';
+import 'constants/theme_colors.dart';
 
 class MyApp extends StatefulWidget {
   @override
@@ -39,21 +39,23 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final lightTheme = ThemeData(
-        primaryColor: ThemeColors.primaryLight,
-        accentColor: ThemeColors.accentLight,
-        cardColor: ThemeColors.cardColor(),
-        backgroundColor: ThemeColors.backgroundColor(context),
-        textTheme: TextTheme(
-          button: TextStyle(color: ThemeColors.textColor()),
-          subtitle1: TextStyle(color: ThemeColors.textColor()),
-          headline6: TextStyle(color: ThemeColors.textColor()),
-        ),
-        secondaryHeaderColor: ThemeColors.secondaryHeaderColor(),
-        inputDecorationTheme: InputDecorationTheme(
-          labelStyle: TextStyle(color: ThemeColors.textColor()),
-          hintStyle: TextStyle(color: ThemeColors.textColor().withOpacity(0.8)),
-        ),
-        fontFamily: 'TTNorms');
+      brightness: WidgetsBinding.instance.window.platformBrightness,
+      primaryColor: ThemeColors.primaryLight,
+      accentColor: ThemeColors.accentLight,
+      cardColor: ThemeColors.cardColor(),
+      backgroundColor: ThemeColors.backgroundColor(context),
+      textTheme: TextTheme(
+        button: TextStyle(color: ThemeColors.textColor()),
+        subtitle1: TextStyle(color: ThemeColors.textColor()),
+        headline6: TextStyle(color: ThemeColors.textColor()),
+      ),
+      secondaryHeaderColor: ThemeColors.secondaryHeaderColor(),
+      inputDecorationTheme: InputDecorationTheme(
+        labelStyle: TextStyle(color: ThemeColors.textColor()),
+        hintStyle: TextStyle(color: ThemeColors.textColor().withOpacity(0.8)),
+      ),
+      fontFamily: 'TTNorms',
+    );
     return Theme(
       data: lightTheme,
       child: PlatformApp(
@@ -83,6 +85,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                   fontFamily: 'TTNorms',
                   color: ThemeColors.textColor(),
                 ),
+                primaryColor: ThemeColors.primaryLight,
               ),
             ),
           );

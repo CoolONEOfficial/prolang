@@ -15,10 +15,13 @@ LessonSection _$LessonSectionFromJson(Map<String, dynamic> json) {
 class _$LessonSectionTearOff {
   const _$LessonSectionTearOff();
 
-  _LessonSection call({String title, String description}) {
+  _LessonSection call(
+      {String title, String description, String documentId, int index}) {
     return _LessonSection(
       title: title,
       description: description,
+      documentId: documentId,
+      index: index,
     );
   }
 }
@@ -29,6 +32,8 @@ const $LessonSection = _$LessonSectionTearOff();
 mixin _$LessonSection {
   String get title;
   String get description;
+  String get documentId;
+  int get index;
 
   Map<String, dynamic> toJson();
   $LessonSectionCopyWith<LessonSection> get copyWith;
@@ -38,7 +43,7 @@ abstract class $LessonSectionCopyWith<$Res> {
   factory $LessonSectionCopyWith(
           LessonSection value, $Res Function(LessonSection) then) =
       _$LessonSectionCopyWithImpl<$Res>;
-  $Res call({String title, String description});
+  $Res call({String title, String description, String documentId, int index});
 }
 
 class _$LessonSectionCopyWithImpl<$Res>
@@ -53,11 +58,16 @@ class _$LessonSectionCopyWithImpl<$Res>
   $Res call({
     Object title = freezed,
     Object description = freezed,
+    Object documentId = freezed,
+    Object index = freezed,
   }) {
     return _then(_value.copyWith(
       title: title == freezed ? _value.title : title as String,
       description:
           description == freezed ? _value.description : description as String,
+      documentId:
+          documentId == freezed ? _value.documentId : documentId as String,
+      index: index == freezed ? _value.index : index as int,
     ));
   }
 }
@@ -68,7 +78,7 @@ abstract class _$LessonSectionCopyWith<$Res>
           _LessonSection value, $Res Function(_LessonSection) then) =
       __$LessonSectionCopyWithImpl<$Res>;
   @override
-  $Res call({String title, String description});
+  $Res call({String title, String description, String documentId, int index});
 }
 
 class __$LessonSectionCopyWithImpl<$Res>
@@ -85,18 +95,23 @@ class __$LessonSectionCopyWithImpl<$Res>
   $Res call({
     Object title = freezed,
     Object description = freezed,
+    Object documentId = freezed,
+    Object index = freezed,
   }) {
     return _then(_LessonSection(
       title: title == freezed ? _value.title : title as String,
       description:
           description == freezed ? _value.description : description as String,
+      documentId:
+          documentId == freezed ? _value.documentId : documentId as String,
+      index: index == freezed ? _value.index : index as int,
     ));
   }
 }
 
 @JsonSerializable()
 class _$_LessonSection with DiagnosticableTreeMixin implements _LessonSection {
-  _$_LessonSection({this.title, this.description});
+  _$_LessonSection({this.title, this.description, this.documentId, this.index});
 
   factory _$_LessonSection.fromJson(Map<String, dynamic> json) =>
       _$_$_LessonSectionFromJson(json);
@@ -105,10 +120,14 @@ class _$_LessonSection with DiagnosticableTreeMixin implements _LessonSection {
   final String title;
   @override
   final String description;
+  @override
+  final String documentId;
+  @override
+  final int index;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'LessonSection(title: $title, description: $description)';
+    return 'LessonSection(title: $title, description: $description, documentId: $documentId, index: $index)';
   }
 
   @override
@@ -117,7 +136,9 @@ class _$_LessonSection with DiagnosticableTreeMixin implements _LessonSection {
     properties
       ..add(DiagnosticsProperty('type', 'LessonSection'))
       ..add(DiagnosticsProperty('title', title))
-      ..add(DiagnosticsProperty('description', description));
+      ..add(DiagnosticsProperty('description', description))
+      ..add(DiagnosticsProperty('documentId', documentId))
+      ..add(DiagnosticsProperty('index', index));
   }
 
   @override
@@ -128,14 +149,21 @@ class _$_LessonSection with DiagnosticableTreeMixin implements _LessonSection {
                 const DeepCollectionEquality().equals(other.title, title)) &&
             (identical(other.description, description) ||
                 const DeepCollectionEquality()
-                    .equals(other.description, description)));
+                    .equals(other.description, description)) &&
+            (identical(other.documentId, documentId) ||
+                const DeepCollectionEquality()
+                    .equals(other.documentId, documentId)) &&
+            (identical(other.index, index) ||
+                const DeepCollectionEquality().equals(other.index, index)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(title) ^
-      const DeepCollectionEquality().hash(description);
+      const DeepCollectionEquality().hash(description) ^
+      const DeepCollectionEquality().hash(documentId) ^
+      const DeepCollectionEquality().hash(index);
 
   @override
   _$LessonSectionCopyWith<_LessonSection> get copyWith =>
@@ -148,7 +176,11 @@ class _$_LessonSection with DiagnosticableTreeMixin implements _LessonSection {
 }
 
 abstract class _LessonSection implements LessonSection {
-  factory _LessonSection({String title, String description}) = _$_LessonSection;
+  factory _LessonSection(
+      {String title,
+      String description,
+      String documentId,
+      int index}) = _$_LessonSection;
 
   factory _LessonSection.fromJson(Map<String, dynamic> json) =
       _$_LessonSection.fromJson;
@@ -157,6 +189,10 @@ abstract class _LessonSection implements LessonSection {
   String get title;
   @override
   String get description;
+  @override
+  String get documentId;
+  @override
+  int get index;
   @override
   _$LessonSectionCopyWith<_LessonSection> get copyWith;
 }

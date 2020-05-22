@@ -14,7 +14,7 @@ class GoogleSignInButton extends StatelessWidget {
         context.read<FirebaseAuthService>().signInWithGoogle();
       },
       darkMode: true,
-      text: "auth.google".tr(),
+      text: "intro.auth.button.google".tr(),
       textStyle: TextStyle(
         fontSize: 14,
         color: Colors.white,

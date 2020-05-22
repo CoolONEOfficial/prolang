@@ -1,6 +1,8 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
+import 'package:prolang/app/models/lesson_section.dart';
 import 'package:prolang/app/services/firestore_service.dart';
 import 'package:provider/provider.dart';
 
@@ -15,11 +17,23 @@ class LangViewModel extends ChangeNotifier {
   bool _isLoading = true;
   bool get isLoading => _isLoading;
 
-  List<Lesson> lessonList;
+  List<MapEntry<LessonSection, List<Lesson>>> sectionList;
 
-  Future<void> loadLessonList() async {
+  loadLessonList() async {
     _setLoading();
-    lessonList = await locator<FirestoreService>().loadLessonList(lang);
+
+    final fs = locator<FirestoreService>();
+
+    sectionList = [];
+    for (var section in await fs.loadSectionList(lang)) {
+      sectionList.add(
+        MapEntry(
+          section,
+          await fs.loadLessonList(lang, section),
+        ),
+      );
+    }
+
     _setNotLoading();
   }
 

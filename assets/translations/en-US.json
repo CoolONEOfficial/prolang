@@ -3,10 +3,10 @@
     "subtitle": "Start speaking\na foreign language",
     "next": "Next",
     "skip": "Skip",
-    "auth": {
-        "anonymous": "Anonimous sign in",
-        "google": "Sign in with Google"
-    },
+    "delete": "Delete",
+    "create": "Create",
+    "cancel": "Cancel",
+    "required_field": "This field is required.",
     "intro": {
         "baloon": {
             "title": "NO LANGUAGE BARRIER",
@@ -34,19 +34,56 @@
         },
         "auth": {
             "title": "AUTHENTICATION",
-            "description": "To start learning, log in with Google or try out basic functionality using the anonymous login."
+            "description": "To start learning, log in with Google or try out basic functionality using the anonymous login.",
+            "button": {
+                "anonymous": "Anonimous sign in",
+                "google": "Sign in with Google"
+            }
         }
     },
     "lang_list": {
         "title": "Languages"
     },
-    "lesson_list": {
-        "title": "Lessons"
+    "lang": {
+        "lesson": {
+            "delete": {
+                "confirmation": "Delete lesson?",
+                "progress": "Deleting lesson..."
+            }
+        },
+        "lesson_section": {
+            "delete": {
+                "confirmation": "Delete section?",
+                "progress": "Deleting section..."
+            }
+        }
     },
-    "lesson_create": {
-        "title": "Add lesson"
+    "lesson_form": {
+        "confirmation": "Create lesson?",
+        "progress": "Creating lesson...",
+        "title": "Add lesson",
+        "general": {
+            "label": "General",
+            "title": {
+                "label": "Title",
+                "hint": "Basics, charter 1..."
+            }
+        }
     },
-    "lesson_section_create": {
-        "title": "Add section"
+    "lesson_section_form": {
+        "confirmation": "Create lesson section?",
+        "progress": "Creating lesson section...",
+        "title": "New lesson section",
+        "general": {
+            "label": "General",
+            "title": {
+                "label": "Title",
+                "hint": "Level, charter..."
+            },
+            "description": {
+                "label": "Description",
+                "hint": "In that section you will learn..."
+            }
+        }
     }
 }

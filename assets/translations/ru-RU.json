@@ -3,10 +3,10 @@
     "subtitle": "Начни говорить на\nиностранном языке",
     "next": "Вперед",
     "skip": "Пропустить",
-    "auth": {
-        "anonymous": "Войти анонимно",
-        "google": "Войти с Google"
-    },
+    "delete": "Удалить",
+    "create": "Создать",
+    "cancel": "Отмена",
+    "required_field": "Это поле обязательно к заполнению.",
     "intro": {
         "baloon": {
             "title": "НЕТ  ЯЗЫКОВОГО  БАРЬЕРА",
@@ -34,19 +34,56 @@
         },
         "auth": {
             "title": "АУДЕНТИФИКАЦИЯ",
-            "description": "Для старта обучения войдите с помощью Google либо опробуйте базовый функционал используя анонимный вход."
+            "description": "Для старта обучения войдите с помощью Google либо опробуйте базовый функционал используя анонимный вход.",
+            "button": {
+                "anonymous": "Войти анонимно",
+                "google": "Войти с Google"
+            }
         }
     },
     "lang_list": {
         "title": "Языки"
     },
-    "lesson_list": {
-        "title": "Уроки"
+    "lang": {
+        "lesson": {
+            "delete": {
+                "confirmation": "Удалить урок?",
+                "progress": "Удаляю урок..."
+            }
+        },
+        "lesson_section": {
+            "delete": {
+                "confirmation": "Удалить секцию с уроками?",
+                "progress": "Удаляю секцию..."
+            }
+        }
     },
-    "lesson_create": {
-        "title": "Добавить урок"
+    "lesson_form": {
+        "confirmation": "Создать урок?",
+        "progress": "Создаю урок...",
+        "title": "Добавить урок",
+        "general": {
+            "label": "Основные",
+            "title": {
+                "label": "Название",
+                "hint": "Основы, тема..."
+            }
+        }
     },
-    "lesson_section_create": {
-        "title": "Добавить секцию"
+    "lesson_section_form": {
+        "confirmation": "Создать секцию?",
+        "progress": "Создаю секцию...",
+        "title": "Новая секция уроков",
+        "general": {
+            "label": "Основные",
+            "title": {
+                "label": "Название",
+                "hint": "Уровень, глава..."
+            },
+            "description": {
+                "label": "Описание",
+                "hint": "В этой секции будут рассмотрены следующие темы..."
+            }
+        }
     }
 }
