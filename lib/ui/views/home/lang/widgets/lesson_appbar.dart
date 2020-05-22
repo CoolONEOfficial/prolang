@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:prolang/app/constants/theme_colors.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/ui/widgets/firebase_image.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -29,10 +30,7 @@ class LessonAppBar extends StatelessWidget {
             PlatformIcons(context).create,
             color: Colors.white,
           ),
-          onPressed: () => LangView.createSection(
-            context,
-            lang: lang,
-          ),
+          onPressed: () {},
         ),
       ],
       shape: getValueForScreenType(

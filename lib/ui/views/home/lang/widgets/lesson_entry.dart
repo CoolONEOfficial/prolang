@@ -73,16 +73,34 @@ class LessonEntry extends StatelessWidget {
             ),
             Spacer(),
             PlatformIconButton(
-              icon: Icon(PlatformIcons(context).delete),
-              onPressed: () => onDeletePressed(context, lang, section),
-            ),
-            PlatformIconButton(
-              icon: Icon(PlatformIcons(context).add),
-              onPressed: () => LangView.createLesson(
+              icon: Icon(
+                PlatformIcons(context).create,
+                color: ThemeColors.iconColor(),
+              ),
+              onPressed: () => LangView.showLessonForm(
                 context,
                 lang: lang,
                 section: section,
-                insertPosition: lesson.index,
+                lesson: lesson,
+              ),
+            ),
+            PlatformIconButton(
+              icon: Icon(
+                PlatformIcons(context).delete,
+                color: ThemeColors.iconColor(),
+              ),
+              onPressed: () => onDeletePressed(context, lang, section),
+            ),
+            PlatformIconButton(
+              icon: Icon(
+                PlatformIcons(context).add,
+                color: ThemeColors.iconColor(),
+              ),
+              onPressed: () => LangView.showLessonForm(
+                context,
+                lang: lang,
+                section: section,
+                insertPosition: lesson.index
               ),
             )
           ],

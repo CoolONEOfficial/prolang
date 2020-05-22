@@ -22,6 +22,8 @@ class ThemeColors {
       ? _color(light: Colors.white, dark: Colors.grey[800])
       : _color(light: Color.fromARGB(255, 242, 242, 247), dark: Colors.black);
 
+  static Color iconColor() => _color(light: Colors.black, dark: Colors.white);
+
   static Color textColor() => _color(light: Colors.black87, dark: Colors.white);
 
   static Color textAccentColor() =>

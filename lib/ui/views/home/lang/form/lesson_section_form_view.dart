@@ -13,20 +13,22 @@ import 'package:provider/provider.dart';
 class LessonSectionFormView extends StatefulWidget {
   final int insertPosition;
   final Lang lang;
+  final LessonSection section;
 
   const LessonSectionFormView({
     this.insertPosition,
-    @required
-    this.lang,
+    @required this.lang,
+    this.section,
     Key key,
   }) : super(key: key);
 
   @override
-  _LessonSectionFormState createState() => _LessonSectionFormState();
+  _LessonSectionFormState createState() =>
+      _LessonSectionFormState(section ?? LessonSection());
 }
 
 class _LessonSectionFormState extends State<LessonSectionFormView> {
-  var _sectionModel = LessonSection();
+  LessonSection _sectionModel;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -36,6 +38,8 @@ class _LessonSectionFormState extends State<LessonSectionFormView> {
   // if you only have one orientation, the _formKey is sufficient
   final GlobalKey<FormState> _nameKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _descriptionKey = GlobalKey<FormState>();
+
+  _LessonSectionFormState(this._sectionModel);
 
   @override
   Widget build(BuildContext context) {
@@ -153,39 +157,52 @@ class _LessonSectionFormState extends State<LessonSectionFormView> {
     if (form.validate()) {
       form.save();
 
-      showPlatformDialog(
-        context: context,
-        builder: (_) => PlatformAlertDialog(
-          title: Text("lesson_section_form.confirmation".tr()),
-          actions: <Widget>[
-            PlatformDialogAction(
-              child: PlatformText("cancel".tr()),
-              onPressed: () => Navigator.pop(context),
-            ),
-            PlatformDialogAction(
-              child: PlatformText("create".tr()),
-              onPressed: createLessonSection,
-            ),
-          ],
-        ),
-      );
+      if (_sectionModel.documentId == null) {
+        showPlatformDialog(
+          context: context,
+          builder: (_) => PlatformAlertDialog(
+            title: Text("lesson_section_form.confirmation".tr()),
+            actions: <Widget>[
+              PlatformDialogAction(
+                child: PlatformText("cancel".tr()),
+                onPressed: () => Navigator.pop(context),
+              ),
+              PlatformDialogAction(
+                child: PlatformText("create".tr()),
+                onPressed: () {
+                  Navigator.pop(context);
+                  applyLessonSection();
+                },
+              ),
+            ],
+          ),
+        );
+      } else {
+        applyLessonSection();
+      }
     }
   }
 
-  createLessonSection() async {
-    Navigator.pop(context);
-
+  applyLessonSection() async {
     showPlatformDialog(
       context: context,
       builder: (_) =>
           PlatformProgressDialog(text: "lesson_section_form.progress".tr()),
     );
 
-    await context.read<FirestoreService>().insertLessonSection(
-          widget.lang,
-          _sectionModel,
-          widget.insertPosition,
-        );
+    final fs = context.read<FirestoreService>();
+    if (_sectionModel.documentId != null) {
+      await fs.updateLessonSection(
+        widget.lang,
+        _sectionModel,
+      );
+    } else {
+      await fs.insertLessonSection(
+        widget.lang,
+        _sectionModel,
+        widget.insertPosition,
+      );
+    }
 
     Navigator.pop(context);
     Navigator.pop(context, true);

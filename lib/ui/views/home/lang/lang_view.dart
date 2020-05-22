@@ -82,16 +82,18 @@ class LangView extends StatelessWidget {
     Navigator.pop(context);
   }
 
-  static createSection(
+  static showLessonSectionForm(
     BuildContext context, {
     Lang lang,
     int insertPosition = 0,
+    LessonSection section,
   }) async {
     if (await Navigator.of(context).push(platformPageRoute(
           context: context,
           builder: (context) => LessonSectionFormView(
             insertPosition: insertPosition,
             lang: lang,
+            section: section,
           ),
         )) ==
         true) {
@@ -99,11 +101,12 @@ class LangView extends StatelessWidget {
     }
   }
 
-  static createLesson(
+  static showLessonForm(
     BuildContext context, {
     Lang lang,
     LessonSection section,
     int insertPosition = 0,
+    Lesson lesson,
   }) async {
     if (await Navigator.of(context).push(platformPageRoute(
           context: context,
@@ -111,6 +114,7 @@ class LangView extends StatelessWidget {
             insertPosition: insertPosition,
             lang: lang,
             lessonSection: section,
+            lesson: lesson,
           ),
         )) ==
         true) {
@@ -212,9 +216,10 @@ class _LangViewBody extends StatelessWidget {
                       child: PlatformIconButton(
                         icon: Icon(
                           PlatformIcons(context).add,
+                          color: ThemeColors.iconColor(),
                           size: 40,
                         ),
-                        onPressed: () => LangView.createSection(
+                        onPressed: () => LangView.showLessonSectionForm(
                           context,
                           insertPosition: sectionList.length,
                           lang: lang,

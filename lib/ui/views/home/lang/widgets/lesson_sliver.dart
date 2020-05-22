@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
+import 'package:prolang/app/constants/theme_colors.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
@@ -70,10 +71,11 @@ class LessonSliver extends StatelessWidget {
                               padding: const EdgeInsets.all(8.0),
                               child: Icon(
                                 PlatformIcons(context).add,
+                                color: ThemeColors.textColor(),
                               ),
                             ),
                             onPressed: () {
-                              LangView.createLesson(
+                              LangView.showLessonForm(
                                 context,
                                 lang: lang,
                                 section: section.key.copyWith(),

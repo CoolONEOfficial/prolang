@@ -77,25 +77,37 @@ class LessonHeader extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            vertical: 0.0,
+            vertical: 5.0,
             horizontal: 16.0,
           ),
           child: Row(
             children: <Widget>[
-              Text(
-                section.title,
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-                textAlign: getValueForScreenType(
-                  context: context,
-                  tablet: TextAlign.center,
-                  mobile: TextAlign.left,
+              Expanded(
+                child: Text(
+                  section.title,
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  textAlign: getValueForScreenType(
+                    context: context,
+                    tablet: TextAlign.center,
+                    mobile: TextAlign.left,
+                  ),
                 ),
               ),
-              Spacer(),
+              PlatformIconButton(
+                icon: Icon(
+                  PlatformIcons(context).create,
+                  color: Colors.white,
+                ),
+                onPressed: () => LangView.showLessonSectionForm(
+                  context,
+                  lang: lang,
+                  section: section,
+                ),
+              ),
               PlatformIconButton(
                 icon: Icon(
                   PlatformIcons(context).delete,
@@ -108,7 +120,7 @@ class LessonHeader extends StatelessWidget {
                   PlatformIcons(context).add,
                   color: Colors.white,
                 ),
-                onPressed: () => LangView.createSection(
+                onPressed: () => LangView.showLessonSectionForm(
                   context,
                   lang: lang,
                   insertPosition: section.index,

@@ -146,6 +146,18 @@ class FirestoreService {
     }
   }
 
+  // Update
+
+  updateLesson(Lang lang, LessonSection section, Lesson lesson) {
+    lessonRef(lang, section, lesson).updateData(lesson.toJson());
+  }
+
+  updateLessonSection(Lang lang, LessonSection section) {
+    lessonSectionRef(lang, section).updateData(section.toJson());
+  }
+
+  // Ref
+
   DocumentReference langRef(Lang lang) =>
       _firestore.collection('langs').document(lang.documentId);
 

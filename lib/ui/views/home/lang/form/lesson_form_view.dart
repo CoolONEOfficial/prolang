@@ -15,22 +15,22 @@ class LessonFormView extends StatefulWidget {
   final int insertPosition;
   final Lang lang;
   final LessonSection lessonSection;
+  final Lesson lesson;
 
   const LessonFormView({
     this.insertPosition,
-    @required
-    this.lang,
-    @required
-    this.lessonSection,
+    @required this.lang,
+    @required this.lessonSection,
+    this.lesson,
     Key key,
   }) : super(key: key);
 
   @override
-  _LessonFormState createState() => _LessonFormState();
+  _LessonFormState createState() => _LessonFormState(lesson ?? Lesson());
 }
 
 class _LessonFormState extends State<LessonFormView> {
-  var _lessonModel = Lesson();
+  Lesson _lessonModel;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -39,6 +39,8 @@ class _LessonFormState extends State<LessonFormView> {
   // to support orientation changes, we assign a unique key to each field
   // if you only have one orientation, the _formKey is sufficient
   final GlobalKey<FormState> _nameKey = GlobalKey<FormState>();
+
+  _LessonFormState(this._lessonModel);
 
   @override
   Widget build(BuildContext context) {
@@ -132,28 +134,34 @@ class _LessonFormState extends State<LessonFormView> {
 
     if (form.validate()) {
       form.save();
-      showPlatformDialog(
-        context: context,
-        builder: (_) => PlatformAlertDialog(
-          title: Text("lesson_form.confirmation".tr()),
-          actions: <Widget>[
-            PlatformDialogAction(
-              child: PlatformText("cancel".tr()),
-              onPressed: () => Navigator.pop(context),
-            ),
-            PlatformDialogAction(
-              child: PlatformText("create".tr()),
-              onPressed: createLesson,
-            ),
-          ],
-        ),
-      );
+
+      if (_lessonModel.documentId == null) {
+        showPlatformDialog(
+          context: context,
+          builder: (_) => PlatformAlertDialog(
+            title: Text("lesson_form.confirmation".tr()),
+            actions: <Widget>[
+              PlatformDialogAction(
+                child: PlatformText("cancel".tr()),
+                onPressed: () => Navigator.pop(context),
+              ),
+              PlatformDialogAction(
+                child: PlatformText("create".tr()),
+                onPressed: () {
+                  Navigator.pop(context);
+                  applyLesson();
+                },
+              ),
+            ],
+          ),
+        );
+      } else {
+        applyLesson();
+      }
     }
   }
 
-  createLesson() async {
-    Navigator.pop(context);
-
+  applyLesson() async {
     showPlatformDialog(
       context: context,
       builder: (_) => PlatformProgressDialog(
@@ -161,12 +169,21 @@ class _LessonFormState extends State<LessonFormView> {
       ),
     );
 
-    await context.read<FirestoreService>().insertLesson(
-          widget.lang,
-          widget.lessonSection,
-          _lessonModel,
-          widget.insertPosition,
-        );
+    final fs = context.read<FirestoreService>();
+    if (_lessonModel.documentId != null) {
+      await fs.updateLesson(
+        widget.lang,
+        widget.lessonSection,
+        _lessonModel,
+      );
+    } else {
+      await fs.insertLesson(
+        widget.lang,
+        widget.lessonSection,
+        _lessonModel,
+        widget.insertPosition,
+      );
+    }
 
     Navigator.pop(context);
     Navigator.pop(context, true);
