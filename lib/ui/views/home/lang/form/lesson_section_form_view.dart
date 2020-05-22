@@ -16,6 +16,7 @@ class LessonSectionFormView extends StatefulWidget {
 
   const LessonSectionFormView({
     this.insertPosition,
+    @required
     this.lang,
     Key key,
   }) : super(key: key);
@@ -81,7 +82,7 @@ class _LessonSectionFormState extends State<LessonSectionFormView> {
 
   CardSettings _buildLandscapeLayout() {
     return CardSettings.sectioned(
-      labelWidth: 100,
+      labelPadding: 12.0,
       children: <CardSettingsSection>[
         CardSettingsSection(
           header: CardSettingsHeader(
@@ -163,28 +164,30 @@ class _LessonSectionFormState extends State<LessonSectionFormView> {
             ),
             PlatformDialogAction(
               child: PlatformText("create".tr()),
-              onPressed: () async {
-                Navigator.pop(context);
-
-                showPlatformDialog(
-                  context: context,
-                  builder: (_) => PlatformProgressDialog(
-                      text: "lesson_section_form.progress".tr()),
-                );
-
-                await context.read<FirestoreService>().insertLessonSection(
-                      widget.lang,
-                      _sectionModel,
-                      widget.insertPosition,
-                    );
-
-                Navigator.pop(context);
-                Navigator.pop(context, true);
-              },
+              onPressed: createLessonSection,
             ),
           ],
         ),
       );
     }
+  }
+
+  createLessonSection() async {
+    Navigator.pop(context);
+
+    showPlatformDialog(
+      context: context,
+      builder: (_) =>
+          PlatformProgressDialog(text: "lesson_section_form.progress".tr()),
+    );
+
+    await context.read<FirestoreService>().insertLessonSection(
+          widget.lang,
+          _sectionModel,
+          widget.insertPosition,
+        );
+
+    Navigator.pop(context);
+    Navigator.pop(context, true);
   }
 }

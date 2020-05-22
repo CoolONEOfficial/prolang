@@ -61,6 +61,20 @@ class FirestoreService {
     );
   }
 
+  deleteLesson([
+    Lang lang,
+    LessonSection section,
+    Lesson lesson,
+  ]) async {
+    await _deleteDocWithIndex(
+      lessonSectionRef(
+        lang,
+        section,
+      ).collection('lessons'),
+      lesson,
+    );
+  }
+
   // Insert
 
   insertLessonSection([

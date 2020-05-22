@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:prolang/app/constants/theme_colors.dart';
 import 'package:prolang/app/models/lang.dart';
+import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
 import 'package:prolang/app/services/firestore_service.dart';
 import 'package:prolang/ui/views/home/lang/widgets/lesson_appbar.dart';
@@ -15,8 +16,10 @@ import 'package:responsive_builder/responsive_builder.dart';
 import 'package:sliver_fab/sliver_fab.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import 'form/lesson_form_view.dart';
 import 'form/lesson_section_form_view.dart';
 import 'lang_view_model.dart';
+import 'widgets/lesson_fab.dart';
 import 'widgets/lesson_sliver.dart';
 
 class LangView extends StatelessWidget {
@@ -56,9 +59,25 @@ class LangView extends StatelessWidget {
     showPlatformDialog(
       context: context,
       builder: (_) =>
-          PlatformProgressDialog(text: "lang.lesson.delete.progress".tr()),
+          PlatformProgressDialog(text: "lang.lesson_section.delete.progress".tr()),
     );
     await context.read<FirestoreService>().deleteLessonSection(lang, section);
+    context.read<LangViewModel>().loadLessonList();
+    Navigator.pop(context);
+  }
+
+  static deleteLesson(
+    BuildContext context, {
+    Lang lang,
+    LessonSection section,
+    Lesson lesson,
+  }) async {
+    showPlatformDialog(
+      context: context,
+      builder: (_) =>
+          PlatformProgressDialog(text: "lang.lesson.delete.progress".tr()),
+    );
+    await context.read<FirestoreService>().deleteLesson(lang, section, lesson);
     context.read<LangViewModel>().loadLessonList();
     Navigator.pop(context);
   }
@@ -73,6 +92,25 @@ class LangView extends StatelessWidget {
           builder: (context) => LessonSectionFormView(
             insertPosition: insertPosition,
             lang: lang,
+          ),
+        )) ==
+        true) {
+      context.read<LangViewModel>().loadLessonList();
+    }
+  }
+
+  static createLesson(
+    BuildContext context, {
+    Lang lang,
+    LessonSection section,
+    int insertPosition = 0,
+  }) async {
+    if (await Navigator.of(context).push(platformPageRoute(
+          context: context,
+          builder: (context) => LessonFormView(
+            insertPosition: insertPosition,
+            lang: lang,
+            lessonSection: section,
           ),
         )) ==
         true) {
@@ -104,7 +142,6 @@ class _LangViewBody extends StatelessWidget {
     final sectionList =
         context.select((LangViewModel viewModel) => viewModel.sectionList);
 
-    final media = ((MediaQuery.of(context).size.width - avatarSize) / 2);
     final expandedHeight = getValueForScreenType<double>(
       context: context,
       mobile: 256,
@@ -121,22 +158,10 @@ class _LangViewBody extends StatelessWidget {
 
     return ScrollConfiguration(
       behavior: ClampingBehavior(),
-      child: SliverFab(
-        floatingWidget: Container(
-          height: avatarSize,
-          width: avatarSize,
-          margin: EdgeInsets.only(left: 7.5),
-          child: ClipOval(
-            child: FirebaseImage(
-              '$basePath/avatar.png',
-            ),
-          ),
-        ),
-        floatingPosition: FloatingPosition(
-          left: media - 10,
-          top: -(avatarSize / 2 - 22),
-        ),
+      child: LessonFab(
         expandedHeight: expandedHeight,
+        avatarSize: avatarSize,
+        basePath: basePath,
         slivers: <Widget>[
               SliverPadding(
                 padding: EdgeInsets.only(

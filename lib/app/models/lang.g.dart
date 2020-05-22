@@ -9,12 +9,6 @@ part of 'lang.dart';
 _$_Lang _$_$_LangFromJson(Map<String, dynamic> json) {
   return _$_Lang(
     title: parseJsonMap(json['title']),
-    sections: (json['sections'] as List)
-            ?.map((e) => e == null
-                ? null
-                : LessonSection.fromJson(e as Map<String, dynamic>))
-            ?.toList() ??
-        [],
     flag: json['flag'] as String,
     color: json['color'] as String,
     documentId: json['documentId'] as String,
@@ -24,7 +18,6 @@ _$_Lang _$_$_LangFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$_$_LangToJson(_$_Lang instance) => <String, dynamic>{
       'title': instance.title,
-      'sections': encodeJsonList(instance.sections),
       'flag': instance.flag,
       'color': instance.color,
       'documentId': instance.documentId,

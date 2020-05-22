@@ -23,7 +23,7 @@ class LessonHeader extends StatelessWidget {
       showPlatformDialog(
         context: context,
         builder: (_) => PlatformAlertDialog(
-          title: Text("lang.lesson.delete.confirmation".tr()),
+          title: Text("lang.lesson_section.delete.confirmation".tr()),
           actions: <Widget>[
             PlatformDialogAction(
               child: PlatformText(

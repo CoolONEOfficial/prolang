@@ -12,7 +12,6 @@ part 'lesson.g.dart';
 abstract class Lesson with _$Lesson, IndexMixin {
   factory Lesson({
     final String title,
-    final int section,
     final String documentId,
     final int index,
   }) = _Lesson;
