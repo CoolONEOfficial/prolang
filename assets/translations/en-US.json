@@ -5,6 +5,7 @@
     "skip": "Skip",
     "delete": "Delete",
     "create": "Create",
+    "edit": "Confirm",
     "cancel": "Cancel",
     "required_field": "This field is required.",
     "intro": {
@@ -59,9 +60,16 @@
         }
     },
     "lesson_form": {
-        "confirmation": "Create lesson?",
-        "progress": "Creating lesson...",
-        "title": "Add lesson",
+        "create": {
+            "confirmation": "Create lesson?",
+            "progress": "Creating lesson...",
+            "title": "Add lesson"
+        },
+        "edit": {
+            "confirmation": "Apply changes?",
+            "progress": "Editing lesson...",
+            "title": "Edit lesson"
+        },
         "general": {
             "label": "General",
             "title": {
@@ -71,9 +79,16 @@
         }
     },
     "lesson_section_form": {
-        "confirmation": "Create lesson section?",
-        "progress": "Creating lesson section...",
-        "title": "New lesson section",
+        "create": {
+            "confirmation": "Create lesson section?",
+            "progress": "Creating lesson section...",
+            "title": "New lesson section"
+        },
+        "edit": {
+            "confirmation": "Apply changes?",
+            "progress": "Editing lesson section...",
+            "title": "Edit lesson section"
+        },
         "general": {
             "label": "General",
             "title": {

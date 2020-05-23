@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:prolang/app/helpers/form_localization.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/services/firestore_service.dart';
 import 'package:prolang/ui/widgets/platform_progress_dialog.dart';
@@ -48,7 +49,7 @@ class _LessonSectionFormState extends State<LessonSectionFormView> {
       key: _scaffoldKey,
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: PlatformAppBar(
-        title: Text("lesson_section_form.title").tr(),
+        title: Text("lesson_section_form.${formLocalizationKey(_sectionModel)}.title").tr(),
         trailingActions: <Widget>[
           PlatformIconButton(
             icon: Icon(PlatformIcons(context).done),
@@ -157,18 +158,19 @@ class _LessonSectionFormState extends State<LessonSectionFormView> {
     if (form.validate()) {
       form.save();
 
-      if (_sectionModel.documentId == null) {
-        showPlatformDialog(
+      final key = formLocalizationKey(_sectionModel);
+
+      showPlatformDialog(
           context: context,
           builder: (_) => PlatformAlertDialog(
-            title: Text("lesson_section_form.confirmation".tr()),
+            title: Text("lesson_section_form.$key.confirmation".tr()),
             actions: <Widget>[
               PlatformDialogAction(
                 child: PlatformText("cancel".tr()),
                 onPressed: () => Navigator.pop(context),
               ),
               PlatformDialogAction(
-                child: PlatformText("create".tr()),
+                child: PlatformText(key.tr()),
                 onPressed: () {
                   Navigator.pop(context);
                   applyLessonSection();
@@ -177,9 +179,6 @@ class _LessonSectionFormState extends State<LessonSectionFormView> {
             ],
           ),
         );
-      } else {
-        applyLessonSection();
-      }
     }
   }
 
@@ -187,7 +186,7 @@ class _LessonSectionFormState extends State<LessonSectionFormView> {
     showPlatformDialog(
       context: context,
       builder: (_) =>
-          PlatformProgressDialog(text: "lesson_section_form.progress".tr()),
+          PlatformProgressDialog(text: "lesson_section_form.${formLocalizationKey(_sectionModel)}.progress".tr()),
     );
 
     final fs = context.read<FirestoreService>();

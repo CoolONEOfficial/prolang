@@ -5,6 +5,7 @@
     "skip": "Пропустить",
     "delete": "Удалить",
     "create": "Создать",
+    "edit": "Применить",
     "cancel": "Отмена",
     "required_field": "Это поле обязательно к заполнению.",
     "intro": {
@@ -59,9 +60,16 @@
         }
     },
     "lesson_form": {
-        "confirmation": "Создать урок?",
-        "progress": "Создаю урок...",
-        "title": "Добавить урок",
+        "create": {
+            "confirmation": "Создать урок?",
+            "progress": "Создаю урок...",
+            "title": "Добавить урок"
+        },
+        "edit": {
+            "confirmation": "Применить изменения?",
+            "progress": "Обновляю урок...",
+            "title": "Изменить урок"
+        },
         "general": {
             "label": "Основные",
             "title": {
@@ -75,9 +83,16 @@
         }
     },
     "lesson_section_form": {
-        "confirmation": "Создать секцию?",
-        "progress": "Создаю секцию...",
-        "title": "Новая секция уроков",
+        "create": {
+            "confirmation": "Создать секцию?",
+            "progress": "Создаю секцию...",
+            "title": "Новая секция уроков"
+        },
+        "edit": {
+            "confirmation": "Применить изменения?",
+            "progress": "Обновляю секцию...",
+            "title": "Изменить секцию уроков"
+        },
         "general": {
             "label": "Основные",
             "title": {

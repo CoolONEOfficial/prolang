@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:prolang/app/helpers/form_localization.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/services/firestore_service.dart';
@@ -50,7 +51,8 @@ class _LessonFormState extends State<LessonFormView> {
       key: _scaffoldKey,
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: PlatformAppBar(
-        title: Text("lesson_form.title").tr(),
+        title:
+            Text("lesson_form.${formLocalizationKey(_lessonModel)}.title").tr(),
         trailingActions: <Widget>[
           PlatformIconButton(
             icon: Icon(PlatformIcons(context).done),
@@ -159,29 +161,27 @@ class _LessonFormState extends State<LessonFormView> {
     if (form.validate()) {
       form.save();
 
-      if (_lessonModel.documentId == null) {
-        showPlatformDialog(
-          context: context,
-          builder: (_) => PlatformAlertDialog(
-            title: Text("lesson_form.confirmation".tr()),
-            actions: <Widget>[
-              PlatformDialogAction(
-                child: PlatformText("cancel".tr()),
-                onPressed: () => Navigator.pop(context),
-              ),
-              PlatformDialogAction(
-                child: PlatformText("create".tr()),
-                onPressed: () {
-                  Navigator.pop(context);
-                  applyLesson();
-                },
-              ),
-            ],
-          ),
-        );
-      } else {
-        applyLesson();
-      }
+      final key = formLocalizationKey(_lessonModel);
+
+      showPlatformDialog(
+        context: context,
+        builder: (_) => PlatformAlertDialog(
+          title: Text("lesson_form.$key.confirmation".tr()),
+          actions: <Widget>[
+            PlatformDialogAction(
+              child: PlatformText("cancel".tr()),
+              onPressed: () => Navigator.pop(context),
+            ),
+            PlatformDialogAction(
+              child: PlatformText(key.tr()),
+              onPressed: () {
+                Navigator.pop(context);
+                applyLesson();
+              },
+            ),
+          ],
+        ),
+      );
     }
   }
 
@@ -189,7 +189,7 @@ class _LessonFormState extends State<LessonFormView> {
     showPlatformDialog(
       context: context,
       builder: (_) => PlatformProgressDialog(
-        text: "lesson_form.progress".tr(),
+        text: "lesson_form.${formLocalizationKey(_lessonModel)}.progress".tr(),
       ),
     );
 
