@@ -7,6 +7,7 @@
     "create": "Create",
     "edit": "Confirm",
     "cancel": "Cancel",
+    "unattach": "Unattach",
     "required_field": "This field is required.",
     "intro": {
         "baloon": {
@@ -75,6 +76,14 @@
             "title": {
                 "label": "Title",
                 "hint": "Basics, charter 1..."
+            },
+            "description": {
+                "label": "Description",
+                "hint": "Lesson article..."
+            },
+            "video": {
+                "label": "Video",
+                "unattach_confirmation": "Unattach video?"
             }
         }
     },

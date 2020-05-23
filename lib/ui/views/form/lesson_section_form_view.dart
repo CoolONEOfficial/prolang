@@ -9,6 +9,7 @@ import 'package:prolang/app/services/firestore_service.dart';
 import 'package:prolang/ui/widgets/platform_progress_dialog.dart';
 import 'package:prolang/ui/widgets/required_indicator.dart';
 import 'package:prolang/app/models/lesson_section.dart';
+import 'package:prolang/ui/widgets/responsive_safe_area.dart';
 import 'package:provider/provider.dart';
 
 class LessonSectionFormView extends StatefulWidget {
@@ -45,23 +46,27 @@ class _LessonSectionFormState extends State<LessonSectionFormView> {
   @override
   Widget build(BuildContext context) {
     var orientation = MediaQuery.of(context).orientation;
-    return PlatformScaffold(
-      key: _scaffoldKey,
-      backgroundColor: Theme.of(context).backgroundColor,
-      appBar: PlatformAppBar(
-        title: Text("lesson_section_form.${formLocalizationKey(_sectionModel)}.title").tr(),
-        trailingActions: <Widget>[
-          PlatformIconButton(
-            icon: Icon(PlatformIcons(context).done),
-            onPressed: onDonePressed,
-          )
-        ],
-      ),
-      body: Form(
-        key: _formKey,
-        child: orientation == Orientation.portrait
-            ? _buildPortraitLayout()
-            : _buildLandscapeLayout(),
+    return ResponsiveSafeArea(
+      child: PlatformScaffold(
+        key: _scaffoldKey,
+        backgroundColor: Theme.of(context).backgroundColor,
+        appBar: PlatformAppBar(
+          title: Text(
+                  "lesson_section_form.${formLocalizationKey(_sectionModel)}.title")
+              .tr(),
+          trailingActions: <Widget>[
+            PlatformIconButton(
+              icon: Icon(PlatformIcons(context).done),
+              onPressed: onDonePressed,
+            )
+          ],
+        ),
+        body: Form(
+          key: _formKey,
+          child: orientation == Orientation.portrait
+              ? _buildPortraitLayout()
+              : _buildLandscapeLayout(),
+        ),
       ),
     );
   }
@@ -161,32 +166,34 @@ class _LessonSectionFormState extends State<LessonSectionFormView> {
       final key = formLocalizationKey(_sectionModel);
 
       showPlatformDialog(
-          context: context,
-          builder: (_) => PlatformAlertDialog(
-            title: Text("lesson_section_form.$key.confirmation".tr()),
-            actions: <Widget>[
-              PlatformDialogAction(
-                child: PlatformText("cancel".tr()),
-                onPressed: () => Navigator.pop(context),
-              ),
-              PlatformDialogAction(
-                child: PlatformText(key.tr()),
-                onPressed: () {
-                  Navigator.pop(context);
-                  applyLessonSection();
-                },
-              ),
-            ],
-          ),
-        );
+        context: context,
+        builder: (_) => PlatformAlertDialog(
+          title: Text("lesson_section_form.$key.confirmation".tr()),
+          actions: <Widget>[
+            PlatformDialogAction(
+              child: PlatformText("cancel".tr()),
+              onPressed: () => Navigator.pop(context),
+            ),
+            PlatformDialogAction(
+              child: PlatformText(key.tr()),
+              onPressed: () {
+                Navigator.pop(context);
+                applyLessonSection();
+              },
+            ),
+          ],
+        ),
+      );
     }
   }
 
   applyLessonSection() async {
     showPlatformDialog(
       context: context,
-      builder: (_) =>
-          PlatformProgressDialog(text: "lesson_section_form.${formLocalizationKey(_sectionModel)}.progress".tr()),
+      builder: (_) => PlatformProgressDialog(
+          text:
+              "lesson_section_form.${formLocalizationKey(_sectionModel)}.progress"
+                  .tr()),
     );
 
     final fs = context.read<FirestoreService>();

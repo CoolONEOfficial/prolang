@@ -19,7 +19,7 @@ class ThemeColors {
       _color(light: Colors.grey[300], dark: Colors.grey[850]);
 
   static Color backgroundColor(BuildContext context) => isMaterial(context)
-      ? _color(light: Colors.white, dark: Colors.grey[800])
+      ? Colors.transparent
       : _color(light: Color.fromARGB(255, 242, 242, 247), dark: Colors.black);
 
   static Color iconColor() => _color(light: Colors.black, dark: Colors.white);

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 class FirebaseStorageService extends ChangeNotifier {
@@ -5,6 +7,10 @@ class FirebaseStorageService extends ChangeNotifier {
   FirebaseStorageService();
 
   static Future<String> loadFromStorage(String image) {
+    throw ("Platform not found");
+  }
+
+  static uploadToStorage(Uint8List data, String path) async {
     throw ("Platform not found");
   }
 }

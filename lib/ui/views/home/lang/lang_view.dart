@@ -32,12 +32,8 @@ class LangView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider<Lang>(
-          create: (_) => lang,
-        )
-      ],
+    return Provider<Lang>(
+      create: (_) => lang,
       child: ChangeNotifierProvider<LangViewModel>(
         create: (_) => LangViewModel(context.read, lang),
         builder: (_, child) {

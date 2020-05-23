@@ -93,7 +93,7 @@ class FirestoreService {
     );
   }
 
-  insertLesson([
+  Future<String> insertLesson([
     Lang lang,
     LessonSection section,
     Lesson lesson,
@@ -102,7 +102,7 @@ class FirestoreService {
     lesson = lesson.copyWith(
       index: index,
     );
-    await _insertDocWithIndex(
+    return _insertDocWithIndex(
       lessonSectionRef(
         lang,
         section,
@@ -113,7 +113,7 @@ class FirestoreService {
 
   // Helpers
 
-  _insertDocWithIndex(CollectionReference collRef, IndexMixin doc) async {
+  Future<String> _insertDocWithIndex(CollectionReference collRef, IndexMixin doc) async {
     final docs = await collRef
         .where('index', isGreaterThanOrEqualTo: doc.index)
         .getDocuments();
@@ -124,7 +124,7 @@ class FirestoreService {
       });
     }
 
-    await collRef.add(doc.toJson());
+    return (await collRef.add(doc.toJson())).documentID;
   }
 
   _deleteDocWithIndex(CollectionReference collRef, IndexMixin doc) async {

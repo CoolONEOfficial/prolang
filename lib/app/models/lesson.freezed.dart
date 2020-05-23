@@ -16,11 +16,16 @@ class _$LessonTearOff {
   const _$LessonTearOff();
 
   _Lesson call(
-      {String title, String description, String documentId, int index}) {
+      {String title,
+      String description,
+      String documentId,
+      int videoBytes,
+      int index}) {
     return _Lesson(
       title: title,
       description: description,
       documentId: documentId,
+      videoBytes: videoBytes,
       index: index,
     );
   }
@@ -33,6 +38,7 @@ mixin _$Lesson {
   String get title;
   String get description;
   String get documentId;
+  int get videoBytes;
   int get index;
 
   Map<String, dynamic> toJson();
@@ -42,7 +48,12 @@ mixin _$Lesson {
 abstract class $LessonCopyWith<$Res> {
   factory $LessonCopyWith(Lesson value, $Res Function(Lesson) then) =
       _$LessonCopyWithImpl<$Res>;
-  $Res call({String title, String description, String documentId, int index});
+  $Res call(
+      {String title,
+      String description,
+      String documentId,
+      int videoBytes,
+      int index});
 }
 
 class _$LessonCopyWithImpl<$Res> implements $LessonCopyWith<$Res> {
@@ -57,6 +68,7 @@ class _$LessonCopyWithImpl<$Res> implements $LessonCopyWith<$Res> {
     Object title = freezed,
     Object description = freezed,
     Object documentId = freezed,
+    Object videoBytes = freezed,
     Object index = freezed,
   }) {
     return _then(_value.copyWith(
@@ -65,6 +77,7 @@ class _$LessonCopyWithImpl<$Res> implements $LessonCopyWith<$Res> {
           description == freezed ? _value.description : description as String,
       documentId:
           documentId == freezed ? _value.documentId : documentId as String,
+      videoBytes: videoBytes == freezed ? _value.videoBytes : videoBytes as int,
       index: index == freezed ? _value.index : index as int,
     ));
   }
@@ -74,7 +87,12 @@ abstract class _$LessonCopyWith<$Res> implements $LessonCopyWith<$Res> {
   factory _$LessonCopyWith(_Lesson value, $Res Function(_Lesson) then) =
       __$LessonCopyWithImpl<$Res>;
   @override
-  $Res call({String title, String description, String documentId, int index});
+  $Res call(
+      {String title,
+      String description,
+      String documentId,
+      int videoBytes,
+      int index});
 }
 
 class __$LessonCopyWithImpl<$Res> extends _$LessonCopyWithImpl<$Res>
@@ -90,6 +108,7 @@ class __$LessonCopyWithImpl<$Res> extends _$LessonCopyWithImpl<$Res>
     Object title = freezed,
     Object description = freezed,
     Object documentId = freezed,
+    Object videoBytes = freezed,
     Object index = freezed,
   }) {
     return _then(_Lesson(
@@ -98,6 +117,7 @@ class __$LessonCopyWithImpl<$Res> extends _$LessonCopyWithImpl<$Res>
           description == freezed ? _value.description : description as String,
       documentId:
           documentId == freezed ? _value.documentId : documentId as String,
+      videoBytes: videoBytes == freezed ? _value.videoBytes : videoBytes as int,
       index: index == freezed ? _value.index : index as int,
     ));
   }
@@ -105,7 +125,12 @@ class __$LessonCopyWithImpl<$Res> extends _$LessonCopyWithImpl<$Res>
 
 @JsonSerializable()
 class _$_Lesson with DiagnosticableTreeMixin implements _Lesson {
-  _$_Lesson({this.title, this.description, this.documentId, this.index});
+  _$_Lesson(
+      {this.title,
+      this.description,
+      this.documentId,
+      this.videoBytes,
+      this.index});
 
   factory _$_Lesson.fromJson(Map<String, dynamic> json) =>
       _$_$_LessonFromJson(json);
@@ -117,11 +142,13 @@ class _$_Lesson with DiagnosticableTreeMixin implements _Lesson {
   @override
   final String documentId;
   @override
+  final int videoBytes;
+  @override
   final int index;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Lesson(title: $title, description: $description, documentId: $documentId, index: $index)';
+    return 'Lesson(title: $title, description: $description, documentId: $documentId, videoBytes: $videoBytes, index: $index)';
   }
 
   @override
@@ -132,6 +159,7 @@ class _$_Lesson with DiagnosticableTreeMixin implements _Lesson {
       ..add(DiagnosticsProperty('title', title))
       ..add(DiagnosticsProperty('description', description))
       ..add(DiagnosticsProperty('documentId', documentId))
+      ..add(DiagnosticsProperty('videoBytes', videoBytes))
       ..add(DiagnosticsProperty('index', index));
   }
 
@@ -147,6 +175,9 @@ class _$_Lesson with DiagnosticableTreeMixin implements _Lesson {
             (identical(other.documentId, documentId) ||
                 const DeepCollectionEquality()
                     .equals(other.documentId, documentId)) &&
+            (identical(other.videoBytes, videoBytes) ||
+                const DeepCollectionEquality()
+                    .equals(other.videoBytes, videoBytes)) &&
             (identical(other.index, index) ||
                 const DeepCollectionEquality().equals(other.index, index)));
   }
@@ -157,6 +188,7 @@ class _$_Lesson with DiagnosticableTreeMixin implements _Lesson {
       const DeepCollectionEquality().hash(title) ^
       const DeepCollectionEquality().hash(description) ^
       const DeepCollectionEquality().hash(documentId) ^
+      const DeepCollectionEquality().hash(videoBytes) ^
       const DeepCollectionEquality().hash(index);
 
   @override
@@ -174,6 +206,7 @@ abstract class _Lesson implements Lesson {
       {String title,
       String description,
       String documentId,
+      int videoBytes,
       int index}) = _$_Lesson;
 
   factory _Lesson.fromJson(Map<String, dynamic> json) = _$_Lesson.fromJson;
@@ -184,6 +217,8 @@ abstract class _Lesson implements Lesson {
   String get description;
   @override
   String get documentId;
+  @override
+  int get videoBytes;
   @override
   int get index;
   @override

@@ -111,7 +111,8 @@ class LessonEntry extends StatelessWidget {
         context: context,
         builder: (context) => LessonView(
           lesson: lesson,
-          iosTitle: lang.title[context.locale.countryCode],
+          lang: lang,
+          section: section
         ),
         iosTitle: section.title,
       )),

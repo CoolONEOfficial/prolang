@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
@@ -6,5 +8,10 @@ class FirebaseStorageService extends ChangeNotifier {
 
   static Future<String> loadFromStorage(String image) async {
     return await FirebaseStorage.instance.ref().child(image).getDownloadURL();
+  }
+
+  static uploadToStorage(Uint8List data, String path) async {
+    StorageReference storageRef = FirebaseStorage.instance.ref().child(path);
+    await storageRef.putData(data).onComplete;
   }
 }

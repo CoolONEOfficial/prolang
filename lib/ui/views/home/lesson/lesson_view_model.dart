@@ -1,20 +1,21 @@
-import 'package:chewie/chewie.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
+import 'package:prolang/app/models/lesson_section.dart';
 import 'package:prolang/app/services/firebase_storage_service.dart';
-import 'package:prolang/ui/views/home/lesson/widgets/video_scaffold.dart';
 import 'package:provider/provider.dart';
-import 'package:video_player/video_player.dart';
 
 class LessonViewModel extends ChangeNotifier {
-  LessonViewModel(this.locator, this.lesson) {
+  LessonViewModel(this.locator, this.lesson, this.section, this.lang) {
     loadLessonList();
   }
 
   final Locator locator;
   final Lesson lesson;
+  final LessonSection section;
+  final Lang lang;
 
   bool _isLoading = true;
   bool get isLoading => _isLoading;
@@ -24,8 +25,10 @@ class LessonViewModel extends ChangeNotifier {
   loadLessonList() async {
     _setLoading();
 
-    videoUrl = await FirebaseStorageService.loadFromStorage("test.mp4");
-    
+    videoUrl = await FirebaseStorageService.loadFromStorage(
+      "langs/${lang.documentId}/sections/${section.documentId}/lessons/${lesson.documentId}/video.mp4",
+    );
+
     _setNotLoading();
   }
 

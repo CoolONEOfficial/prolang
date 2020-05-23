@@ -177,6 +177,42 @@ PODS:
     - Flutter
   - cloud_firestore_web (0.1.0):
     - Flutter
+  - DKImagePickerController/Core (4.3.1):
+    - DKImagePickerController/ImageDataManager
+    - DKImagePickerController/Resource
+  - DKImagePickerController/ImageDataManager (4.3.1)
+  - DKImagePickerController/PhotoGallery (4.3.1):
+    - DKImagePickerController/Core
+    - DKPhotoGallery
+  - DKImagePickerController/Resource (4.3.1)
+  - DKPhotoGallery (0.0.15):
+    - DKPhotoGallery/Core (= 0.0.15)
+    - DKPhotoGallery/Model (= 0.0.15)
+    - DKPhotoGallery/Preview (= 0.0.15)
+    - DKPhotoGallery/Resource (= 0.0.15)
+    - SDWebImage
+    - SDWebImageFLPlugin
+  - DKPhotoGallery/Core (0.0.15):
+    - DKPhotoGallery/Model
+    - DKPhotoGallery/Preview
+    - SDWebImage
+    - SDWebImageFLPlugin
+  - DKPhotoGallery/Model (0.0.15):
+    - SDWebImage
+    - SDWebImageFLPlugin
+  - DKPhotoGallery/Preview (0.0.15):
+    - DKPhotoGallery/Model
+    - DKPhotoGallery/Resource
+    - SDWebImage
+    - SDWebImageFLPlugin
+  - DKPhotoGallery/Resource (0.0.15):
+    - SDWebImage
+    - SDWebImageFLPlugin
+  - file_chooser (0.0.1):
+    - Flutter
+  - file_picker (0.0.1):
+    - DKImagePickerController/PhotoGallery
+    - Flutter
   - Firebase/Analytics (6.22.0):
     - Firebase/Core
   - Firebase/Auth (6.22.0):
@@ -260,7 +296,10 @@ PODS:
     - FirebaseAuthInterop (~> 1.1)
     - FirebaseCore (~> 6.6)
     - GTMSessionFetcher/Core (~> 1.1)
+  - FLAnimatedImage (1.0.12)
   - Flutter (1.0.0)
+  - flutter_plugin_android_lifecycle (0.0.1):
+    - Flutter
   - google_sign_in (0.0.1):
     - Flutter
     - GoogleSignIn (~> 5.0)
@@ -329,6 +368,12 @@ PODS:
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
   - PromisesObjC (1.2.8)
+  - SDWebImage (5.7.2):
+    - SDWebImage/Core (= 5.7.2)
+  - SDWebImage/Core (5.7.2)
+  - SDWebImageFLPlugin (0.4.0):
+    - FLAnimatedImage (>= 1.0.11)
+    - SDWebImage/Core (~> 5.6)
   - shared_preferences (0.0.1):
     - Flutter
   - shared_preferences_macos (0.0.1):
@@ -346,6 +391,8 @@ DEPENDENCIES:
   - auto_orientation (from `.symlinks/plugins/auto_orientation/ios`)
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - cloud_firestore_web (from `.symlinks/plugins/cloud_firestore_web/ios`)
+  - file_chooser (from `.symlinks/plugins/file_chooser/ios`)
+  - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_auth_web (from `.symlinks/plugins/firebase_auth_web/ios`)
@@ -353,6 +400,7 @@ DEPENDENCIES:
   - firebase_core_web (from `.symlinks/plugins/firebase_core_web/ios`)
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
   - Flutter (from `Flutter`)
+  - flutter_plugin_android_lifecycle (from `.symlinks/plugins/flutter_plugin_android_lifecycle/ios`)
   - google_sign_in (from `.symlinks/plugins/google_sign_in/ios`)
   - google_sign_in_web (from `.symlinks/plugins/google_sign_in_web/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
@@ -367,6 +415,8 @@ SPEC REPOS:
     - abseil
     - AppAuth
     - BoringSSL-GRPC
+    - DKImagePickerController
+    - DKPhotoGallery
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -377,6 +427,7 @@ SPEC REPOS:
     - FirebaseFirestore
     - FirebaseInstallations
     - FirebaseStorage
+    - FLAnimatedImage
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
@@ -389,6 +440,8 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - PromisesObjC
+    - SDWebImage
+    - SDWebImageFLPlugin
 
 EXTERNAL SOURCES:
   auto_orientation:
@@ -397,6 +450,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/cloud_firestore/ios"
   cloud_firestore_web:
     :path: ".symlinks/plugins/cloud_firestore_web/ios"
+  file_chooser:
+    :path: ".symlinks/plugins/file_chooser/ios"
+  file_picker:
+    :path: ".symlinks/plugins/file_picker/ios"
   firebase_analytics:
     :path: ".symlinks/plugins/firebase_analytics/ios"
   firebase_auth:
@@ -411,6 +468,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_storage/ios"
   Flutter:
     :path: Flutter
+  flutter_plugin_android_lifecycle:
+    :path: ".symlinks/plugins/flutter_plugin_android_lifecycle/ios"
   google_sign_in:
     :path: ".symlinks/plugins/google_sign_in/ios"
   google_sign_in_web:
@@ -435,6 +494,10 @@ SPEC CHECKSUMS:
   BoringSSL-GRPC: db8764df3204ccea016e1c8dd15d9a9ad63ff318
   cloud_firestore: 56ea1a42d4a4b3c9cf22e0e0f73140b5d07376a8
   cloud_firestore_web: 9ec3dc7f5f98de5129339802d491c1204462bfec
+  DKImagePickerController: f3d397887f38b98276a506b02ed9c167425f7cf3
+  DKPhotoGallery: e880aef16c108333240e1e7327896f2ea380f4f0
+  file_chooser: 98943893422baaed80ca2415390aec58f01ea192
+  file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
   Firebase: 32f9520684e87c7af3f0704f7f88042626d6b536
   firebase_analytics: dacdcfc524d722fff13dcff942f0dfa47e6be567
   firebase_auth: f8287325aae894aff045dff38bf0667cbeb49563
@@ -451,7 +514,9 @@ SPEC CHECKSUMS:
   FirebaseFirestore: a750487e2019ac35464c78311dcf2fde9d817c52
   FirebaseInstallations: acb3216eb9784d3b1d2d2d635ff74fa892cc0c44
   FirebaseStorage: b43ee271294227e1a3225544b073f3b49b427f46
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  flutter_plugin_android_lifecycle: dc0b544e129eebb77a6bfb1239d4d1c673a60a35
   google_sign_in: 6bd214b9c154f881422f5fe27b66aaa7bbd580cc
   google_sign_in_web: 52deb24929ac0992baff65c57956031c44ed44c3
   GoogleAppMeasurement: e49be3954045b17d046f271b9cc1ec052bad9702
@@ -466,6 +531,8 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
+  SDWebImage: d9ea4959d99c52276dfada481987018fcaea3d58
+  SDWebImageFLPlugin: 6c2295fb1242d44467c6c87dc5db6b0a13228fd8
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   shared_preferences_macos: f3f29b71ccbb56bf40c9dd6396c9acf15e214087
   shared_preferences_web: 141cce0c3ed1a1c5bf2a0e44f52d31eeb66e5ea9

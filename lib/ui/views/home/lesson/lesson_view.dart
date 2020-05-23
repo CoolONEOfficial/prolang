@@ -4,8 +4,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:prolang/app/constants/theme_colors.dart';
+import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
-import 'package:prolang/ui/views/home/lang/lang_view_model.dart';
+import 'package:prolang/app/models/lesson_section.dart';
 import 'package:prolang/ui/views/home/lesson/lesson_view_model.dart';
 import 'package:prolang/ui/widgets/loading_indicator.dart';
 import 'package:prolang/ui/widgets/responsive_safe_area.dart';
@@ -16,30 +17,28 @@ import 'widgets/video_scaffold.dart';
 
 class LessonView extends StatelessWidget {
   final Lesson lesson;
-  final String iosTitle;
+  final LessonSection section;
+  final Lang lang;
 
   const LessonView({
     Key key,
     this.lesson,
-    this.iosTitle,
+    this.section,
+    this.lang,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider<Lesson>(
-          create: (_) => lesson,
-        )
-      ],
+    return Provider<Lesson>(
+      create: (_) => lesson,
       child: ChangeNotifierProvider<LessonViewModel>(
-        create: (_) => LessonViewModel(context.read, lesson),
+        create: (_) => LessonViewModel(context.read, lesson, section, lang),
         builder: (_, child) => PlatformScaffold(
-          body: _LessonViewBody._(iosTitle: iosTitle),
+          body: _LessonViewBody._(),
           appBar: PlatformAppBar(
             title: Text(lesson.title),
             ios: (context) => CupertinoNavigationBarData(
-              previousPageTitle: iosTitle,
+              previousPageTitle: section.title,
             ),
           ),
         ),
@@ -51,10 +50,7 @@ class LessonView extends StatelessWidget {
 class _LessonViewBody extends StatefulWidget {
   const _LessonViewBody._({
     Key key,
-    this.iosTitle,
   }) : super(key: key);
-
-  final String iosTitle;
 
   @override
   _LessonViewBodyState createState() => _LessonViewBodyState();
@@ -78,7 +74,6 @@ class _LessonViewBodyState extends State<_LessonViewBody> {
 
     return ResponsiveSafeArea(
       child: isLoading ? LoadingIndicator() : _lesson(context),
-      top: false,
       bottom: false,
     );
   }
@@ -91,7 +86,7 @@ class _LessonViewBodyState extends State<_LessonViewBody> {
       _videoPlayerController = VideoPlayerController.network(vm.videoUrl);
       _chewieController = ChewieController(
         videoPlayerController: _videoPlayerController,
-        aspectRatio: 3 / 2,
+        aspectRatio: 16 / 9,
         autoPlay: false,
         looping: true,
         autoInitialize: true,

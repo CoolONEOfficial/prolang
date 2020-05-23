@@ -1,16 +1,23 @@
+import 'dart:typed_data';
+
 import 'package:card_settings/card_settings.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:file_picker_cross/file_picker_cross.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:prolang/app/helpers/form_localization.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
+import 'package:prolang/app/services/firebase_storage_service.dart';
 import 'package:prolang/app/services/firestore_service.dart';
 import 'package:prolang/ui/widgets/platform_progress_dialog.dart';
 import 'package:prolang/ui/widgets/required_indicator.dart';
 import 'package:prolang/app/models/lesson_section.dart';
+import 'package:prolang/ui/widgets/responsive_safe_area.dart';
 import 'package:provider/provider.dart';
+
+import 'widgets/card_settings_file_picker.dart';
 
 class LessonFormView extends StatefulWidget {
   final int insertPosition;
@@ -36,35 +43,40 @@ class _LessonFormState extends State<LessonFormView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  Uint8List _videoFile;
+
   // control state only works if the field order never changes.
   // to support orientation changes, we assign a unique key to each field
   // if you only have one orientation, the _formKey is sufficient
   final GlobalKey<FormState> _nameKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _descriptionKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _videoKey = GlobalKey<FormState>();
 
   _LessonFormState(this._lessonModel);
 
   @override
   Widget build(BuildContext context) {
     var orientation = MediaQuery.of(context).orientation;
-    return PlatformScaffold(
-      key: _scaffoldKey,
-      backgroundColor: Theme.of(context).backgroundColor,
-      appBar: PlatformAppBar(
-        title:
-            Text("lesson_form.${formLocalizationKey(_lessonModel)}.title").tr(),
-        trailingActions: <Widget>[
-          PlatformIconButton(
-            icon: Icon(PlatformIcons(context).done),
-            onPressed: onDonePressed,
-          )
-        ],
-      ),
-      body: Form(
-        key: _formKey,
-        child: orientation == Orientation.portrait
-            ? _buildPortraitLayout()
-            : _buildLandscapeLayout(),
+    return ResponsiveSafeArea(
+      child: PlatformScaffold(
+        key: _scaffoldKey,
+        backgroundColor: Theme.of(context).backgroundColor,
+        appBar: PlatformAppBar(
+          title: Text("lesson_form.${formLocalizationKey(_lessonModel)}.title")
+              .tr(),
+          trailingActions: <Widget>[
+            PlatformIconButton(
+              icon: Icon(PlatformIcons(context).done),
+              onPressed: onDonePressed,
+            )
+          ],
+        ),
+        body: Form(
+          key: _formKey,
+          child: orientation == Orientation.portrait
+              ? _buildPortraitLayout()
+              : _buildLandscapeLayout(),
+        ),
       ),
     );
   }
@@ -82,6 +94,7 @@ class _LessonFormState extends State<LessonFormView> {
           children: <Widget>[
             _buildCardSettingsText_Title(),
             _buildCardSettingsText_Description(),
+            _buildCardSettingsVideo(),
           ],
         ),
       ],
@@ -99,6 +112,7 @@ class _LessonFormState extends State<LessonFormView> {
           children: <Widget>[
             _buildCardSettingsText_Title(),
             _buildCardSettingsText_Description(),
+            _buildCardSettingsVideo(),
             // CardFieldLayout(
             //   <Widget>[
             //     _buildCardSettingsRadioPicker_Gender(),
@@ -153,6 +167,28 @@ class _LessonFormState extends State<LessonFormView> {
     );
   }
 
+  CardSettingsFilePicker _buildCardSettingsVideo() {
+    return CardSettingsFilePicker(
+      key: _videoKey,
+      label: 'lesson_form.general.video.label'.tr(),
+      icon: Icon(PlatformIcons(context).videoCamera),
+      initialValue: widget.lesson != null ? Uint8List(widget.lesson.videoBytes) : null,
+      unattachConfirmation:
+          'lesson_form.general.video.unattach_confirmation'.tr(),
+      requiredIndicator: RequiredIndicator(),
+      fileExtension: ".mp4",
+      fileType: FileTypeCross.custom,
+      validator: (value) {
+        if (value == null || value.length == 0) return 'required_field'.tr();
+        return null;
+      },
+      onChanged: (value) {
+        _videoFile = value;
+        _lessonModel = _lessonModel.copyWith(videoBytes: value.length);
+      },
+    );
+  }
+
   // Event handlers
 
   onDonePressed() {
@@ -201,11 +237,20 @@ class _LessonFormState extends State<LessonFormView> {
         _lessonModel,
       );
     } else {
-      await fs.insertLesson(
-        widget.lang,
-        widget.lessonSection,
-        _lessonModel,
-        widget.insertPosition,
+      _lessonModel = _lessonModel.copyWith(
+        documentId: await fs.insertLesson(
+          widget.lang,
+          widget.lessonSection,
+          _lessonModel,
+          widget.insertPosition,
+        ),
+      );
+    }
+
+    if (_videoFile != null) {
+      await FirebaseStorageService.uploadToStorage(
+        _videoFile,
+        "langs/${widget.lang.documentId}/sections/${widget.lessonSection.documentId}/lessons/${_lessonModel.documentId}/video.mp4",
       );
     }
 
