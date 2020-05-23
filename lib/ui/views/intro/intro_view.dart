@@ -149,7 +149,7 @@ class _SignInViewBodyState extends State<_IntroViewBody> {
               fontSize: 20,
             ),
             textAlign: TextAlign.center,
-          ).tr(),
+          ),
         ),
         Spacer(),
       ],

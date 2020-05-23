@@ -39,6 +39,7 @@ class _LessonFormState extends State<LessonFormView> {
   // to support orientation changes, we assign a unique key to each field
   // if you only have one orientation, the _formKey is sufficient
   final GlobalKey<FormState> _nameKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _descriptionKey = GlobalKey<FormState>();
 
   _LessonFormState(this._lessonModel);
 
@@ -78,6 +79,7 @@ class _LessonFormState extends State<LessonFormView> {
           ),
           children: <Widget>[
             _buildCardSettingsText_Title(),
+            _buildCardSettingsText_Description(),
           ],
         ),
       ],
@@ -94,6 +96,7 @@ class _LessonFormState extends State<LessonFormView> {
           ),
           children: <Widget>[
             _buildCardSettingsText_Title(),
+            _buildCardSettingsText_Description(),
             // CardFieldLayout(
             //   <Widget>[
             //     _buildCardSettingsRadioPicker_Gender(),
@@ -122,6 +125,27 @@ class _LessonFormState extends State<LessonFormView> {
       onChanged: (value) {
         setState(() {
           _lessonModel = _lessonModel.copyWith(title: value);
+        });
+      },
+    );
+  }
+
+  CardSettingsText _buildCardSettingsText_Description() {
+    return CardSettingsParagraph(
+      key: _descriptionKey,
+      label: 'lesson_form.general.description.label'.tr(),
+      hintText: 'lesson_form.general.description.hint'.tr(),
+      initialValue: _lessonModel.description,
+      requiredIndicator: RequiredIndicator(),
+      validator: (value) {
+        if (value == null || value.isEmpty) return 'required_field'.tr();
+        return null;
+      },
+      onSaved: (value) =>
+          _lessonModel = _lessonModel.copyWith(description: value),
+      onChanged: (value) {
+        setState(() {
+          _lessonModel = _lessonModel.copyWith(description: value);
         });
       },
     );

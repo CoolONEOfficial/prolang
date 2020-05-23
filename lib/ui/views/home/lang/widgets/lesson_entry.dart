@@ -5,6 +5,7 @@ import 'package:prolang/app/constants/theme_colors.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
+import 'package:prolang/ui/views/home/lesson/lesson_view.dart';
 import 'package:prolang/ui/widgets/platform_card.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -67,7 +68,7 @@ class LessonEntry extends StatelessWidget {
             Text(
               lesson.title,
               style: TextStyle(
-                fontSize: 30,
+                fontSize: 20,
                 color: ThemeColors.textColor(),
               ),
             ),
@@ -100,13 +101,20 @@ class LessonEntry extends StatelessWidget {
                 context,
                 lang: lang,
                 section: section,
-                insertPosition: lesson.index
+                insertPosition: lesson.index,
               ),
             )
           ],
         ),
       ),
-      onPressed: () {},
+      onPressed: () => Navigator.of(context).push(platformPageRoute(
+        context: context,
+        builder: (context) => LessonView(
+          lesson: lesson,
+          iosTitle: lang.title[context.locale.countryCode],
+        ),
+        iosTitle: section.title,
+      )),
     );
   }
 }

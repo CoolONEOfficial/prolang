@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prolang/app/plugins/storage/fire_storage_service.dart';
+import 'package:prolang/app/services/firebase_storage_service.dart';
 
 import 'loading_indicator.dart';
 
@@ -31,8 +31,7 @@ class _FirebaseStorageImageState extends State<FirebaseImage>
     this.path,
     this.errorWidget,
   ) {
-    debugPrint("pathhg: $path");
-    var url = FireStorageService.loadFromStorage(context, path);
+    var url = FirebaseStorageService.loadFromStorage(path);
     this._imageDownloadState = ImageDownloadState.GettingURL;
     url.then(this._setImageData).catchError((err) {
       debugPrint("ERROR: $err");
@@ -52,9 +51,9 @@ class _FirebaseStorageImageState extends State<FirebaseImage>
   ImageDownloadState _imageDownloadState = ImageDownloadState.Idle;
 
   /// Sets the [_networkImage] to the image downloaded from [url].
-  void _setImageData(dynamic url) {
+  void _setImageData(String url) {
     this._networkImage = Image.network(
-      url.toString(),
+      url,
       fit: widget.fit,
     );
     this
