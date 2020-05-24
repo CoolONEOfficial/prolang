@@ -8,6 +8,7 @@ import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
 import 'package:prolang/ui/views/home/lesson/lesson_view_model.dart';
+import 'package:prolang/ui/views/home/lesson_phrases/lesson_phrases_view.dart';
 import 'package:prolang/ui/widgets/loading_indicator.dart';
 import 'package:prolang/ui/widgets/responsive_safe_area.dart';
 import 'package:provider/provider.dart';
@@ -29,8 +30,18 @@ class LessonView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider<Lesson>(
-      create: (_) => lesson,
+    return MultiProvider(
+      providers: [
+        Provider<Lesson>(
+          create: (_) => lesson,
+        ),
+        Provider<LessonSection>(
+          create: (_) => section,
+        ),
+        Provider<Lang>(
+          create: (_) => lang,
+        ),
+      ],
       child: ChangeNotifierProvider<LessonViewModel>(
         create: (_) => LessonViewModel(context.read, lesson, section, lang),
         builder: (_, child) => PlatformScaffold(
@@ -81,6 +92,8 @@ class _LessonViewBodyState extends State<_LessonViewBody> {
   Widget _lesson(BuildContext context) {
     final vm = context.watch<LessonViewModel>();
     final lesson = context.watch<Lesson>();
+    final section = context.watch<LessonSection>();
+    final lang = context.watch<Lang>();
 
     if (_videoPlayerController == null && _chewieController == null) {
       _videoPlayerController = VideoPlayerController.network(vm.videoUrl);
@@ -135,7 +148,15 @@ class _LessonViewBodyState extends State<_LessonViewBody> {
                           "Грамматика",
                           style: TextStyle(color: ThemeColors.textColor()),
                         ),
-                        onPressed: () {},
+                        onPressed: () =>
+                            Navigator.of(context).push(platformPageRoute(
+                          context: context,
+                          builder: (context) => LessonPhrasesView(
+                            lesson: lesson,
+                            section: section,
+                            lang: lang,
+                          ),
+                        )),
                       ),
                       PlatformButton(
                           child: Text(

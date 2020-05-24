@@ -12,6 +12,7 @@ _$_Lesson _$_$_LessonFromJson(Map<String, dynamic> json) {
     description: json['description'] as String,
     documentId: json['documentId'] as String,
     videoBytes: json['videoBytes'] as int,
+    grammarBytes: json['grammarBytes'] as int,
     index: json['index'] as int,
   );
 }
@@ -21,5 +22,6 @@ Map<String, dynamic> _$_$_LessonToJson(_$_Lesson instance) => <String, dynamic>{
       'description': instance.description,
       'documentId': instance.documentId,
       'videoBytes': instance.videoBytes,
+      'grammarBytes': instance.grammarBytes,
       'index': instance.index,
     };

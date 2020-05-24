@@ -84,6 +84,10 @@
             "video": {
                 "label": "Video",
                 "unattach_confirmation": "Unattach video?"
+            },
+            "grammar": {
+                "label": "Grammatical scheme",
+                "unattach_confirmation": "Unattach grammatical scheme?"
             }
         }
     },
@@ -107,6 +111,29 @@
             "description": {
                 "label": "Description",
                 "hint": "In that section you will learn..."
+            }
+        }
+    },
+    "lesson_phrase_form": {
+        "create": {
+            "confirmation": "Create lesson phrase?",
+            "progress": "Creating lesson phrase...",
+            "title": "New lesson phrase"
+        },
+        "edit": {
+            "confirmation": "Apply changes?",
+            "progress": "Editing lesson phrase...",
+            "title": "Edit lesson phrase"
+        },
+        "general": {
+            "label": "General",
+            "original": {
+                "label": "Original",
+                "hint": "Original sentence..."
+            },
+            "translated": {
+                "label": "Translated",
+                "hint": "Translated sentence..."
             }
         }
     }

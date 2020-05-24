@@ -6,6 +6,7 @@ import 'package:file_picker_cross/file_picker_cross.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:prolang/app/constants/firebase_paths.dart';
 import 'package:prolang/app/helpers/form_localization.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
@@ -44,6 +45,9 @@ class _LessonFormState extends State<LessonFormView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Uint8List _videoFile;
+  bool _videoChanged = false;
+  Uint8List _grammarSchemeFile;
+  bool _grammarChanged = false;
 
   // control state only works if the field order never changes.
   // to support orientation changes, we assign a unique key to each field
@@ -51,6 +55,7 @@ class _LessonFormState extends State<LessonFormView> {
   final GlobalKey<FormState> _nameKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _descriptionKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _videoKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _grammarKey = GlobalKey<FormState>();
 
   _LessonFormState(this._lessonModel);
 
@@ -95,6 +100,7 @@ class _LessonFormState extends State<LessonFormView> {
             _buildCardSettingsText_Title(),
             _buildCardSettingsText_Description(),
             _buildCardSettingsVideo(),
+            _buildCardSettingsGrammaticalScheme()
           ],
         ),
       ],
@@ -113,6 +119,7 @@ class _LessonFormState extends State<LessonFormView> {
             _buildCardSettingsText_Title(),
             _buildCardSettingsText_Description(),
             _buildCardSettingsVideo(),
+            _buildCardSettingsGrammaticalScheme()
             // CardFieldLayout(
             //   <Widget>[
             //     _buildCardSettingsRadioPicker_Gender(),
@@ -172,7 +179,8 @@ class _LessonFormState extends State<LessonFormView> {
       key: _videoKey,
       label: 'lesson_form.general.video.label'.tr(),
       icon: Icon(PlatformIcons(context).videoCamera),
-      initialValue: widget.lesson != null ? Uint8List(widget.lesson.videoBytes) : null,
+      initialValue:
+          widget.lesson != null ? Uint8List(widget.lesson.videoBytes) : null,
       unattachConfirmation:
           'lesson_form.general.video.unattach_confirmation'.tr(),
       requiredIndicator: RequiredIndicator(),
@@ -184,7 +192,32 @@ class _LessonFormState extends State<LessonFormView> {
       },
       onChanged: (value) {
         _videoFile = value;
+        _videoChanged = true;
         _lessonModel = _lessonModel.copyWith(videoBytes: value.length);
+      },
+    );
+  }
+
+  CardSettingsFilePicker _buildCardSettingsGrammaticalScheme() {
+    return CardSettingsFilePicker(
+      key: _grammarKey,
+      label: 'lesson_form.general.grammar.label'.tr(),
+      icon: Icon(PlatformIcons(context).photoCamera),
+      initialValue:
+          widget.lesson != null ? Uint8List(widget.lesson.grammarBytes) : null,
+      unattachConfirmation:
+          'lesson_form.general.grammar.unattach_confirmation'.tr(),
+      requiredIndicator: RequiredIndicator(),
+      fileExtension: ".jpg",
+      fileType: FileTypeCross.custom,
+      validator: (value) {
+        if (value == null || value.length == 0) return 'required_field'.tr();
+        return null;
+      },
+      onChanged: (value) {
+        _grammarSchemeFile = value;
+        _grammarChanged = true;
+        _lessonModel = _lessonModel.copyWith(grammarBytes: value.length);
       },
     );
   }
@@ -247,10 +280,19 @@ class _LessonFormState extends State<LessonFormView> {
       );
     }
 
-    if (_videoFile != null) {
+    final basePath = FirebasePaths.lessonPath(widget.lang, widget.lessonSection, _lessonModel);
+
+    if (_videoChanged && _videoFile != null) {
       await FirebaseStorageService.uploadToStorage(
         _videoFile,
-        "langs/${widget.lang.documentId}/sections/${widget.lessonSection.documentId}/lessons/${_lessonModel.documentId}/video.mp4",
+        "$basePath/video.mp4",
+      );
+    }
+
+    if (_grammarChanged && _grammarSchemeFile != null) {
+      await FirebaseStorageService.uploadToStorage(
+        _grammarSchemeFile,
+        "$basePath/grammar.jpg",
       );
     }
 

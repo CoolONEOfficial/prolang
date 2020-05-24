@@ -15,6 +15,7 @@ abstract class Lesson with _$Lesson, IndexMixin {
     final String description,
     final String documentId,
     final int videoBytes,
+    final int grammarBytes,
     final int index,
   }) = _Lesson;
 

@@ -1,7 +1,7 @@
 name: prolang
 description: A new Flutter project.
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
 
@@ -40,6 +40,7 @@ dependencies:
   video_player: ^0.10.11+1
   auto_orientation: ^1.0.6
   file_picker_cross: ^2.0.0
+  paginate_firestore: ^0.1.0
 
 dev_dependencies:
   flutter_test:
@@ -54,7 +55,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
   uses-material-design: true
 
   assets:

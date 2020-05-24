@@ -13,16 +13,22 @@ class FirebaseImage extends StatefulWidget {
 
   final BoxFit fit;
 
+  final double width;
+
+  final double height;
+
   FirebaseImage(
     this.path, {
     Key key,
     this.errorWidget,
     this.fit,
+    this.width,
+    this.height,
   });
 
   @override
-  _FirebaseStorageImageState createState() => _FirebaseStorageImageState(
-      path, errorWidget ?? Container());
+  _FirebaseStorageImageState createState() =>
+      _FirebaseStorageImageState(path, errorWidget ?? Container());
 }
 
 class _FirebaseStorageImageState extends State<FirebaseImage>
@@ -55,6 +61,8 @@ class _FirebaseStorageImageState extends State<FirebaseImage>
     this._networkImage = Image.network(
       url,
       fit: widget.fit,
+      width: widget.width,
+      height: widget.height,
     );
     this
         ._networkImage

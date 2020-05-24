@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/widgets.dart';
+import 'package:prolang/app/constants/firebase_paths.dart';
 import 'package:prolang/app/mixins/index_mixin.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
+import 'package:prolang/app/models/phrase.dart';
 
 class FirestoreService {
   final Firestore _firestore;
@@ -23,7 +24,7 @@ class FirestoreService {
   Future<List<LessonSection>> loadSectionList(
     Lang lang,
   ) async {
-    var snapshot = await langRef(lang)
+    var snapshot = await FirebasePaths.langRef(lang)
         .collection('sections')
         .orderBy('index')
         .getDocuments();
@@ -37,7 +38,7 @@ class FirestoreService {
     Lang lang,
     LessonSection section,
   ) async {
-    var snapshot = await lessonSectionRef(lang, section)
+    var snapshot = await FirebasePaths.lessonSectionRef(lang, section)
         .collection('lessons')
         .orderBy('index')
         .getDocuments();
@@ -54,7 +55,7 @@ class FirestoreService {
     LessonSection section,
   ]) async {
     await _deleteDocWithIndex(
-      langRef(
+      FirebasePaths.langRef(
         lang,
       ).collection('sections'),
       section,
@@ -67,11 +68,27 @@ class FirestoreService {
     Lesson lesson,
   ]) async {
     await _deleteDocWithIndex(
-      lessonSectionRef(
+      FirebasePaths.lessonSectionRef(
         lang,
         section,
       ).collection('lessons'),
       lesson,
+    );
+  }
+
+  deleteLessonPhrase([
+    Lang lang,
+    LessonSection section,
+    Lesson lesson,
+    Phrase phrase,
+  ]) async {
+    await _deleteDocWithIndex(
+      FirebasePaths.lessonRef(
+        lang,
+        section,
+        lesson,
+      ).collection('phrases'),
+      phrase,
     );
   }
 
@@ -86,7 +103,7 @@ class FirestoreService {
       index: index,
     );
     await _insertDocWithIndex(
-      langRef(
+      FirebasePaths.langRef(
         lang,
       ).collection('sections'),
       section,
@@ -103,7 +120,7 @@ class FirestoreService {
       index: index,
     );
     return _insertDocWithIndex(
-      lessonSectionRef(
+      FirebasePaths.lessonSectionRef(
         lang,
         section,
       ).collection('lessons'),
@@ -111,9 +128,44 @@ class FirestoreService {
     );
   }
 
+  Future<String> insertLessonPhrase([
+    Lang lang,
+    LessonSection section,
+    Lesson lesson,
+    Phrase phrase,
+    int index,
+  ]) async {
+    phrase = phrase.copyWith(
+      index: index,
+    );
+    return _insertDocWithIndex(
+      FirebasePaths.lessonRef(
+        lang,
+        section,
+        lesson,
+      ).collection('phrases'),
+      phrase,
+    );
+  }
+
+  // Update
+
+  updateLesson(Lang lang, LessonSection section, Lesson lesson) {
+    FirebasePaths.lessonRef(lang, section, lesson).updateData(lesson.toJson());
+  }
+
+  updateLessonSection(Lang lang, LessonSection section) {
+    FirebasePaths.lessonSectionRef(lang, section).updateData(section.toJson());
+  }
+
+  updateLessonPhrase(Lang lang, LessonSection section, Lesson lesson, Phrase phrase) {
+    FirebasePaths.lessonSectionRef(lang, section).updateData(section.toJson());
+  }
+
   // Helpers
 
-  Future<String> _insertDocWithIndex(CollectionReference collRef, IndexMixin doc) async {
+  Future<String> _insertDocWithIndex(
+      CollectionReference collRef, IndexMixin doc) async {
     final docs = await collRef
         .where('index', isGreaterThanOrEqualTo: doc.index)
         .getDocuments();
@@ -145,28 +197,4 @@ class FirestoreService {
       });
     }
   }
-
-  // Update
-
-  updateLesson(Lang lang, LessonSection section, Lesson lesson) {
-    lessonRef(lang, section, lesson).updateData(lesson.toJson());
-  }
-
-  updateLessonSection(Lang lang, LessonSection section) {
-    lessonSectionRef(lang, section).updateData(section.toJson());
-  }
-
-  // Ref
-
-  DocumentReference langRef(Lang lang) =>
-      _firestore.collection('langs').document(lang.documentId);
-
-  DocumentReference lessonSectionRef(Lang lang, LessonSection section) =>
-      langRef(lang).collection('sections').document(section.documentId);
-
-  DocumentReference lessonRef(
-          Lang lang, LessonSection section, Lesson lesson) =>
-      lessonSectionRef(lang, section)
-          .collection('lessons')
-          .document(lesson.documentId);
 }

@@ -20,12 +20,14 @@ class _$LessonTearOff {
       String description,
       String documentId,
       int videoBytes,
+      int grammarBytes,
       int index}) {
     return _Lesson(
       title: title,
       description: description,
       documentId: documentId,
       videoBytes: videoBytes,
+      grammarBytes: grammarBytes,
       index: index,
     );
   }
@@ -39,6 +41,7 @@ mixin _$Lesson {
   String get description;
   String get documentId;
   int get videoBytes;
+  int get grammarBytes;
   int get index;
 
   Map<String, dynamic> toJson();
@@ -53,6 +56,7 @@ abstract class $LessonCopyWith<$Res> {
       String description,
       String documentId,
       int videoBytes,
+      int grammarBytes,
       int index});
 }
 
@@ -69,6 +73,7 @@ class _$LessonCopyWithImpl<$Res> implements $LessonCopyWith<$Res> {
     Object description = freezed,
     Object documentId = freezed,
     Object videoBytes = freezed,
+    Object grammarBytes = freezed,
     Object index = freezed,
   }) {
     return _then(_value.copyWith(
@@ -78,6 +83,8 @@ class _$LessonCopyWithImpl<$Res> implements $LessonCopyWith<$Res> {
       documentId:
           documentId == freezed ? _value.documentId : documentId as String,
       videoBytes: videoBytes == freezed ? _value.videoBytes : videoBytes as int,
+      grammarBytes:
+          grammarBytes == freezed ? _value.grammarBytes : grammarBytes as int,
       index: index == freezed ? _value.index : index as int,
     ));
   }
@@ -92,6 +99,7 @@ abstract class _$LessonCopyWith<$Res> implements $LessonCopyWith<$Res> {
       String description,
       String documentId,
       int videoBytes,
+      int grammarBytes,
       int index});
 }
 
@@ -109,6 +117,7 @@ class __$LessonCopyWithImpl<$Res> extends _$LessonCopyWithImpl<$Res>
     Object description = freezed,
     Object documentId = freezed,
     Object videoBytes = freezed,
+    Object grammarBytes = freezed,
     Object index = freezed,
   }) {
     return _then(_Lesson(
@@ -118,6 +127,8 @@ class __$LessonCopyWithImpl<$Res> extends _$LessonCopyWithImpl<$Res>
       documentId:
           documentId == freezed ? _value.documentId : documentId as String,
       videoBytes: videoBytes == freezed ? _value.videoBytes : videoBytes as int,
+      grammarBytes:
+          grammarBytes == freezed ? _value.grammarBytes : grammarBytes as int,
       index: index == freezed ? _value.index : index as int,
     ));
   }
@@ -130,6 +141,7 @@ class _$_Lesson with DiagnosticableTreeMixin implements _Lesson {
       this.description,
       this.documentId,
       this.videoBytes,
+      this.grammarBytes,
       this.index});
 
   factory _$_Lesson.fromJson(Map<String, dynamic> json) =>
@@ -144,11 +156,13 @@ class _$_Lesson with DiagnosticableTreeMixin implements _Lesson {
   @override
   final int videoBytes;
   @override
+  final int grammarBytes;
+  @override
   final int index;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Lesson(title: $title, description: $description, documentId: $documentId, videoBytes: $videoBytes, index: $index)';
+    return 'Lesson(title: $title, description: $description, documentId: $documentId, videoBytes: $videoBytes, grammarBytes: $grammarBytes, index: $index)';
   }
 
   @override
@@ -160,6 +174,7 @@ class _$_Lesson with DiagnosticableTreeMixin implements _Lesson {
       ..add(DiagnosticsProperty('description', description))
       ..add(DiagnosticsProperty('documentId', documentId))
       ..add(DiagnosticsProperty('videoBytes', videoBytes))
+      ..add(DiagnosticsProperty('grammarBytes', grammarBytes))
       ..add(DiagnosticsProperty('index', index));
   }
 
@@ -178,6 +193,9 @@ class _$_Lesson with DiagnosticableTreeMixin implements _Lesson {
             (identical(other.videoBytes, videoBytes) ||
                 const DeepCollectionEquality()
                     .equals(other.videoBytes, videoBytes)) &&
+            (identical(other.grammarBytes, grammarBytes) ||
+                const DeepCollectionEquality()
+                    .equals(other.grammarBytes, grammarBytes)) &&
             (identical(other.index, index) ||
                 const DeepCollectionEquality().equals(other.index, index)));
   }
@@ -189,6 +207,7 @@ class _$_Lesson with DiagnosticableTreeMixin implements _Lesson {
       const DeepCollectionEquality().hash(description) ^
       const DeepCollectionEquality().hash(documentId) ^
       const DeepCollectionEquality().hash(videoBytes) ^
+      const DeepCollectionEquality().hash(grammarBytes) ^
       const DeepCollectionEquality().hash(index);
 
   @override
@@ -207,6 +226,7 @@ abstract class _Lesson implements Lesson {
       String description,
       String documentId,
       int videoBytes,
+      int grammarBytes,
       int index}) = _$_Lesson;
 
   factory _Lesson.fromJson(Map<String, dynamic> json) = _$_Lesson.fromJson;
@@ -219,6 +239,8 @@ abstract class _Lesson implements Lesson {
   String get documentId;
   @override
   int get videoBytes;
+  @override
+  int get grammarBytes;
   @override
   int get index;
   @override

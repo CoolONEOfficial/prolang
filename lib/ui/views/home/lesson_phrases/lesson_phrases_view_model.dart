@@ -1,16 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:prolang/app/constants/firebase_paths.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
-import 'package:prolang/app/services/firebase_storage_service.dart';
 import 'package:provider/provider.dart';
 
-class LessonViewModel extends ChangeNotifier {
-  LessonViewModel(this.locator, this.lesson, this.section, this.lang) {
-    loadLessonList();
+class LessonPhrasesViewModel extends ChangeNotifier {
+  LessonPhrasesViewModel(this.locator, this.lesson, this.section, this.lang) {
+    // loadLessonList();
   }
 
   final Locator locator;
@@ -18,18 +16,16 @@ class LessonViewModel extends ChangeNotifier {
   final LessonSection section;
   final Lang lang;
 
-  bool _isLoading = true;
+  bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  String videoUrl;
+  // loadLessonList() async {
+  //   _setLoading();
+  //   _setNotLoading();
+  // }
 
-  loadLessonList() async {
+  reload() {
     _setLoading();
-
-    videoUrl = await FirebaseStorageService.loadFromStorage(
-      "${FirebasePaths.lessonPath(lang, section, lesson)}/video.mp4",
-    );
-
     _setNotLoading();
   }
 
