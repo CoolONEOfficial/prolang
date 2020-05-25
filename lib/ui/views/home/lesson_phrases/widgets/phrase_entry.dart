@@ -74,7 +74,7 @@ class _PhraseEntryState extends State<PhraseEntry>
               onPressed: () => showPlatformDialog(
                 context: context,
                 builder: (_) => PlatformAlertDialog(
-                  title: Text("lang.lesson.delete.confirmation".tr()),
+                  title: Text("lesson_phrase.delete.confirmation".tr()),
                   actions: <Widget>[
                     PlatformDialogAction(
                       child: PlatformText(
@@ -84,7 +84,7 @@ class _PhraseEntryState extends State<PhraseEntry>
                       onPressed: () => Navigator.pop(context),
                     ),
                     PlatformDialogAction(
-                      ios: (c) => CupertinoDialogActionData(
+                      cupertino: (c, _) => CupertinoDialogActionData(
                         isDestructiveAction: true,
                       ),
                       child: PlatformText(

@@ -18,7 +18,7 @@ class LoadingIndicator extends StatelessWidget {
       ),
       child: Center(
         child: PlatformCircularProgressIndicator(
-          android: (context) => MaterialProgressIndicatorData(
+          material: (context, _) => MaterialProgressIndicatorData(
             valueColor:
                 AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
           ),

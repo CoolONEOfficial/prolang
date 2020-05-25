@@ -112,7 +112,7 @@ class _CardSettingsFilePickerState extends FormFieldState<Uint8List> {
             ),
             PlatformDialogAction(
               child: PlatformText("unattach".tr()),
-              ios: (_) =>
+              cupertino: (_, __) =>
                   CupertinoDialogActionData(isDestructiveAction: true),
               onPressed: () {
                 didChange(null);

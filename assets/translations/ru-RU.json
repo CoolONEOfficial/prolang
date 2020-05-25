@@ -46,18 +46,22 @@
     "lang_list": {
         "title": "Языки"
     },
-    "lang": {
-        "lesson": {
-            "delete": {
-                "confirmation": "Удалить урок?",
-                "progress": "Удаляю урок..."
-            }
-        },
-        "lesson_section": {
-            "delete": {
-                "confirmation": "Удалить секцию с уроками?",
-                "progress": "Удаляю секцию..."
-            }
+    "lesson": {
+        "delete": {
+            "confirmation": "Удалить урок?",
+            "progress": "Удаляю урок..."
+        }
+    },
+    "lesson_section": {
+        "delete": {
+            "confirmation": "Удалить секцию с уроками?",
+            "progress": "Удаляю секцию..."
+        }
+    },
+    "lesson_phrase": {
+        "delete": {
+            "confirmation": "Удалить фразу?",
+            "progress": "Удаляю фразу..."
         }
     },
     "lesson_form": {

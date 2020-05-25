@@ -37,8 +37,8 @@ class LangEntry extends StatelessWidget {
               ),
             ),
             child: PlatformWidget(
-              android: (context) => _materialCardContent(context, lang),
-              ios: (context) => _cupertinoCardContent(context, lang),
+              material: (context, _) => _materialCardContent(context, lang),
+              cupertino: (context, _) => _cupertinoCardContent(context, lang),
             ),
           ),
         ),

@@ -46,18 +46,22 @@
     "lang_list": {
         "title": "Languages"
     },
-    "lang": {
-        "lesson": {
-            "delete": {
-                "confirmation": "Delete lesson?",
-                "progress": "Deleting lesson..."
-            }
-        },
-        "lesson_section": {
-            "delete": {
-                "confirmation": "Delete section?",
-                "progress": "Deleting section..."
-            }
+    "lesson": {
+        "delete": {
+            "confirmation": "Delete lesson?",
+            "progress": "Deleting lesson..."
+        }
+    },
+    "lesson_section": {
+        "delete": {
+            "confirmation": "Delete section?",
+            "progress": "Deleting section..."
+        }
+    },
+    "lesson_phrase": {
+        "delete": {
+            "confirmation": "Delete phrase?",
+            "progress": "Deleting phrase..."
         }
     },
     "lesson_form": {

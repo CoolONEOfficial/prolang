@@ -53,7 +53,7 @@ class LangView extends StatelessWidget {
     showPlatformDialog(
       context: context,
       builder: (_) => PlatformProgressDialog(
-          text: "lang.lesson_section.delete.progress".tr()),
+          text: "lang.delete.progress".tr()),
     );
     await context.read<FirestoreService>().deleteLessonSection(lang, section);
     context.read<LangViewModel>().loadLessonList();
@@ -69,7 +69,7 @@ class LangView extends StatelessWidget {
     showPlatformDialog(
       context: context,
       builder: (_) =>
-          PlatformProgressDialog(text: "lang.lesson.delete.progress".tr()),
+          PlatformProgressDialog(text: "lang.delete.progress".tr()),
     );
     await context.read<FirestoreService>().deleteLesson(lang, section, lesson);
     context.read<LangViewModel>().loadLessonList();

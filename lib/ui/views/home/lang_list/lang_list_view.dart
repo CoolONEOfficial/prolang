@@ -40,7 +40,7 @@ class _LangListViewBody extends StatelessWidget {
     return PlatformScaffold(
       appBar: PlatformAppBar(
         title: Text("lang_list.title").tr(context: context),
-        android: (context) => MaterialAppBarData(centerTitle: true),
+        material: (context, _) => MaterialAppBarData(centerTitle: true),
         trailingActions: <Widget>[
           PlatformButton(
             child: Text("Signout"),

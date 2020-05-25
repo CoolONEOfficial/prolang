@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           GlobalWidgetsLocalizations.delegate,
           EasyLocalization.of(context).delegate,
         ],
-        android: (context) {
+        material: (context, _) {
           return MaterialAppData(
             theme: lightTheme,
             darkTheme: lightTheme.copyWith(
@@ -75,7 +75,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             ),
           );
         },
-        ios: (context) {
+        cupertino: (context, _) {
           return CupertinoAppData(
             theme: CupertinoThemeData(
               primaryColor: ThemeColors.primaryLight,

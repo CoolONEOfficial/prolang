@@ -1,9 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:prolang/app/services/firebase_storage_service.dart';
 
 import 'loading_indicator.dart';
 
 enum ImageDownloadState { Idle, GettingURL, Downloading, Done, Error }
+
+final _cachedUrls = Map<String, String>();
 
 class FirebaseImage extends StatefulWidget {
   final String path;
@@ -37,12 +40,21 @@ class _FirebaseStorageImageState extends State<FirebaseImage>
     this.path,
     this.errorWidget,
   ) {
-    var url = FirebaseStorageService.loadFromStorage(path);
     this._imageDownloadState = ImageDownloadState.GettingURL;
-    url.then(this._setImageData).catchError((err) {
-      debugPrint("ERROR: $err");
-      this._setError();
-    });
+    if (!_cachedUrls.containsKey(path)) {
+      FirebaseStorageService.loadFromStorage(path)
+          .then(this._setImageData)
+          .catchError(this._setError);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (_cachedUrls.containsKey(path)) {
+      _setImageData(_cachedUrls[path]);
+    }
   }
 
   final String path;
@@ -58,8 +70,10 @@ class _FirebaseStorageImageState extends State<FirebaseImage>
 
   /// Sets the [_networkImage] to the image downloaded from [url].
   void _setImageData(String url) {
-    this._networkImage = Image.network(
-      url,
+    debugPrint("set $url to $path");
+    _cachedUrls[path] = url;
+    this._networkImage = Image(
+      image: CachedNetworkImageProvider(url),
       fit: widget.fit,
       width: widget.width,
       height: widget.height,
@@ -77,7 +91,7 @@ class _FirebaseStorageImageState extends State<FirebaseImage>
   }
 
   /// Sets the [_imageDownloadState] to [ImageDownloadState.Error] and redraws the UI.
-  void _setError() {
+  void _setError(dynamic err) {
     if (mounted)
       setState(() => this._imageDownloadState = ImageDownloadState.Error);
   }

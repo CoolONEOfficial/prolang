@@ -23,7 +23,7 @@ class LessonHeader extends StatelessWidget {
       showPlatformDialog(
         context: context,
         builder: (_) => PlatformAlertDialog(
-          title: Text("lang.lesson_section.delete.confirmation".tr()),
+          title: Text("lesson_section.delete.confirmation".tr()),
           actions: <Widget>[
             PlatformDialogAction(
               child: PlatformText(
@@ -33,7 +33,7 @@ class LessonHeader extends StatelessWidget {
               onPressed: () => Navigator.pop(context),
             ),
             PlatformDialogAction(
-              ios: (c) => CupertinoDialogActionData(
+              cupertino: (_, __) => CupertinoDialogActionData(
                 isDestructiveAction: true,
               ),
               child: PlatformText(

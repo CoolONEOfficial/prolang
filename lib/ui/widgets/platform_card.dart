@@ -28,7 +28,7 @@ class PlatformCard extends PlatformWidgetBase<CupertinoButton, Card> {
   final VoidCallback onPressed;
 
   @override
-  Card createAndroidWidget(BuildContext context) {
+  Card createMaterialWidget(BuildContext context) {
     return Card(
       color: color,
       shadowColor: shadowColor,
@@ -44,7 +44,7 @@ class PlatformCard extends PlatformWidgetBase<CupertinoButton, Card> {
   }
 
   @override
-  CupertinoButton createIosWidget(BuildContext context) {
+  CupertinoButton createCupertinoWidget(BuildContext context) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
       onPressed: onPressed,

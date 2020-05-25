@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:full_screen_image/full_screen_image.dart';
 import 'package:prolang/app/constants/firebase_paths.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
@@ -53,23 +54,21 @@ class LessonPhrasesView extends StatelessWidget {
             trailingActions: <Widget>[
               PlatformIconButton(
                 icon: Icon(PlatformIcons(context).create),
-                onPressed: () async {
-                  await Navigator.of(context).push(
-                    platformPageRoute(
-                      context: context,
-                      builder: (context) => LessonPhraseFormView(
-                        lang: lang,
-                        section: section,
-                        lesson: lesson,
-                        insertPosition: 0,
-                      ),
+                onPressed: () => Navigator.of(context).push(
+                  platformPageRoute(
+                    context: context,
+                    builder: (context) => LessonPhraseFormView(
+                      lang: lang,
+                      section: section,
+                      lesson: lesson,
+                      insertPosition: 0,
                     ),
-                  );
-                },
+                  ),
+                ),
               )
             ],
             title: Text("Грамматика"),
-            ios: (context) => CupertinoNavigationBarData(
+            cupertino: (context, _) => CupertinoNavigationBarData(
               previousPageTitle: lesson.title,
             ),
           ),
@@ -109,15 +108,23 @@ class __LessonPhrasesViewBodyState extends State<_LessonPhrasesViewBody> {
     return LayoutBuilder(builder: (context, constraints) {
       final screenHeight = constraints.maxHeight;
       final screenWidth = constraints.maxWidth;
+
       return Column(
         children: <Widget>[
           Container(
             color: Colors.black,
             height: screenHeight / 3,
-            child: FirebaseImage(
-              "$lessonPath/grammar.jpg",
-              fit: BoxFit.contain,
-              width: screenWidth,
+            child: FullScreenWidget(
+              child: Center(
+                child: Hero(
+                  tag: "smallImage",
+                  child: FirebaseImage(
+                    "$lessonPath/grammar.jpg",
+                    fit: BoxFit.contain,
+                    width: screenWidth,
+                  ),
+                ),
+              ),
             ),
           ),
           Container(

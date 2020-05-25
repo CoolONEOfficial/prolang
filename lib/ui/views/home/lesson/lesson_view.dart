@@ -48,7 +48,7 @@ class LessonView extends StatelessWidget {
           body: _LessonViewBody._(),
           appBar: PlatformAppBar(
             title: Text(lesson.title),
-            ios: (context) => CupertinoNavigationBarData(
+            cupertino: (context, _) => CupertinoNavigationBarData(
               previousPageTitle: section.title,
             ),
           ),
