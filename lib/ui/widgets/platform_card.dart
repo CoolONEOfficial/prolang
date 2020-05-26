@@ -13,6 +13,7 @@ class PlatformCard extends PlatformWidgetBase<CupertinoButton, Card> {
     this.clipBehavior,
     this.child,
     this.semanticContainer = true,
+    this.enabled = true,
     this.onPressed,
   })  : assert(borderOnForeground != null),
         super(key: key);
@@ -25,19 +26,25 @@ class PlatformCard extends PlatformWidgetBase<CupertinoButton, Card> {
   final bool semanticContainer;
   final Widget child;
 
+  final bool enabled;
   final VoidCallback onPressed;
+
+  VoidCallback get _onPressed => enabled ? onPressed : null;
+  Color _color(BuildContext context) => enabled
+      ? color ?? Theme.of(context).cardColor
+      : Theme.of(context).disabledColor;
 
   @override
   Card createMaterialWidget(BuildContext context) {
     return Card(
-      color: color,
+      color: _color(context),
       shadowColor: shadowColor,
       borderOnForeground: borderOnForeground,
       clipBehavior: clipBehavior,
       margin: margin,
       semanticContainer: semanticContainer,
       child: InkWell(
-        onTap: onPressed,
+        onTap: _onPressed,
         child: child,
       ),
     );
@@ -47,7 +54,7 @@ class PlatformCard extends PlatformWidgetBase<CupertinoButton, Card> {
   CupertinoButton createCupertinoWidget(BuildContext context) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
-      onPressed: onPressed,
+      onPressed: _onPressed,
       child: Container(
         width: double.infinity,
         child: Card(
@@ -55,7 +62,7 @@ class PlatformCard extends PlatformWidgetBase<CupertinoButton, Card> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          color: color,
+          color: _color(context),
           shadowColor: shadowColor,
           borderOnForeground: borderOnForeground,
           clipBehavior: clipBehavior,

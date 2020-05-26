@@ -64,6 +64,12 @@
             "progress": "Deleting phrase..."
         }
     },
+    "lesson_question": {
+        "delete": {
+            "confirmation": "Delete question?",
+            "progress": "Deleting question..."
+        }
+    },
     "lesson_form": {
         "create": {
             "confirmation": "Create lesson?",
@@ -138,6 +144,32 @@
             "translated": {
                 "label": "Translated",
                 "hint": "Translated sentence..."
+            }
+        }
+    },
+    "lesson_question_form": {
+        "create": {
+            "confirmation": "Create lesson question?",
+            "progress": "Creating lesson question...",
+            "title": "New lesson question"
+        },
+        "edit": {
+            "confirmation": "Apply changes?",
+            "progress": "Editing lesson question...",
+            "title": "Edit lesson question"
+        },
+        "general": {
+            "label": "General",
+            "title": {
+                "label": "Title",
+                "hint": "Example question?"
+            },
+            "answers": {
+                "label": "Answers",
+                "hint": "Answers divided by new line..."
+            },
+            "correctAnswers": {
+                "label": "Correct answers"
             }
         }
     }

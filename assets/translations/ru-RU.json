@@ -64,6 +64,12 @@
             "progress": "Удаляю фразу..."
         }
     },
+    "lesson_question": {
+        "delete": {
+            "confirmation": "Удалить вопрос?",
+            "progress": "Удаляю вопрос..."
+        }
+    },
     "lesson_form": {
         "create": {
             "confirmation": "Создать урок?",
@@ -141,6 +147,32 @@
             "translated": {
                 "label": "Перевож",
                 "hint": "Переведенное предложение..."
+            }
+        }
+    },
+    "lesson_question_form": {
+        "create": {
+            "confirmation": "Создать вопрос?",
+            "progress": "Создаю вопрос...",
+            "title": "Новый вопрос"
+        },
+        "edit": {
+            "confirmation": "Применить изменения?",
+            "progress": "Обновляю фразу...",
+            "title": "Изменить фразу"
+        },
+        "general": {
+            "label": "Основные",
+            "title": {
+                "label": "Название",
+                "hint": "Почему?"
+            },
+            "answers": {
+                "label": "Ответы",
+                "hint": "Ответы раделенные переносом строки"
+            },
+            "correctAnswers": {
+                "label": "Правильные ответы"
             }
         }
     }

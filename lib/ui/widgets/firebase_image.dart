@@ -70,7 +70,6 @@ class _FirebaseStorageImageState extends State<FirebaseImage>
 
   /// Sets the [_networkImage] to the image downloaded from [url].
   void _setImageData(String url) {
-    debugPrint("set $url to $path");
     _cachedUrls[path] = url;
     this._networkImage = Image(
       image: CachedNetworkImageProvider(url),

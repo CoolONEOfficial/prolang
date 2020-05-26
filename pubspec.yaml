@@ -43,6 +43,8 @@ dependencies:
   paginate_firestore: ^0.1.0
   full_screen_image: ^1.0.2
   cached_network_image: ^2.2.0+1
+  step_progress_indicator: ^0.2.3+6
+  tinycolor: ^1.0.2
 
 dev_dependencies:
   flutter_test:

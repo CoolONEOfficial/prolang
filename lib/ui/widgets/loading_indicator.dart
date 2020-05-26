@@ -7,15 +7,15 @@ class LoadingIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(
-            backgroundImagePath(context),
-          ),
-          repeat: ImageRepeat.repeat,
-          alignment: Alignment.center,
-        ),
-      ),
+      // decoration: BoxDecoration(
+      //   image: DecorationImage(
+      //     image: AssetImage(
+      //       backgroundImagePath(context),
+      //     ),
+      //     repeat: ImageRepeat.repeat,
+      //     alignment: Alignment.center,
+      //   ),
+      // ),
       child: Center(
         child: PlatformCircularProgressIndicator(
           material: (context, _) => MaterialProgressIndicatorData(

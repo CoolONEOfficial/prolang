@@ -4,12 +4,15 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:prolang/app/constants/theme_colors.dart';
+import 'package:prolang/app/helpers/app_bar_shape.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
 import 'package:prolang/ui/views/home/lesson/lesson_view_model.dart';
 import 'package:prolang/ui/views/home/lesson_phrases/lesson_phrases_view.dart';
+import 'package:prolang/ui/views/home/lesson_test/lesson_test_view.dart';
 import 'package:prolang/ui/widgets/loading_indicator.dart';
+import 'package:prolang/ui/widgets/platform_card_button.dart';
 import 'package:prolang/ui/widgets/responsive_safe_area.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
@@ -44,12 +47,18 @@ class LessonView extends StatelessWidget {
       ],
       child: ChangeNotifierProvider<LessonViewModel>(
         create: (_) => LessonViewModel(context.read, lesson, section, lang),
-        builder: (_, child) => PlatformScaffold(
-          body: _LessonViewBody._(),
-          appBar: PlatformAppBar(
-            title: Text(lesson.title),
-            cupertino: (context, _) => CupertinoNavigationBarData(
-              previousPageTitle: section.title,
+        builder: (_, child) => ResponsiveSafeArea(
+          child: PlatformScaffold(
+            backgroundColor: Colors.transparent,
+            body: _LessonViewBody._(),
+            appBar: PlatformAppBar(
+              title: Text(lesson.title),
+              material: (context, _) => MaterialAppBarData(
+                shape: appBarShape(context),
+              ),
+              cupertino: (context, _) => CupertinoNavigationBarData(
+                previousPageTitle: section.title,
+              ),
             ),
           ),
         ),
@@ -83,10 +92,7 @@ class _LessonViewBodyState extends State<_LessonViewBody> {
     final isLoading =
         context.select((LessonViewModel viewModel) => viewModel.isLoading);
 
-    return ResponsiveSafeArea(
-      child: isLoading ? LoadingIndicator() : _lesson(context),
-      bottom: false,
-    );
+    return isLoading ? LoadingIndicator() : _lesson(context);
   }
 
   Widget _lesson(BuildContext context) {
@@ -141,28 +147,41 @@ class _LessonViewBodyState extends State<_LessonViewBody> {
                   ),
                   SizedBox(height: 16.0),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      PlatformButton(
-                        child: Text(
-                          "Грамматика",
-                          style: TextStyle(color: ThemeColors.textColor()),
-                        ),
-                        onPressed: () =>
-                            Navigator.of(context).push(platformPageRoute(
-                          context: context,
-                          builder: (context) => LessonPhrasesView(
-                            lesson: lesson,
-                            section: section,
-                            lang: lang,
-                          ),
-                        )),
-                      ),
-                      PlatformButton(
+                      Expanded(
+                        child: PlatformCardButton(
                           child: Text(
-                        "Перейти к тесту",
-                        style: TextStyle(color: ThemeColors.textColor()),
-                      ))
+                            "Грамматика",
+                            textAlign: TextAlign.center,
+                          ),
+                          onPressed: () =>
+                              Navigator.of(context).push(platformPageRoute(
+                            context: context,
+                            builder: (context) => LessonPhrasesView(
+                              lesson: lesson,
+                              section: section,
+                              lang: lang,
+                            ),
+                          )),
+                        ),
+                      ),
+                      Expanded(
+                        child: PlatformCardButton(
+                          child: Text(
+                            "Перейти к тесту",
+                            textAlign: TextAlign.center,
+                          ),
+                          onPressed: () =>
+                              Navigator.of(context).push(platformPageRoute(
+                            context: context,
+                            builder: (context) => LessonTestView(
+                              lesson: lesson,
+                              section: section,
+                              lang: lang,
+                            ),
+                          )),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(height: 16.0),

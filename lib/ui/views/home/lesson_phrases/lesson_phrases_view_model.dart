@@ -19,16 +19,6 @@ class LessonPhrasesViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  // loadLessonList() async {
-  //   _setLoading();
-  //   _setNotLoading();
-  // }
-
-  reload() {
-    _setLoading();
-    _setNotLoading();
-  }
-
   void _setLoading() {
     _isLoading = true;
     notifyListeners();

@@ -130,12 +130,7 @@ class _PhraseEntryState extends State<PhraseEntry>
           ],
         ),
         SizedBox(height: 5),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            _translatedText(context),
-          ],
-        ),
+        _translatedText(context),
       ],
     );
   }
@@ -147,11 +142,14 @@ class _PhraseEntryState extends State<PhraseEntry>
       width: width,
       child: Stack(
         children: <Widget>[
-          Center(
+          Container(
+            height: 55.0,
+            width: width,
             child: AutoSizeText(
               widget.phrase.translated,
               minFontSize: 18,
               maxLines: 2,
+              overflow: TextOverflow.clip,
               style: Theme.of(context).textTheme.headline5,
             ),
           ),

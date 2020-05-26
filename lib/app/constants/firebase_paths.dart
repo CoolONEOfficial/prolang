@@ -3,6 +3,7 @@ import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
 import 'package:prolang/app/models/phrase.dart';
+import 'package:prolang/app/models/question.dart';
 
 class FirebasePaths {
   // Paths
@@ -69,4 +70,14 @@ class FirebasePaths {
       lessonRef(lang, section, lesson)
           .collection('phrases')
           .document(phrase.documentId);
+
+  static DocumentReference questionRef(
+    Lang lang,
+    LessonSection section,
+    Lesson lesson,
+    Question question,
+  ) =>
+      lessonRef(lang, section, lesson)
+          .collection('questions')
+          .document(question.documentId);
 }

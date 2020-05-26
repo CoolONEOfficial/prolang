@@ -44,6 +44,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       accentColor: ThemeColors.accentLight,
       cardColor: ThemeColors.cardColor(),
       backgroundColor: ThemeColors.backgroundColor(context),
+      disabledColor: ThemeColors.disabledColor(context),
       textTheme: TextTheme(
         button: TextStyle(color: ThemeColors.textColor()),
         subtitle1: TextStyle(color: ThemeColors.textColor()),

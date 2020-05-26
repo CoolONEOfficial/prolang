@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:full_screen_image/full_screen_image.dart';
 import 'package:prolang/app/constants/firebase_paths.dart';
+import 'package:prolang/app/helpers/app_bar_shape.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
@@ -48,28 +49,34 @@ class LessonPhrasesView extends StatelessWidget {
           section,
           lang,
         ),
-        builder: (context, child) => PlatformScaffold(
-          body: _LessonPhrasesViewBody._(),
-          appBar: PlatformAppBar(
-            trailingActions: <Widget>[
-              PlatformIconButton(
-                icon: Icon(PlatformIcons(context).create),
-                onPressed: () => Navigator.of(context).push(
-                  platformPageRoute(
-                    context: context,
-                    builder: (context) => LessonPhraseFormView(
-                      lang: lang,
-                      section: section,
-                      lesson: lesson,
-                      insertPosition: 0,
+        builder: (context, child) => ResponsiveSafeArea(
+          child: PlatformScaffold(
+            backgroundColor: Colors.transparent,
+            body: _LessonPhrasesViewBody._(),
+            appBar: PlatformAppBar(
+              trailingActions: <Widget>[
+                PlatformIconButton(
+                  icon: Icon(PlatformIcons(context).create),
+                  onPressed: () => Navigator.of(context).push(
+                    platformPageRoute(
+                      context: context,
+                      builder: (context) => LessonPhraseFormView(
+                        lang: lang,
+                        section: section,
+                        lesson: lesson,
+                        insertPosition: 0,
+                      ),
                     ),
                   ),
-                ),
-              )
-            ],
-            title: Text("Грамматика"),
-            cupertino: (context, _) => CupertinoNavigationBarData(
-              previousPageTitle: lesson.title,
+                )
+              ],
+              title: Text("Грамматика"),
+              material: (context, _) => MaterialAppBarData(
+                shape: appBarShape(context),
+              ),
+              cupertino: (context, _) => CupertinoNavigationBarData(
+                previousPageTitle: lesson.title,
+              ),
             ),
           ),
         ),
@@ -78,23 +85,15 @@ class LessonPhrasesView extends StatelessWidget {
   }
 }
 
-class _LessonPhrasesViewBody extends StatefulWidget {
+class _LessonPhrasesViewBody extends StatelessWidget {
   const _LessonPhrasesViewBody._({Key key}) : super(key: key);
 
-  @override
-  __LessonPhrasesViewBodyState createState() => __LessonPhrasesViewBodyState();
-}
-
-class __LessonPhrasesViewBodyState extends State<_LessonPhrasesViewBody> {
   @override
   Widget build(BuildContext context) {
     final isLoading = context
         .select((LessonPhrasesViewModel viewModel) => viewModel.isLoading);
 
-    return ResponsiveSafeArea(
-      child: isLoading ? LoadingIndicator() : _phrases(context),
-      bottom: false,
-    );
+    return isLoading ? LoadingIndicator() : _phrases(context);
   }
 
   Widget _phrases(BuildContext context) {

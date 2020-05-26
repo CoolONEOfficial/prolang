@@ -7,6 +7,7 @@ import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
 import 'package:prolang/ui/views/home/lesson/lesson_view.dart';
 import 'package:prolang/ui/widgets/platform_card.dart';
+import 'package:prolang/ui/widgets/platform_card_button.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -59,53 +60,46 @@ class LessonEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     final lang = context.watch<Lang>();
     final section = context.watch<LessonSection>();
-    return PlatformCard(
+    return PlatformCardButton(
       color: Theme.of(context).cardColor,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: <Widget>[
-            Text(
-              lesson.title,
-              style: TextStyle(
-                fontSize: 20,
-                color: ThemeColors.textColor(),
-              ),
+      child: Row(
+        children: <Widget>[
+          Text(
+            lesson.title,
+          ),
+          Spacer(),
+          PlatformIconButton(
+            icon: Icon(
+              PlatformIcons(context).create,
+              color: ThemeColors.iconColor(),
             ),
-            Spacer(),
-            PlatformIconButton(
-              icon: Icon(
-                PlatformIcons(context).create,
-                color: ThemeColors.iconColor(),
-              ),
-              onPressed: () => LangView.showLessonForm(
-                context,
-                lang: lang,
-                section: section,
-                lesson: lesson,
-              ),
+            onPressed: () => LangView.showLessonForm(
+              context,
+              lang: lang,
+              section: section,
+              lesson: lesson,
             ),
-            PlatformIconButton(
-              icon: Icon(
-                PlatformIcons(context).delete,
-                color: ThemeColors.iconColor(),
-              ),
-              onPressed: () => onDeletePressed(context, lang, section),
+          ),
+          PlatformIconButton(
+            icon: Icon(
+              PlatformIcons(context).delete,
+              color: ThemeColors.iconColor(),
             ),
-            PlatformIconButton(
-              icon: Icon(
-                PlatformIcons(context).add,
-                color: ThemeColors.iconColor(),
-              ),
-              onPressed: () => LangView.showLessonForm(
-                context,
-                lang: lang,
-                section: section,
-                insertPosition: lesson.index,
-              ),
-            )
-          ],
-        ),
+            onPressed: () => onDeletePressed(context, lang, section),
+          ),
+          PlatformIconButton(
+            icon: Icon(
+              PlatformIcons(context).add,
+              color: ThemeColors.iconColor(),
+            ),
+            onPressed: () => LangView.showLessonForm(
+              context,
+              lang: lang,
+              section: section,
+              insertPosition: lesson.index,
+            ),
+          )
+        ],
       ),
       onPressed: () => Navigator.of(context).push(platformPageRoute(
         context: context,

@@ -10,6 +10,7 @@ import 'package:prolang/app/models/lesson_section.dart';
 import 'package:prolang/ui/views/home/lang/lang_view.dart';
 import 'package:prolang/ui/views/home/lang/widgets/lesson_description.dart';
 import 'package:prolang/ui/widgets/platform_card.dart';
+import 'package:prolang/ui/widgets/platform_card_button.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:provider/provider.dart';
 
@@ -65,14 +66,11 @@ class LessonSliver extends StatelessWidget {
                             left: 8.0,
                             right: 8.0,
                           ),
-                          child: PlatformCard(
+                          child: PlatformCardButton(
                             color: Theme.of(context).cardColor,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Icon(
-                                PlatformIcons(context).add,
-                                color: ThemeColors.textColor(),
-                              ),
+                            child: Icon(
+                              PlatformIcons(context).add,
+                              color: ThemeColors.textColor(),
                             ),
                             onPressed: () {
                               LangView.showLessonForm(

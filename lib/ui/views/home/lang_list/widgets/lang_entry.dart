@@ -2,11 +2,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:prolang/app/extensions/Color.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/ui/views/home/lang/lang_view.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:prolang/ui/widgets/platform_card.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 class LangEntry extends StatelessWidget {
   final Lang lang;
@@ -23,7 +23,7 @@ class LangEntry extends StatelessWidget {
       child: PlatformCard(
         semanticContainer: true,
         clipBehavior: Clip.antiAliasWithSaveLayer,
-        color: HexColor.fromHex(lang.color),
+        color: TinyColor.fromString(lang.color).color,
         child: AspectRatio(
           aspectRatio: 1,
           child: Container(

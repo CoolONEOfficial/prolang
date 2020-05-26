@@ -5,6 +5,7 @@ import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
 import 'package:prolang/app/models/phrase.dart';
+import 'package:prolang/app/models/question.dart';
 
 class FirestoreService {
   final Firestore _firestore;
@@ -45,6 +46,18 @@ class FirestoreService {
 
     return snapshot.documents
         .map((langSnapshot) => Lesson.fromSnapshot(langSnapshot))
+        .toList();
+  }
+
+  Future<List<Question>> loadQuestionList(
+      Lang lang, LessonSection section, Lesson lesson) async {
+    var snapshot = await FirebasePaths.lessonRef(lang, section, lesson)
+        .collection('questions')
+        .orderBy('index')
+        .getDocuments();
+
+    return snapshot.documents
+        .map((langSnapshot) => Question.fromSnapshot(langSnapshot))
         .toList();
   }
 
@@ -89,6 +102,22 @@ class FirestoreService {
         lesson,
       ).collection('phrases'),
       phrase,
+    );
+  }
+
+  deleteLessonQuestion([
+    Lang lang,
+    LessonSection section,
+    Lesson lesson,
+    Question question,
+  ]) async {
+    await _deleteDocWithIndex(
+      FirebasePaths.lessonRef(
+        lang,
+        section,
+        lesson,
+      ).collection('questions'),
+      question,
     );
   }
 
@@ -148,18 +177,61 @@ class FirestoreService {
     );
   }
 
+  Future<String> insertLessonQuestion([
+    Lang lang,
+    LessonSection section,
+    Lesson lesson,
+    Question question,
+    int index,
+  ]) async {
+    question = question.copyWith(
+      index: index,
+    );
+    return _insertDocWithIndex(
+      FirebasePaths.lessonRef(
+        lang,
+        section,
+        lesson,
+      ).collection('questions'),
+      question,
+    );
+  }
+
   // Update
 
-  updateLesson(Lang lang, LessonSection section, Lesson lesson) {
+  updateLesson(
+    Lang lang,
+    LessonSection section,
+    Lesson lesson,
+  ) {
     FirebasePaths.lessonRef(lang, section, lesson).updateData(lesson.toJson());
   }
 
-  updateLessonSection(Lang lang, LessonSection section) {
+  updateLessonSection(
+    Lang lang,
+    LessonSection section,
+  ) {
     FirebasePaths.lessonSectionRef(lang, section).updateData(section.toJson());
   }
 
-  updateLessonPhrase(Lang lang, LessonSection section, Lesson lesson, Phrase phrase) {
-    FirebasePaths.lessonSectionRef(lang, section).updateData(section.toJson());
+  updateLessonPhrase(
+    Lang lang,
+    LessonSection section,
+    Lesson lesson,
+    Phrase phrase,
+  ) {
+    FirebasePaths.phraseRef(lang, section, lesson, phrase)
+        .updateData(phrase.toJson());
+  }
+
+  updateLessonQuestion(
+    Lang lang,
+    LessonSection section,
+    Lesson lesson,
+    Question question,
+  ) {
+    FirebasePaths.questionRef(lang, section, lesson, question)
+        .updateData(question.toJson());
   }
 
   // Helpers

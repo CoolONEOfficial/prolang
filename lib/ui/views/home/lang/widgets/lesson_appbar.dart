@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:prolang/app/constants/theme_colors.dart';
+import 'package:prolang/app/helpers/app_bar_shape.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/ui/widgets/firebase_image.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -24,24 +25,7 @@ class LessonAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final lang = context.watch<Lang>();
     return SliverAppBar(
-      actions: <Widget>[
-        PlatformIconButton(
-          icon: Icon(
-            PlatformIcons(context).create,
-            color: Colors.white,
-          ),
-          onPressed: () {},
-        ),
-      ],
-      shape: getValueForScreenType(
-        context: context,
-        mobile: null,
-        tablet: ContinuousRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(32),
-          ),
-        ),
-      ),
+      shape: appBarShape(context),
       expandedHeight: expandedHeight,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(

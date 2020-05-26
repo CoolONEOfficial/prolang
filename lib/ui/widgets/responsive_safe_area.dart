@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:prolang/app/helpers/background_image_path.dart';
+import 'package:prolang/ui/widgets/responsive_content.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class ResponsiveSafeArea extends SafeArea {
@@ -34,15 +35,7 @@ class ResponsiveSafeArea extends SafeArea {
           repeat: ImageRepeat.repeat,
           alignment: Alignment.center,
         ),
-        ScreenTypeLayout(
-          mobile: super.build(context),
-          tablet: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width / 5,
-            ),
-            child: super.build(context),
-          ),
-        ),
+        ResponsiveContent(child: super.build(context)),
       ],
     );
   }

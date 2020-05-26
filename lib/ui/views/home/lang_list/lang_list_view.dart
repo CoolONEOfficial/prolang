@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:prolang/app/helpers/app_bar_shape.dart';
 import 'package:prolang/app/services/firebase_auth_service.dart';
 import 'package:prolang/ui/views/home/lang_list/widgets/lang_entry.dart';
 import 'package:prolang/ui/widgets/loading_indicator.dart';
@@ -17,15 +18,9 @@ class LangListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<LangListViewModel>(
       create: (_) => LangListViewModel(context.read),
-      builder: (_, child) {
-        return Stack(
-          children: <Widget>[
-            const Scaffold(
-              body: _LangListViewBody._(),
-            ),
-          ],
-        );
-      },
+      builder: (_, child) => const Scaffold(
+        body: _LangListViewBody._(),
+      ),
     );
   }
 }
@@ -37,22 +32,27 @@ class _LangListViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final isLoading =
         context.select((LangListViewModel viewModel) => viewModel.isLoading);
-    return PlatformScaffold(
-      appBar: PlatformAppBar(
-        title: Text("lang_list.title").tr(context: context),
-        material: (context, _) => MaterialAppBarData(centerTitle: true),
-        trailingActions: <Widget>[
-          PlatformButton(
-            child: Text("Signout"),
-            onPressed: () {
-              context.read<FirebaseAuthService>().signOut();
-            },
-          )
-        ],
-      ),
-      body: ResponsiveSafeArea(
-        bottom: false,
-        child: isLoading ? LoadingIndicator() : _langList(context),
+    return ResponsiveSafeArea(
+      bottom: false,
+      child: PlatformScaffold(
+        backgroundColor: Colors.transparent,
+        appBar: PlatformAppBar(
+          title: Text("lang_list.title").tr(context: context),
+          material: (context, _) => MaterialAppBarData(
+            centerTitle: true,
+            shape: appBarShape(context),
+          ),
+          trailingActions: <Widget>[
+            PlatformButton(
+              child: Text("Signout"),
+              color: Colors.transparent,
+              onPressed: () {
+                context.read<FirebaseAuthService>().signOut();
+              },
+            )
+          ],
+        ),
+        body: isLoading ? LoadingIndicator() : _langList(context),
       ),
     );
   }

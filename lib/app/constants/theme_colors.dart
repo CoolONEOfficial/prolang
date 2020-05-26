@@ -22,6 +22,11 @@ class ThemeColors {
       ? Colors.transparent
       : _color(light: Color.fromARGB(255, 242, 242, 247), dark: Colors.black);
 
+  static Color disabledColor(BuildContext context) => _color(
+        light: Colors.grey.shade300,
+        dark: isMaterial(context) ? Colors.grey.shade900 : Colors.grey.shade800,
+      );
+
   static Color iconColor() => _color(light: Colors.black, dark: Colors.white);
 
   static Color textColor() => _color(light: Colors.black87, dark: Colors.white);
