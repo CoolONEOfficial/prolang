@@ -7,6 +7,7 @@ import 'package:prolang/app/helpers/app_bar_shape.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
+import 'package:prolang/app/services/firebase_auth_service.dart';
 import 'package:prolang/ui/views/form/lesson_phrase_form_view.dart';
 import 'package:prolang/ui/views/home/lesson_phrases/widgets/phrase_list.dart';
 import 'package:prolang/ui/widgets/firebase_image.dart';
@@ -52,24 +53,27 @@ class LessonPhrasesView extends StatelessWidget {
         builder: (context, child) => ResponsiveSafeArea(
           child: PlatformScaffold(
             backgroundColor: Colors.transparent,
-            body: _LessonPhrasesViewBody._(),
+            body: SafeArea(child: _LessonPhrasesViewBody._()),
             appBar: PlatformAppBar(
-              trailingActions: <Widget>[
-                PlatformIconButton(
-                  icon: Icon(PlatformIcons(context).create),
-                  onPressed: () => Navigator.of(context).push(
-                    platformPageRoute(
-                      context: context,
-                      builder: (context) => LessonPhraseFormView(
-                        lang: lang,
-                        section: section,
-                        lesson: lesson,
-                        insertPosition: 0,
-                      ),
-                    ),
-                  ),
-                )
-              ],
+              trailingActions:
+                  FirebaseAuthService.cachedCurrentUser.uid == lang.adminId
+                      ? <Widget>[
+                          PlatformIconButton(
+                            icon: Icon(PlatformIcons(context).add),
+                            onPressed: () => Navigator.of(context).push(
+                              platformPageRoute(
+                                context: context,
+                                builder: (context) => LessonPhraseFormView(
+                                  lang: lang,
+                                  section: section,
+                                  lesson: lesson,
+                                  insertPosition: 0,
+                                ),
+                              ),
+                            ),
+                          )
+                        ]
+                      : [],
               title: Text("Грамматика"),
               material: (context, _) => MaterialAppBarData(
                 shape: appBarShape(context),

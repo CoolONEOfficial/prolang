@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
 import 'package:prolang/app/models/phrase.dart';
 import 'package:prolang/app/models/question.dart';
+import 'package:prolang/app/models/user.dart';
+import 'package:prolang/app/services/firebase_auth_service.dart';
 
 class FirebasePaths {
   // Paths
@@ -40,6 +43,19 @@ class FirebasePaths {
       phraseRef(lang, section, lesson, phrase).path;
 
   // Refs
+
+  static DocumentReference currentUserRef() =>
+      userRefFromUser(FirebaseAuthService.cachedCurrentUser);
+
+  static DocumentReference userRefFromUser(
+    User user,
+  ) =>
+      userRefFromId(user.uid);
+
+  static DocumentReference userRefFromId(
+    String userId,
+  ) =>
+      Firestore.instance.collection('users').document(userId);
 
   static DocumentReference langRef(
     Lang lang,

@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:prolang/app/helpers/background_image_path.dart';
 import 'package:prolang/ui/widgets/responsive_content.dart';
-import 'package:responsive_builder/responsive_builder.dart';
 
 class ResponsiveSafeArea extends SafeArea {
   const ResponsiveSafeArea({

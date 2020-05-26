@@ -19,6 +19,7 @@ abstract class Lang with _$Lang {
     String color,
     String documentId,
     String teacher,
+    String adminId,
   }) = _Lang;
 
   factory Lang.fromSnapshot(DocumentSnapshot snapshot) =>

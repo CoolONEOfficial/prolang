@@ -20,13 +20,15 @@ class _$LangTearOff {
       String flag,
       String color,
       String documentId,
-      String teacher}) {
+      String teacher,
+      String adminId}) {
     return _Lang(
       title: title,
       flag: flag,
       color: color,
       documentId: documentId,
       teacher: teacher,
+      adminId: adminId,
     );
   }
 }
@@ -41,6 +43,7 @@ mixin _$Lang {
   String get color;
   String get documentId;
   String get teacher;
+  String get adminId;
 
   Map<String, dynamic> toJson();
   $LangCopyWith<Lang> get copyWith;
@@ -54,7 +57,8 @@ abstract class $LangCopyWith<$Res> {
       String flag,
       String color,
       String documentId,
-      String teacher});
+      String teacher,
+      String adminId});
 }
 
 class _$LangCopyWithImpl<$Res> implements $LangCopyWith<$Res> {
@@ -71,6 +75,7 @@ class _$LangCopyWithImpl<$Res> implements $LangCopyWith<$Res> {
     Object color = freezed,
     Object documentId = freezed,
     Object teacher = freezed,
+    Object adminId = freezed,
   }) {
     return _then(_value.copyWith(
       title: title == freezed ? _value.title : title as Map<String, String>,
@@ -79,6 +84,7 @@ class _$LangCopyWithImpl<$Res> implements $LangCopyWith<$Res> {
       documentId:
           documentId == freezed ? _value.documentId : documentId as String,
       teacher: teacher == freezed ? _value.teacher : teacher as String,
+      adminId: adminId == freezed ? _value.adminId : adminId as String,
     ));
   }
 }
@@ -92,7 +98,8 @@ abstract class _$LangCopyWith<$Res> implements $LangCopyWith<$Res> {
       String flag,
       String color,
       String documentId,
-      String teacher});
+      String teacher,
+      String adminId});
 }
 
 class __$LangCopyWithImpl<$Res> extends _$LangCopyWithImpl<$Res>
@@ -110,6 +117,7 @@ class __$LangCopyWithImpl<$Res> extends _$LangCopyWithImpl<$Res>
     Object color = freezed,
     Object documentId = freezed,
     Object teacher = freezed,
+    Object adminId = freezed,
   }) {
     return _then(_Lang(
       title: title == freezed ? _value.title : title as Map<String, String>,
@@ -118,6 +126,7 @@ class __$LangCopyWithImpl<$Res> extends _$LangCopyWithImpl<$Res>
       documentId:
           documentId == freezed ? _value.documentId : documentId as String,
       teacher: teacher == freezed ? _value.teacher : teacher as String,
+      adminId: adminId == freezed ? _value.adminId : adminId as String,
     ));
   }
 }
@@ -129,7 +138,8 @@ class _$_Lang with DiagnosticableTreeMixin implements _Lang {
       this.flag,
       this.color,
       this.documentId,
-      this.teacher});
+      this.teacher,
+      this.adminId});
 
   factory _$_Lang.fromJson(Map<String, dynamic> json) =>
       _$_$_LangFromJson(json);
@@ -145,10 +155,12 @@ class _$_Lang with DiagnosticableTreeMixin implements _Lang {
   final String documentId;
   @override
   final String teacher;
+  @override
+  final String adminId;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Lang(title: $title, flag: $flag, color: $color, documentId: $documentId, teacher: $teacher)';
+    return 'Lang(title: $title, flag: $flag, color: $color, documentId: $documentId, teacher: $teacher, adminId: $adminId)';
   }
 
   @override
@@ -160,7 +172,8 @@ class _$_Lang with DiagnosticableTreeMixin implements _Lang {
       ..add(DiagnosticsProperty('flag', flag))
       ..add(DiagnosticsProperty('color', color))
       ..add(DiagnosticsProperty('documentId', documentId))
-      ..add(DiagnosticsProperty('teacher', teacher));
+      ..add(DiagnosticsProperty('teacher', teacher))
+      ..add(DiagnosticsProperty('adminId', adminId));
   }
 
   @override
@@ -177,7 +190,10 @@ class _$_Lang with DiagnosticableTreeMixin implements _Lang {
                 const DeepCollectionEquality()
                     .equals(other.documentId, documentId)) &&
             (identical(other.teacher, teacher) ||
-                const DeepCollectionEquality().equals(other.teacher, teacher)));
+                const DeepCollectionEquality()
+                    .equals(other.teacher, teacher)) &&
+            (identical(other.adminId, adminId) ||
+                const DeepCollectionEquality().equals(other.adminId, adminId)));
   }
 
   @override
@@ -187,7 +203,8 @@ class _$_Lang with DiagnosticableTreeMixin implements _Lang {
       const DeepCollectionEquality().hash(flag) ^
       const DeepCollectionEquality().hash(color) ^
       const DeepCollectionEquality().hash(documentId) ^
-      const DeepCollectionEquality().hash(teacher);
+      const DeepCollectionEquality().hash(teacher) ^
+      const DeepCollectionEquality().hash(adminId);
 
   @override
   _$LangCopyWith<_Lang> get copyWith =>
@@ -205,7 +222,8 @@ abstract class _Lang implements Lang {
       String flag,
       String color,
       String documentId,
-      String teacher}) = _$_Lang;
+      String teacher,
+      String adminId}) = _$_Lang;
 
   factory _Lang.fromJson(Map<String, dynamic> json) = _$_Lang.fromJson;
 
@@ -220,6 +238,8 @@ abstract class _Lang implements Lang {
   String get documentId;
   @override
   String get teacher;
+  @override
+  String get adminId;
   @override
   _$LangCopyWith<_Lang> get copyWith;
 }

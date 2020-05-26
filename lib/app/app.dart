@@ -55,7 +55,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         labelStyle: TextStyle(color: ThemeColors.textColor()),
         hintStyle: TextStyle(color: ThemeColors.textColor().withOpacity(0.8)),
       ),
-      fontFamily: 'TTNorms',
+      fontFamily: 'TTNorms'
     );
     return Theme(
       data: lightTheme,

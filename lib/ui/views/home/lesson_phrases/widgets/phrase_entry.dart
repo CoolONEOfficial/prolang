@@ -9,6 +9,7 @@ import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
 import 'package:prolang/app/models/phrase.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:prolang/app/services/firebase_auth_service.dart';
 import 'package:prolang/app/services/firestore_service.dart';
 import 'package:prolang/ui/views/home/lesson_phrases/lesson_phrases_view_model.dart';
 import 'package:provider/provider.dart';
@@ -70,42 +71,6 @@ class _PhraseEntryState extends State<PhraseEntry>
               ),
             ),
             PlatformIconButton(
-              icon: Icon(PlatformIcons(context).delete),
-              onPressed: () => showPlatformDialog(
-                context: context,
-                builder: (_) => PlatformAlertDialog(
-                  title: Text("lesson_phrase.delete.confirmation".tr()),
-                  actions: <Widget>[
-                    PlatformDialogAction(
-                      child: PlatformText(
-                        "cancel".tr(),
-                        style: TextStyle(color: Theme.of(context).primaryColor),
-                      ),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    PlatformDialogAction(
-                      cupertino: (c, _) => CupertinoDialogActionData(
-                        isDestructiveAction: true,
-                      ),
-                      child: PlatformText(
-                        "delete".tr(),
-                        style: TextStyle(color: Theme.of(context).primaryColor),
-                      ),
-                      onPressed: () async {
-                        Navigator.pop(context, true);
-                        await fs.deleteLessonPhrase(
-                          lang,
-                          section,
-                          lesson,
-                          widget.phrase,
-                        );
-                      },
-                    )
-                  ],
-                ),
-              ),
-            ),
-            PlatformIconButton(
               icon: Icon(
                 isMaterial(context)
                     ? _hidden
@@ -127,7 +92,51 @@ class _PhraseEntryState extends State<PhraseEntry>
                 });
               },
             ),
-          ],
+          ]..insertAll(
+              1,
+              FirebaseAuthService.cachedCurrentUser.uid == lang.adminId
+                  ? [
+                      PlatformIconButton(
+                        icon: Icon(PlatformIcons(context).delete),
+                        onPressed: () => showPlatformDialog(
+                          context: context,
+                          builder: (_) => PlatformAlertDialog(
+                            title:
+                                Text("lesson_phrase.delete.confirmation".tr()),
+                            actions: <Widget>[
+                              PlatformDialogAction(
+                                child: PlatformText(
+                                  "cancel".tr(),
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor),
+                                ),
+                                onPressed: () => Navigator.pop(context),
+                              ),
+                              PlatformDialogAction(
+                                cupertino: (c, _) => CupertinoDialogActionData(
+                                  isDestructiveAction: true,
+                                ),
+                                child: PlatformText(
+                                  "delete".tr(),
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor),
+                                ),
+                                onPressed: () async {
+                                  Navigator.pop(context, true);
+                                  await fs.deleteLessonPhrase(
+                                    lang,
+                                    section,
+                                    lesson,
+                                    widget.phrase,
+                                  );
+                                },
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ]
+                  : []),
         ),
         SizedBox(height: 5),
         _translatedText(context),

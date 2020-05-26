@@ -50,7 +50,7 @@ class LessonView extends StatelessWidget {
         builder: (_, child) => ResponsiveSafeArea(
           child: PlatformScaffold(
             backgroundColor: Colors.transparent,
-            body: _LessonViewBody._(),
+            body: SafeArea(child: _LessonViewBody._()),
             appBar: PlatformAppBar(
               title: Text(lesson.title),
               material: (context, _) => MaterialAppBarData(

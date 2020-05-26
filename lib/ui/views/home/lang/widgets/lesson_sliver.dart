@@ -7,6 +7,7 @@ import 'package:prolang/app/constants/theme_colors.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
+import 'package:prolang/app/services/firebase_auth_service.dart';
 import 'package:prolang/ui/views/home/lang/lang_view.dart';
 import 'package:prolang/ui/views/home/lang/widgets/lesson_description.dart';
 import 'package:prolang/ui/widgets/platform_card.dart';
@@ -56,34 +57,36 @@ class LessonSliver extends StatelessWidget {
                           ),
                         )
                         .toList() +
-                    [
-                      ResponsiveGridCol(
-                        lg: 6,
-                        md: 12,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            bottom: 8.0,
-                            left: 8.0,
-                            right: 8.0,
-                          ),
-                          child: PlatformCardButton(
-                            color: Theme.of(context).cardColor,
-                            child: Icon(
-                              PlatformIcons(context).add,
-                              color: ThemeColors.textColor(),
-                            ),
-                            onPressed: () {
-                              LangView.showLessonForm(
-                                context,
-                                lang: lang,
-                                section: section.key.copyWith(),
-                                insertPosition: section.value.length,
-                              );
-                            },
-                          ),
-                        ),
-                      )
-                    ],
+                    (FirebaseAuthService.cachedCurrentUser.uid == lang.adminId
+                        ? [
+                            ResponsiveGridCol(
+                              lg: 6,
+                              md: 12,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  bottom: 8.0,
+                                  left: 8.0,
+                                  right: 8.0,
+                                ),
+                                child: PlatformCardButton(
+                                  color: Theme.of(context).cardColor,
+                                  child: Icon(
+                                    PlatformIcons(context).add,
+                                    color: ThemeColors.textColor(),
+                                  ),
+                                  onPressed: () {
+                                    LangView.showLessonForm(
+                                      context,
+                                      lang: lang,
+                                      section: section.key.copyWith(),
+                                      insertPosition: section.value.length,
+                                    );
+                                  },
+                                ),
+                              ),
+                            )
+                          ]
+                        : []),
               )
             ]),
           ),

@@ -4,7 +4,7 @@ import 'package:prolang/ui/widgets/platform_card.dart';
 import 'package:prolang/ui/widgets/platform_card_button.dart';
 
 class TestResults extends StatelessWidget {
-  final List<bool> answers;
+  final List<double> answers;
   final Function onRestart;
   final Function onNext;
 
@@ -17,8 +17,8 @@ class TestResults extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final correctAnswers = answers.where((correct) => correct);
-    final pass = correctAnswers.length >= answers.length / 3 * 2;
+    final result = answers.reduce((a, b) => a + b);
+    final pass = result >= answers.length / 3 * 2;
     return Column(
       children: <Widget>[
         Expanded(
@@ -29,8 +29,8 @@ class TestResults extends StatelessWidget {
               children: <Widget>[
                 Text(
                   pass
-                      ? "Вы прошли этот тест!"
-                      : "К сожалению,\nВы не прошли этот тест",
+                      ? "Вы прошли тест!"
+                      : "К сожалению,\nВы не прошли тест",
                   style: Theme.of(context).textTheme.headline5,
                   textAlign: TextAlign.center,
                 ),
@@ -40,7 +40,7 @@ class TestResults extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline5,
                     children: [
                       TextSpan(
-                        text: '${correctAnswers.length}/${answers.length}',
+                        text: '$result/${answers.length}',
                         style: Theme.of(context).textTheme.headline2,
                       ),
                       TextSpan(

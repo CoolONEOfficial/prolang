@@ -5,6 +5,7 @@ import 'package:prolang/app/constants/theme_colors.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
+import 'package:prolang/app/services/firebase_auth_service.dart';
 import 'package:prolang/app/services/firestore_service.dart';
 import 'package:prolang/ui/views/form/lesson_form_view.dart';
 import 'package:prolang/ui/views/form/lesson_section_form_view.dart';
@@ -200,30 +201,32 @@ class _LangViewBody extends StatelessWidget {
               ),
             ] +
             sectionList.map((section) => LessonSliver(section)).toList() +
-            [
-              SliverToBoxAdapter(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(30.0),
-                      child: PlatformIconButton(
-                        icon: Icon(
-                          PlatformIcons(context).add,
-                          color: ThemeColors.iconColor(),
-                          size: 40,
-                        ),
-                        onPressed: () => LangView.showLessonSectionForm(
-                          context,
-                          insertPosition: sectionList.length,
-                          lang: lang,
-                        ),
+            (FirebaseAuthService.cachedCurrentUser.uid == lang.adminId
+                ? [
+                    SliverToBoxAdapter(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(30.0),
+                            child: PlatformIconButton(
+                              icon: Icon(
+                                PlatformIcons(context).add,
+                                color: ThemeColors.iconColor(),
+                                size: 40,
+                              ),
+                              onPressed: () => LangView.showLessonSectionForm(
+                                context,
+                                insertPosition: sectionList.length,
+                                lang: lang,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                    )
-                  ],
-                ),
-              ),
-            ],
+                    ),
+                  ]
+                : []),
       ),
     );
   }

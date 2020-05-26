@@ -5,7 +5,11 @@ import 'package:prolang/app/helpers/app_bar_shape.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
+import 'package:prolang/app/services/firebase_auth_service.dart';
+import 'package:prolang/app/services/firestore_service.dart';
+import 'package:prolang/app/extensions/map_get.dart';
 import 'package:prolang/ui/views/form/lesson_question_form_view.dart';
+import 'package:prolang/ui/views/home/lesson_test/helpers/answer_to_color.dart';
 import 'package:prolang/ui/views/home/lesson_test/widgets/question_entry.dart';
 import 'package:prolang/ui/views/home/lesson_test/widgets/test_results.dart';
 import 'package:prolang/ui/widgets/loading_indicator.dart';
@@ -53,38 +57,44 @@ class LessonTestView extends StatelessWidget {
         builder: (context, child) {
           final vm = context.watch<LessonTestViewModel>();
           return ResponsiveSafeArea(
-          child: PlatformScaffold(
-            backgroundColor: Colors.transparent,
-            body: _LessonTestViewBody._(),
-            appBar: PlatformAppBar(
-              trailingActions: <Widget>[
-                PlatformIconButton(
-                  icon: Icon(PlatformIcons(context).add),
-                  onPressed: () async {
-                    if (await Navigator.of(context).push(
-                          platformPageRoute(
-                            context: context,
-                            builder: (context) => LessonQuestionFormView(
-                              lang: lang,
-                              section: section,
-                              lesson: lesson,
-                              insertPosition: vm.questionList.length
-                            ),
-                          ),
-                        ) ==
-                        true) {
-                      context.read<LessonTestViewModel>().loadQuestionList();
-                    }
-                  },
-                )
-              ],
-              title: Text("Тест"),
-              material: (context, _) => MaterialAppBarData(
-                shape: appBarShape(context),
+            child: PlatformScaffold(
+              backgroundColor: Colors.transparent,
+              body: SafeArea(child: _LessonTestViewBody._()),
+              appBar: PlatformAppBar(
+                trailingActions: FirebaseAuthService.cachedCurrentUser.uid ==
+                        lang.adminId
+                    ? <Widget>[
+                        PlatformIconButton(
+                          icon: Icon(PlatformIcons(context).add),
+                          onPressed: () async {
+                            if (await Navigator.of(context).push(
+                                  platformPageRoute(
+                                    context: context,
+                                    builder: (context) =>
+                                        LessonQuestionFormView(
+                                      lang: lang,
+                                      section: section,
+                                      lesson: lesson,
+                                      insertPosition: vm.questionList.length,
+                                    ),
+                                  ),
+                                ) ==
+                                true) {
+                              context
+                                  .read<LessonTestViewModel>()
+                                  .loadQuestionList();
+                            }
+                          },
+                        )
+                      ]
+                    : [],
+                title: Text("Тест"),
+                material: (context, _) => MaterialAppBarData(
+                  shape: appBarShape(context),
+                ),
               ),
             ),
-          ),
-        );
+          );
         },
       ),
     );
@@ -99,7 +109,7 @@ class _LessonTestViewBody extends StatefulWidget {
 }
 
 class _LessonTestViewBodyState extends State<_LessonTestViewBody> {
-  List<bool> answers = [];
+  List<double> answers = [];
 
   @override
   Widget build(BuildContext context) {
@@ -111,6 +121,9 @@ class _LessonTestViewBodyState extends State<_LessonTestViewBody> {
 
   Widget _test(BuildContext context) {
     final vm = context.watch<LessonTestViewModel>();
+    final lang = context.watch<Lang>();
+    final section = context.watch<LessonSection>();
+    final lesson = context.watch<Lesson>();
     final questionList = vm.questionList;
     final step = vm.step;
 
@@ -147,15 +160,17 @@ class _LessonTestViewBodyState extends State<_LessonTestViewBody> {
                 child: StepProgressIndicator(
                   totalSteps: questionList.length,
                   currentStep: step,
-                  size: (roundAppBar ? 10 : 5) + 10.0,
+                  size: (roundAppBar ? 10 : 5) +
+                      (FirebaseAuthService.cachedCurrentUser.uid == lang.adminId
+                          ? 10.0
+                          : 0.0),
                   padding: 1,
                   roundedEdges:
                       roundAppBar ? const Radius.circular(5) : Radius.zero,
                   customStep: (index, _, __) {
                     Color color;
                     if (answers.length > index) {
-                      color = (answers[index] ? Colors.green : Colors.red)
-                          .withOpacity(0.8);
+                      color = answerToColor(answers[index]).withOpacity(0.8);
                     } else {
                       color = Theme.of(context).disabledColor;
                     }
@@ -164,15 +179,21 @@ class _LessonTestViewBodyState extends State<_LessonTestViewBody> {
                         color: index == step
                             ? TinyColor(color).darken(10).color
                             : color,
-                        child: Text(
-                          questionList[index].title,
-                          textAlign: TextAlign.center,
-                        ),
+                        child: FirebaseAuthService.cachedCurrentUser.uid ==
+                                lang.adminId
+                            ? Text(
+                                questionList[index].title,
+                                textAlign: TextAlign.center,
+                              )
+                            : null,
                       ),
                       onTap: () {
-                        setState(() {
-                          vm.step = index;
-                        });
+                        if (FirebaseAuthService.cachedCurrentUser.uid ==
+                            lang.adminId) {
+                          setState(() {
+                            vm.step = index;
+                          });
+                        }
                       },
                     );
                   },
@@ -182,11 +203,27 @@ class _LessonTestViewBodyState extends State<_LessonTestViewBody> {
                 child: QuestionEntry(
                   questionList[step],
                   key: Key(step.toString()),
-                  onNext: (correctAnswer) {
+                  onNext: (result) async {
                     setState(() {
-                      answers.add(correctAnswer);
+                      answers.add(result);
                       vm.step++;
                     });
+
+                    if (vm.step == questionList.length &&
+                        (FirebaseAuthService.cachedCurrentUser.progress
+                                    ?.get(lang.documentId)
+                                    ?.get(section.documentId)
+                                    ?.get(lesson.documentId) ??
+                                0) <
+                            result) {
+                      final fs = context.read<FirestoreService>();
+                      await fs.userCompleteTest(
+                        lang,
+                        section,
+                        lesson,
+                        questionList.length / answers.reduce((a, b) => a + b),
+                      );
+                    }
                   },
                 ),
               ),

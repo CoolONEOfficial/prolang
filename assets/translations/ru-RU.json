@@ -94,6 +94,10 @@
             "video": {
                 "label": "Видео",
                 "unattach_confirmation": "Открепить видео?"
+            },
+            "grammar": {
+                "label": "Грамматическая схема",
+                "unattach_confirmation": "Открепить грамматическую схему?"
             }
         }
     },
@@ -120,10 +124,6 @@
             },
             "video": {
                 "label": "Видео"
-            },
-            "grammar": {
-                "label": "Грамматическая схема",
-                "unattach_confirmation": "Открепить грамматическую схему?"
             }
         }
     },

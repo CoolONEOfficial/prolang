@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +10,10 @@ import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
 import 'package:prolang/app/models/question.dart';
+import 'package:prolang/app/services/firebase_auth_service.dart';
 import 'package:prolang/app/services/firestore_service.dart';
 import 'package:prolang/ui/views/form/lesson_question_form_view.dart';
+import 'package:prolang/ui/views/home/lesson_test/helpers/answer_to_color.dart';
 import 'package:prolang/ui/views/home/lesson_test/lesson_test_view_model.dart';
 import 'package:prolang/ui/widgets/platform_card.dart';
 import 'package:prolang/ui/widgets/platform_card_button.dart';
@@ -22,7 +26,7 @@ import 'answer_entry.dart';
 
 class QuestionEntry extends StatefulWidget {
   final Question question;
-  final Function(bool) onNext;
+  final Function(double) onNext;
 
   const QuestionEntry(
     this.question, {
@@ -95,59 +99,61 @@ class _QuestionEntryState extends State<QuestionEntry> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            PlatformIconButton(
-              icon: Icon(PlatformIcons(context).delete),
-              onPressed: () => onDeletePressed(
-                context,
-                lang,
-                section,
-                lesson,
-              ),
-            ),
-            PlatformIconButton(
-              icon: Icon(PlatformIcons(context).create),
-              onPressed: () async {
-                if (await Navigator.of(context).push(
-                      platformPageRoute(
-                        context: context,
-                        builder: (context) => LessonQuestionFormView(
-                          lang: lang,
-                          section: section,
-                          lesson: lesson,
-                          question: widget.question,
-                        ),
-                      ),
-                    ) ==
-                    true) {
-                  vm.loadQuestionList();
-                }
-              },
-            ),
-            PlatformIconButton(
-              icon: Icon(PlatformIcons(context).add),
-              onPressed: () async {
-                if (await Navigator.of(context).push(
-                      platformPageRoute(
-                        context: context,
-                        builder: (context) => LessonQuestionFormView(
-                          lang: lang,
-                          section: section,
-                          lesson: lesson,
-                          insertPosition:
-                              vm.questionList.indexOf(widget.question),
-                        ),
-                      ),
-                    ) ==
-                    true) {
-                  context.read<LessonTestViewModel>().loadQuestionList();
-                }
-              },
-            ),
-          ],
-        ),
+        FirebaseAuthService.cachedCurrentUser.uid == lang.adminId
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  PlatformIconButton(
+                    icon: Icon(PlatformIcons(context).delete),
+                    onPressed: () => onDeletePressed(
+                      context,
+                      lang,
+                      section,
+                      lesson,
+                    ),
+                  ),
+                  PlatformIconButton(
+                    icon: Icon(PlatformIcons(context).create),
+                    onPressed: () async {
+                      if (await Navigator.of(context).push(
+                            platformPageRoute(
+                              context: context,
+                              builder: (context) => LessonQuestionFormView(
+                                lang: lang,
+                                section: section,
+                                lesson: lesson,
+                                question: widget.question,
+                              ),
+                            ),
+                          ) ==
+                          true) {
+                        vm.loadQuestionList();
+                      }
+                    },
+                  ),
+                  PlatformIconButton(
+                    icon: Icon(PlatformIcons(context).add),
+                    onPressed: () async {
+                      if (await Navigator.of(context).push(
+                            platformPageRoute(
+                              context: context,
+                              builder: (context) => LessonQuestionFormView(
+                                lang: lang,
+                                section: section,
+                                lesson: lesson,
+                                insertPosition:
+                                    vm.questionList.indexOf(widget.question),
+                              ),
+                            ),
+                          ) ==
+                          true) {
+                        context.read<LessonTestViewModel>().loadQuestionList();
+                      }
+                    },
+                  ),
+                ],
+              )
+            : SizedBox(),
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: AutoSizeText(
@@ -181,13 +187,6 @@ class _QuestionEntryState extends State<QuestionEntry> {
                           setState(() {
                             if (enabled) {
                               selectedAnswers.add(index);
-
-                              while (selectedAnswers.length >
-                                  widget.question.correctAnswers.length) {
-                                answerKeys[selectedAnswers[0]]
-                                    .currentState
-                                    .toggle();
-                              }
                             } else {
                               selectedAnswers.remove(index);
                             }
@@ -202,43 +201,53 @@ class _QuestionEntryState extends State<QuestionEntry> {
             ),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.all(16.0).add(
-              EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom)),
-          child: PlatformCardButton(
-            enabled:
-                selectedAnswers.length == widget.question.correctAnswers.length,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "Проверить",
+        FirebaseAuthService.cachedCurrentUser.uid == lang.adminId
+            ? Container()
+            : Padding(
+                padding: EdgeInsets.all(16.0).add(EdgeInsets.only(
+                    bottom: MediaQuery.of(context).padding.bottom)),
+                child: PlatformCardButton(
+                  enabled: selectedAnswers.isNotEmpty,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "Проверить",
+                      ),
+                    ],
+                  ),
+                  onPressed: () async {
+                    await showPlatformModalSheet(
+                      context: context,
+                      cupertino:
+                          CupertinoModalSheetData(semanticsDismissible: false),
+                      material: MaterialModalSheetData(isDismissible: false),
+                      builder: _modalSheet,
+                    );
+                    widget.onNext(_correctAnswer);
+                  },
                 ),
-              ],
-            ),
-            onPressed: () async {
-              await showPlatformModalSheet(
-                context: context,
-                cupertino: CupertinoModalSheetData(semanticsDismissible: false),
-                material: MaterialModalSheetData(isDismissible: false),
-                builder: _modalSheet,
-              );
-              widget.onNext(_correctAnswer);
-            },
-          ),
-        ),
+              ),
       ],
     );
   }
 
-  bool get _correctAnswer => widget.question.correctAnswers
-      .toSet()
-      .difference(selectedAnswers.toSet())
-      .isEmpty;
+  double get _correctAnswer {
+    final selectedSet = selectedAnswers.toSet();
+    final correctSet = widget.question.correctAnswers.toSet();
+    final uncorrectSet =
+        widget.question.answers.asMap().keys.toSet().difference(correctSet);
+    return max(
+          0,
+          (correctSet.intersection(selectedSet).length -
+              uncorrectSet.intersection(selectedSet).length),
+        ) /
+        widget.question.correctAnswers.length;
+  }
 
   Widget _modalSheet(BuildContext context) {
     final correctAnswer = _correctAnswer;
-    final color = correctAnswer ? Colors.green : Colors.red;
+    final color = answerToColor(correctAnswer);
     final backgroundColor = Theme.of(context).cardColor;
 
     return Container(
@@ -251,7 +260,9 @@ class _QuestionEntryState extends State<QuestionEntry> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                correctAnswer ? "Верно!" : "Неверно",
+                correctAnswer == 1
+                    ? "Верно!"
+                    : correctAnswer == 0 ? "Неверно" : "Частично верно",
                 style: Theme.of(context).textTheme.headline4.copyWith(
                       color: color,
                       fontWeight: FontWeight.bold,

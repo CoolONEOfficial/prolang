@@ -4,7 +4,9 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:prolang/app/constants/theme_colors.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
+import 'package:prolang/app/extensions/map_get.dart';
 import 'package:prolang/app/models/lesson_section.dart';
+import 'package:prolang/app/services/firebase_auth_service.dart';
 import 'package:prolang/ui/views/home/lesson/lesson_view.dart';
 import 'package:prolang/ui/widgets/platform_card.dart';
 import 'package:prolang/ui/widgets/platform_card_button.dart';
@@ -64,50 +66,63 @@ class LessonEntry extends StatelessWidget {
       color: Theme.of(context).cardColor,
       child: Row(
         children: <Widget>[
-          Text(
-            lesson.title,
-          ),
-          Spacer(),
-          PlatformIconButton(
-            icon: Icon(
-              PlatformIcons(context).create,
-              color: ThemeColors.iconColor(),
-            ),
-            onPressed: () => LangView.showLessonForm(
-              context,
-              lang: lang,
-              section: section,
-              lesson: lesson,
-            ),
-          ),
-          PlatformIconButton(
-            icon: Icon(
-              PlatformIcons(context).delete,
-              color: ThemeColors.iconColor(),
-            ),
-            onPressed: () => onDeletePressed(context, lang, section),
-          ),
-          PlatformIconButton(
-            icon: Icon(
-              PlatformIcons(context).add,
-              color: ThemeColors.iconColor(),
-            ),
-            onPressed: () => LangView.showLessonForm(
-              context,
-              lang: lang,
-              section: section,
-              insertPosition: lesson.index,
-            ),
-          )
-        ],
+              Text(
+                lesson.title,
+              ),
+            ] +
+            (FirebaseAuthService.cachedCurrentUser.uid == lang.adminId
+                ? [
+                    Spacer(),
+                    PlatformIconButton(
+                      icon: Icon(
+                        PlatformIcons(context).create,
+                        color: ThemeColors.iconColor(),
+                      ),
+                      onPressed: () => LangView.showLessonForm(
+                        context,
+                        lang: lang,
+                        section: section,
+                        lesson: lesson,
+                      ),
+                    ),
+                    PlatformIconButton(
+                      icon: Icon(
+                        PlatformIcons(context).delete,
+                        color: ThemeColors.iconColor(),
+                      ),
+                      onPressed: () => onDeletePressed(context, lang, section),
+                    ),
+                    PlatformIconButton(
+                      icon: Icon(
+                        PlatformIcons(context).add,
+                        color: ThemeColors.iconColor(),
+                      ),
+                      onPressed: () => LangView.showLessonForm(
+                        context,
+                        lang: lang,
+                        section: section,
+                        insertPosition: lesson.index,
+                      ),
+                    )
+                  ]
+                : FirebaseAuthService.cachedCurrentUser.progress
+                            .get(lang.documentId)
+                            .get(section.documentId)
+                            .get(lesson.documentId) >
+                        3 / 2
+                    ? [
+                        Spacer(),
+                        Icon(
+                          PlatformIcons(context).done,
+                          color: Theme.of(context).textTheme.bodyText1.color,
+                        ),
+                      ]
+                    : []),
       ),
       onPressed: () => Navigator.of(context).push(platformPageRoute(
         context: context,
-        builder: (context) => LessonView(
-          lesson: lesson,
-          lang: lang,
-          section: section
-        ),
+        builder: (context) =>
+            LessonView(lesson: lesson, lang: lang, section: section),
         iosTitle: section.title,
       )),
     );

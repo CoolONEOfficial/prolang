@@ -6,6 +6,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson_section.dart';
+import 'package:prolang/app/services/firebase_auth_service.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -97,35 +98,6 @@ class LessonHeader extends StatelessWidget {
                   ),
                 ),
               ),
-              PlatformIconButton(
-                icon: Icon(
-                  PlatformIcons(context).create,
-                  color: Colors.white,
-                ),
-                onPressed: () => LangView.showLessonSectionForm(
-                  context,
-                  lang: lang,
-                  section: section,
-                ),
-              ),
-              PlatformIconButton(
-                icon: Icon(
-                  PlatformIcons(context).delete,
-                  color: Colors.white,
-                ),
-                onPressed: () => onDeletePressed(context, lang, section),
-              ),
-              PlatformIconButton(
-                icon: Icon(
-                  PlatformIcons(context).add,
-                  color: Colors.white,
-                ),
-                onPressed: () => LangView.showLessonSectionForm(
-                  context,
-                  lang: lang,
-                  insertPosition: section.index,
-                ),
-              ),
               ExpandableTheme(
                 data: ExpandableThemeData(
                   useInkWell: isMaterial(context),
@@ -138,7 +110,43 @@ class LessonHeader extends StatelessWidget {
                   child: ExpandableIcon(),
                 ),
               )
-            ],
+            ]..insertAll(
+                1,
+                FirebaseAuthService.cachedCurrentUser.uid == lang.adminId
+                    ? [
+                        PlatformIconButton(
+                          icon: Icon(
+                            PlatformIcons(context).create,
+                            color: Colors.white,
+                          ),
+                          onPressed: () => LangView.showLessonSectionForm(
+                            context,
+                            lang: lang,
+                            section: section,
+                          ),
+                        ),
+                        PlatformIconButton(
+                          icon: Icon(
+                            PlatformIcons(context).delete,
+                            color: Colors.white,
+                          ),
+                          onPressed: () =>
+                              onDeletePressed(context, lang, section),
+                        ),
+                        PlatformIconButton(
+                          icon: Icon(
+                            PlatformIcons(context).add,
+                            color: Colors.white,
+                          ),
+                          onPressed: () => LangView.showLessonSectionForm(
+                            context,
+                            lang: lang,
+                            insertPosition: section.index,
+                          ),
+                        ),
+                      ]
+                    : [],
+              ),
           ),
         ),
       ),

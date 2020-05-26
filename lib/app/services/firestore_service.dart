@@ -6,12 +6,32 @@ import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
 import 'package:prolang/app/models/phrase.dart';
 import 'package:prolang/app/models/question.dart';
+import 'package:prolang/app/services/firebase_auth_service.dart';
 
 class FirestoreService {
   final Firestore _firestore;
 
   FirestoreService({Firestore firestore})
       : _firestore = firestore ?? Firestore.instance;
+
+  Future<void> userCompleteTest(
+      Lang lang, LessonSection section, Lesson lesson, double result) {
+    if (FirebaseAuthService.cachedCurrentUser.progress == null)
+      FirebaseAuthService.cachedCurrentUser =
+          FirebaseAuthService.cachedCurrentUser.copyWith(progress: Map());
+    if (FirebaseAuthService.cachedCurrentUser.progress[lang.documentId] == null)
+      FirebaseAuthService.cachedCurrentUser.progress[lang.documentId] = Map();
+    if (FirebaseAuthService.cachedCurrentUser.progress[lang.documentId]
+            [section.documentId] ==
+        null)
+      FirebaseAuthService.cachedCurrentUser.progress[lang.documentId]
+          [section.documentId] = Map();
+    FirebaseAuthService.cachedCurrentUser.progress[lang.documentId]
+        [section.documentId][lesson.documentId] = result;
+    return FirebasePaths.currentUserRef().setData(
+      FirebaseAuthService.cachedCurrentUser.toJson(),
+    );
+  }
 
   // Load
 
