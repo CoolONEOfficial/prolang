@@ -3,7 +3,7 @@ extension DefaultMap<K, V> on Map<K, V> {
     K key, [
     V defaultValue,
   ]) {
-    if (this.containsKey(key)) {
+    if (this != null && this.containsKey(key)) {
       return this[key];
     } else {
       return defaultValue;

@@ -17,10 +17,12 @@ import '../lang_view.dart';
 
 class LessonEntry extends StatelessWidget {
   final Lesson lesson;
+  final bool enabled;
 
   const LessonEntry(
     this.lesson, {
     Key key,
+    this.enabled,
   }) : super(key: key);
 
   onDeletePressed(
@@ -63,6 +65,7 @@ class LessonEntry extends StatelessWidget {
     final lang = context.watch<Lang>();
     final section = context.watch<LessonSection>();
     return PlatformCardButton(
+      enabled: enabled,
       color: Theme.of(context).cardColor,
       child: Row(
         children: <Widget>[
@@ -105,11 +108,11 @@ class LessonEntry extends StatelessWidget {
                       ),
                     )
                   ]
-                : FirebaseAuthService.cachedCurrentUser.progress
-                            .get(lang.documentId)
-                            .get(section.documentId)
-                            .get(lesson.documentId) >
-                        3 / 2
+                : (FirebaseAuthService.cachedCurrentUser.progress
+                            ?.get(lang.documentId)
+                            ?.get(section.documentId)
+                            ?.get(lesson.documentId) ??
+                        0) > 2 / 3
                     ? [
                         Spacer(),
                         Icon(
