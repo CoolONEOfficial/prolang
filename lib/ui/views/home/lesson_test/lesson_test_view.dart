@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:prolang/app/constants/firebase_paths.dart';
 import 'package:prolang/app/helpers/app_bar_shape.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
@@ -9,6 +10,8 @@ import 'package:prolang/app/services/firebase_auth_service.dart';
 import 'package:prolang/app/services/firestore_service.dart';
 import 'package:prolang/app/extensions/map_get.dart';
 import 'package:prolang/ui/views/form/lesson_question_form_view.dart';
+import 'package:prolang/ui/views/home/lang/lang_view.dart';
+import 'package:prolang/ui/views/home/lesson/lesson_view.dart';
 import 'package:prolang/ui/views/home/lesson_test/helpers/answer_to_color.dart';
 import 'package:prolang/ui/views/home/lesson_test/widgets/question_entry.dart';
 import 'package:prolang/ui/views/home/lesson_test/widgets/test_results.dart';
@@ -209,13 +212,14 @@ class _LessonTestViewBodyState extends State<_LessonTestViewBody> {
                       vm.step++;
                     });
 
+                    debugPrint("${answers.length} res: $result");
                     if (vm.step == questionList.length &&
                         (FirebaseAuthService.cachedCurrentUser.progress
                                     ?.get(lang.documentId)
                                     ?.get(section.documentId)
                                     ?.get(lesson.documentId) ??
                                 0) <
-                            result) {
+                            answers.reduce((a, b) => a + b) / answers.length) {
                       final fs = context.read<FirestoreService>();
                       await fs.userCompleteTest(
                         lang,
@@ -231,7 +235,35 @@ class _LessonTestViewBodyState extends State<_LessonTestViewBody> {
           )
         : TestResults(
             answers,
-            onNext: () {},
+            onNext: () async {
+              int count = 0;
+              final nextLesson =
+                  (await FirebasePaths.lessonSectionRef(lang, section)
+                          .collection("lessons")
+                          .orderBy("index")
+                          .startAfter([lesson.index])
+                          .limit(1)
+                          .getDocuments())
+                      .documents;
+              if (nextLesson == null || nextLesson.isEmpty) {
+                Navigator.popUntil(context, (route) {
+                  return count++ == 2;
+                });
+              } else {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    platformPageRoute(
+                      context: context,
+                      builder: (_) => LessonView(
+                        lang: lang,
+                        section: section,
+                        lesson: Lesson.fromSnapshot(nextLesson.first),
+                      ),
+                    ), (route) {
+                  return count++ == 2;
+                });
+              }
+            },
             onRestart: () {
               setState(() {
                 answers = [];

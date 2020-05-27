@@ -238,11 +238,9 @@ class _QuestionEntryState extends State<QuestionEntry> {
     final uncorrectSet =
         widget.question.answers.asMap().keys.toSet().difference(correctSet);
     return max(
-          0,
-          (correctSet.intersection(selectedSet).length -
-              uncorrectSet.intersection(selectedSet).length),
-        ) /
-        widget.question.correctAnswers.length;
+        0,
+        (correctSet.intersection(selectedSet).length / correctSet.length -
+            uncorrectSet.intersection(selectedSet).length));
   }
 
   Widget _modalSheet(BuildContext context) {

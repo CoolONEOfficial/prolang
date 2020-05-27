@@ -20,10 +20,12 @@ import 'lesson_header.dart';
 
 class LessonSliver extends StatelessWidget {
   final MapEntry<LessonSection, List<Lesson>> section;
+  final bool enabled;
 
   const LessonSliver(
     this.section, {
     Key key,
+    this.enabled,
   }) : super(key: key);
 
   @override
@@ -56,15 +58,16 @@ class LessonSliver extends StatelessWidget {
                             ),
                             child: LessonEntry(
                               lesson,
-                              enabled: index == 0 ||
-                                  (FirebaseAuthService
-                                              .cachedCurrentUser.progress
-                                              ?.get(lang.documentId)
-                                              ?.get(section.key.documentId)
-                                              ?.get(section.value[index - 1]
-                                                  .documentId) ??
-                                          0) >
-                                      (2 / 3),
+                              enabled: enabled &&
+                                  (index == 0 ||
+                                      (FirebaseAuthService
+                                                  .cachedCurrentUser.progress
+                                                  ?.get(lang.documentId)
+                                                  ?.get(section.key.documentId)
+                                                  ?.get(section.value[index - 1]
+                                                      .documentId) ??
+                                              0) >
+                                          2 / 3),
                             ),
                           ),
                         );
