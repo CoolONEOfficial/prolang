@@ -1,0 +1,6 @@
+{
+    "enabledManagers": [
+        "pub",
+        "npm"
+    ]
+}
