@@ -11,6 +11,7 @@ _$_LessonSection _$_$_LessonSectionFromJson(Map<String, dynamic> json) {
     title: json['title'] as String,
     description: json['description'] as String,
     documentId: json['documentId'] as String,
+    price: json['price'] as int,
     index: json['index'] as int,
   );
 }
@@ -20,5 +21,6 @@ Map<String, dynamic> _$_$_LessonSectionToJson(_$_LessonSection instance) =>
       'title': instance.title,
       'description': instance.description,
       'documentId': instance.documentId,
+      'price': instance.price,
       'index': instance.index,
     };

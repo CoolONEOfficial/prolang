@@ -11,11 +11,9 @@ import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
 import 'package:prolang/app/models/question.dart';
 import 'package:prolang/app/services/firebase_auth_service.dart';
-import 'package:prolang/app/services/firestore_service.dart';
 import 'package:prolang/ui/views/form/lesson_question_form_view.dart';
 import 'package:prolang/ui/views/home/lesson_test/helpers/answer_to_color.dart';
 import 'package:prolang/ui/views/home/lesson_test/lesson_test_view_model.dart';
-import 'package:prolang/ui/widgets/platform_card.dart';
 import 'package:prolang/ui/widgets/platform_card_button.dart';
 import 'package:prolang/ui/widgets/responsive_content.dart';
 import 'package:responsive_grid/responsive_grid.dart';
@@ -41,12 +39,12 @@ class QuestionEntry extends StatefulWidget {
 class _QuestionEntryState extends State<QuestionEntry> {
   List<int> selectedAnswers = [];
   List<GlobalKey<AnswerEntryState>> answerKeys;
+  static bool toggleLock = false;
 
   @override
   void initState() {
     super.initState();
 
-    debugPrint("init state");
     answerKeys = List<GlobalKey<AnswerEntryState>>.generate(
         widget.question.answers.length, (index) => GlobalKey());
   }
@@ -185,13 +183,22 @@ class _QuestionEntryState extends State<QuestionEntry> {
                         key: answerKeys[index],
                         onPressed: (bool enabled) {
                           setState(() {
+                            debugPrint("pre selected: $selectedAnswers");
                             if (enabled) {
                               selectedAnswers.add(index);
                             } else {
                               selectedAnswers.remove(index);
                             }
+                            debugPrint("selected: $selectedAnswers");
                           });
-                          return true;
+
+                          if (widget.question.correctAnswers.length == 1 && !toggleLock) {
+                            toggleLock = true;
+                            while (selectedAnswers.length > 1) {
+                              answerKeys[selectedAnswers.first].currentState.toggle();
+                            }
+                            toggleLock = false;
+                          }
                         },
                       ),
                     ),

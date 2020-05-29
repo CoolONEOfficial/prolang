@@ -41,7 +41,6 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<!-- Google Sign-in Section -->
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -49,12 +48,10 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
 				<string>com.googleusercontent.apps.134973824575-p0rf1uio577fnf287koahkhahiloj7kr</string>
 			</array>
 		</dict>
 	</array>
-	<!-- End of the Google Sign-in Section -->
 	<key>CFBundleLocalizations</key>
 	<array>
 		<string>en</string>
@@ -62,8 +59,10 @@
 	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-	<key>NSAllowsArbitraryLoads</key>
-	<true/>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSAllowsArbitraryLoadsInWebContent</key>
+		<true/>
 	</dict>
 </dict>
 </plist>

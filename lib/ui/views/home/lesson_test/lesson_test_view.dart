@@ -212,13 +212,9 @@ class _LessonTestViewBodyState extends State<_LessonTestViewBody> {
                       vm.step++;
                     });
 
-                    debugPrint("${answers.length} res: $result");
                     if (vm.step == questionList.length &&
-                        (FirebaseAuthService.cachedCurrentUser.progress
-                                    ?.get(lang.documentId)
-                                    ?.get(section.documentId)
-                                    ?.get(lesson.documentId) ??
-                                0) <
+                        FirebaseAuthService.cachedCurrentUser
+                                .lessonResult(lang, section, lesson) <
                             answers.reduce((a, b) => a + b) / answers.length) {
                       final fs = context.read<FirestoreService>();
                       await fs.userCompleteTest(

@@ -40,6 +40,7 @@ class _LessonSectionFormState extends State<LessonSectionFormView> {
   // if you only have one orientation, the _formKey is sufficient
   final GlobalKey<FormState> _nameKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _descriptionKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _priceKey = GlobalKey<FormState>();
 
   _LessonSectionFormState(this._sectionModel);
 
@@ -84,6 +85,7 @@ class _LessonSectionFormState extends State<LessonSectionFormView> {
           children: <Widget>[
             _buildCardSettingsText_Title(),
             _buildCardSettingsText_Description(),
+            _buildCardSettingsPrice(),
           ],
         ),
       ],
@@ -101,6 +103,7 @@ class _LessonSectionFormState extends State<LessonSectionFormView> {
           children: <Widget>[
             _buildCardSettingsText_Title(),
             _buildCardSettingsText_Description(),
+            _buildCardSettingsPrice(),
             // CardFieldLayout(
             //   <Widget>[
             //     _buildCardSettingsRadioPicker_Gender(),
@@ -150,6 +153,28 @@ class _LessonSectionFormState extends State<LessonSectionFormView> {
       onChanged: (value) {
         setState(() {
           _sectionModel = _sectionModel.copyWith(description: value);
+        });
+      },
+    );
+  }
+
+  CardSettingsNumberPicker _buildCardSettingsPrice() {
+    return CardSettingsNumberPicker(
+      key: _descriptionKey,
+      label: 'lesson_section_form.general.price.label'.tr(),
+      initialValue: 3000,
+      requiredIndicator: RequiredIndicator(),
+      min: 0,
+      max: 100000,
+      validator: (value) {
+        if (value == null) return 'required_field'.tr();
+        return null;
+      },
+      onSaved: (value) =>
+          _sectionModel = _sectionModel.copyWith(price: value),
+      onChanged: (value) {
+        setState(() {
+          _sectionModel = _sectionModel.copyWith(price: value);
         });
       },
     );

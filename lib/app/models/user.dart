@@ -1,12 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:prolang/app/models/lesson.dart';
+import 'package:prolang/app/models/lesson_section.dart';
+import 'package:prolang/app/extensions/map_get.dart';
+
+import 'lang.dart';
 
 part 'user.freezed.dart';
 part 'user.g.dart';
 
 @freezed
-abstract class User with _$User {
+abstract class User implements _$User {
+  const User._();
   factory User({
     @JsonKey(ignore: true) final String uid,
     @JsonKey(ignore: true) final String email,
@@ -14,7 +20,21 @@ abstract class User with _$User {
     @JsonKey(ignore: true) final String displayName,
     @JsonKey(nullable: true)
         final Map<String, Map<String, Map<String, double>>> progress,
+    @JsonKey(nullable: true) final Map<String, List<String>> purchases,
   }) = _User;
+
+  bool sectionPurchased(Lang lang, LessonSection section) =>
+      purchases?.get(lang.documentId)?.contains(section.documentId) ?? false;
+
+  bool lessonCompleted(Lang lang, LessonSection section, Lesson lesson) =>
+      lessonResult(lang, section, lesson) > 2 / 3;
+
+  double lessonResult(Lang lang, LessonSection section, Lesson lesson) =>
+      progress
+          ?.get(lang.documentId)
+          ?.get(section.documentId)
+          ?.get(lesson.documentId) ??
+      0;
 
   factory User.fromSnapshotAndUser(
       DocumentSnapshot snapshot, FirebaseUser user) {

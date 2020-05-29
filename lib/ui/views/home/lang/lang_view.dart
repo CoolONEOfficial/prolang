@@ -209,7 +209,7 @@ class _LangViewBody extends StatelessWidget {
                   final index = entry.key;
                   final section = entry.value;
                   bool enabled;
-                  if (index == 0) {
+                  if (index == 0 || FirebaseAuthService.cachedCurrentUser.uid == lang.adminId) {
                     enabled = true;
                   } else {
                     final prevSection = sectionList[index - 1];
@@ -217,8 +217,6 @@ class _LangViewBody extends StatelessWidget {
                         .cachedCurrentUser.progress
                         ?.get(lang.documentId)
                         ?.get(prevSection.key.documentId);
-                    debugPrint("len ${(sectionProgress?.keys?.length ??
-                        0)}");
                     enabled = (sectionProgress?.keys?.length ??
                         0) == prevSection.value.length &&
                             sectionProgress.values

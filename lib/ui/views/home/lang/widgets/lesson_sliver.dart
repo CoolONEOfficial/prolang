@@ -60,14 +60,12 @@ class LessonSliver extends StatelessWidget {
                               lesson,
                               enabled: enabled &&
                                   (index == 0 ||
-                                      (FirebaseAuthService
-                                                  .cachedCurrentUser.progress
-                                                  ?.get(lang.documentId)
-                                                  ?.get(section.key.documentId)
-                                                  ?.get(section.value[index - 1]
-                                                      .documentId) ??
-                                              0) >
-                                          2 / 3),
+                                      FirebaseAuthService
+                                              .cachedCurrentUser.uid ==
+                                          lang.adminId ||
+                                      FirebaseAuthService.cachedCurrentUser
+                                          .lessonCompleted(lang, section.key,
+                                              section.value[index - 1])),
                             ),
                           ),
                         );
