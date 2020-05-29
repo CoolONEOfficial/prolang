@@ -165,7 +165,8 @@ class _LessonSectionFormState extends State<LessonSectionFormView> {
       initialValue: 3000,
       requiredIndicator: RequiredIndicator(),
       min: 0,
-      max: 100000,
+      max: 20000,
+      stepInterval: 100,
       validator: (value) {
         if (value == null) return 'required_field'.tr();
         return null;

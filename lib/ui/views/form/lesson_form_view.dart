@@ -18,8 +18,6 @@ import 'package:prolang/app/models/lesson_section.dart';
 import 'package:prolang/ui/widgets/responsive_safe_area.dart';
 import 'package:provider/provider.dart';
 
-import 'widgets/card_settings_file_picker.dart';
-
 class LessonFormView extends StatefulWidget {
   final int insertPosition;
   final Lang lang;
@@ -90,7 +88,7 @@ class _LessonFormState extends State<LessonFormView> {
 
   CardSettings _buildPortraitLayout() {
     return CardSettings.sectioned(
-      labelWidth: 100,
+      labelWidth: 200,
       children: <CardSettingsSection>[
         CardSettingsSection(
           header: CardSettingsHeader(
@@ -110,6 +108,7 @@ class _LessonFormState extends State<LessonFormView> {
   CardSettings _buildLandscapeLayout() {
     return CardSettings.sectioned(
       labelPadding: 12.0,
+      labelWidth: 200,
       children: <CardSettingsSection>[
         CardSettingsSection(
           header: CardSettingsHeader(
@@ -181,8 +180,10 @@ class _LessonFormState extends State<LessonFormView> {
       icon: Icon(PlatformIcons(context).videoCamera),
       initialValue:
           widget.lesson != null ? Uint8List(widget.lesson.videoBytes) : null,
-      unattachConfirmation:
+      unattachDialogTitle:
           'lesson_form.general.video.unattach_confirmation'.tr(),
+      unattachDialogCancel: 'cancel'.tr(),
+      unattachDialogConfirm: 'unattach'.tr(),
       requiredIndicator: RequiredIndicator(),
       fileExtension: ".mp4",
       fileType: FileTypeCross.custom,
@@ -205,8 +206,10 @@ class _LessonFormState extends State<LessonFormView> {
       icon: Icon(PlatformIcons(context).photoCamera),
       initialValue:
           widget.lesson != null ? Uint8List(widget.lesson.grammarBytes) : null,
-      unattachConfirmation:
+      unattachDialogTitle:
           'lesson_form.general.grammar.unattach_confirmation'.tr(),
+      unattachDialogCancel: 'cancel'.tr(),
+      unattachDialogConfirm: 'unattach'.tr(),
       requiredIndicator: RequiredIndicator(),
       fileExtension: ".jpg",
       fileType: FileTypeCross.custom,
@@ -280,7 +283,8 @@ class _LessonFormState extends State<LessonFormView> {
       );
     }
 
-    final basePath = FirebasePaths.lessonPath(widget.lang, widget.lessonSection, _lessonModel);
+    final basePath = FirebasePaths.lessonPath(
+        widget.lang, widget.lessonSection, _lessonModel);
 
     if (_videoChanged && _videoFile != null) {
       await FirebaseStorageService.uploadToStorage(

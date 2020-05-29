@@ -122,6 +122,9 @@
             "description": {
                 "label": "Description",
                 "hint": "In that section you will learn..."
+            },
+            "price": {
+                "label": "Price"
             }
         }
     },
