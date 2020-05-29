@@ -25,13 +25,16 @@ class _$UserTearOff {
       @JsonKey(ignore: true)
           String displayName,
       @JsonKey(nullable: true)
-          Map<String, Map<String, Map<String, double>>> progress}) {
+          Map<String, Map<String, Map<String, double>>> progress,
+      @JsonKey(nullable: true)
+          Map<String, List<String>> purchases}) {
     return _User(
       uid: uid,
       email: email,
       photoUrl: photoUrl,
       displayName: displayName,
       progress: progress,
+      purchases: purchases,
     );
   }
 }
@@ -50,6 +53,8 @@ mixin _$User {
   String get displayName;
   @JsonKey(nullable: true)
   Map<String, Map<String, Map<String, double>>> get progress;
+  @JsonKey(nullable: true)
+  Map<String, List<String>> get purchases;
 
   Map<String, dynamic> toJson();
   $UserCopyWith<User> get copyWith;
@@ -68,7 +73,9 @@ abstract class $UserCopyWith<$Res> {
       @JsonKey(ignore: true)
           String displayName,
       @JsonKey(nullable: true)
-          Map<String, Map<String, Map<String, double>>> progress});
+          Map<String, Map<String, Map<String, double>>> progress,
+      @JsonKey(nullable: true)
+          Map<String, List<String>> purchases});
 }
 
 class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
@@ -85,6 +92,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object photoUrl = freezed,
     Object displayName = freezed,
     Object progress = freezed,
+    Object purchases = freezed,
   }) {
     return _then(_value.copyWith(
       uid: uid == freezed ? _value.uid : uid as String,
@@ -95,6 +103,9 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
       progress: progress == freezed
           ? _value.progress
           : progress as Map<String, Map<String, Map<String, double>>>,
+      purchases: purchases == freezed
+          ? _value.purchases
+          : purchases as Map<String, List<String>>,
     ));
   }
 }
@@ -113,7 +124,9 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       @JsonKey(ignore: true)
           String displayName,
       @JsonKey(nullable: true)
-          Map<String, Map<String, Map<String, double>>> progress});
+          Map<String, Map<String, Map<String, double>>> progress,
+      @JsonKey(nullable: true)
+          Map<String, List<String>> purchases});
 }
 
 class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
@@ -131,6 +144,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object photoUrl = freezed,
     Object displayName = freezed,
     Object progress = freezed,
+    Object purchases = freezed,
   }) {
     return _then(_User(
       uid: uid == freezed ? _value.uid : uid as String,
@@ -141,18 +155,23 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
       progress: progress == freezed
           ? _value.progress
           : progress as Map<String, Map<String, Map<String, double>>>,
+      purchases: purchases == freezed
+          ? _value.purchases
+          : purchases as Map<String, List<String>>,
     ));
   }
 }
 
 @JsonSerializable()
-class _$_User implements _User {
+class _$_User extends _User {
   _$_User(
       {@JsonKey(ignore: true) this.uid,
       @JsonKey(ignore: true) this.email,
       @JsonKey(ignore: true) this.photoUrl,
       @JsonKey(ignore: true) this.displayName,
-      @JsonKey(nullable: true) this.progress});
+      @JsonKey(nullable: true) this.progress,
+      @JsonKey(nullable: true) this.purchases})
+      : super._();
 
   factory _$_User.fromJson(Map<String, dynamic> json) =>
       _$_$_UserFromJson(json);
@@ -172,10 +191,13 @@ class _$_User implements _User {
   @override
   @JsonKey(nullable: true)
   final Map<String, Map<String, Map<String, double>>> progress;
+  @override
+  @JsonKey(nullable: true)
+  final Map<String, List<String>> purchases;
 
   @override
   String toString() {
-    return 'User(uid: $uid, email: $email, photoUrl: $photoUrl, displayName: $displayName, progress: $progress)';
+    return 'User(uid: $uid, email: $email, photoUrl: $photoUrl, displayName: $displayName, progress: $progress, purchases: $purchases)';
   }
 
   @override
@@ -194,7 +216,10 @@ class _$_User implements _User {
                     .equals(other.displayName, displayName)) &&
             (identical(other.progress, progress) ||
                 const DeepCollectionEquality()
-                    .equals(other.progress, progress)));
+                    .equals(other.progress, progress)) &&
+            (identical(other.purchases, purchases) ||
+                const DeepCollectionEquality()
+                    .equals(other.purchases, purchases)));
   }
 
   @override
@@ -204,7 +229,8 @@ class _$_User implements _User {
       const DeepCollectionEquality().hash(email) ^
       const DeepCollectionEquality().hash(photoUrl) ^
       const DeepCollectionEquality().hash(displayName) ^
-      const DeepCollectionEquality().hash(progress);
+      const DeepCollectionEquality().hash(progress) ^
+      const DeepCollectionEquality().hash(purchases);
 
   @override
   _$UserCopyWith<_User> get copyWith =>
@@ -216,7 +242,8 @@ class _$_User implements _User {
   }
 }
 
-abstract class _User implements User {
+abstract class _User extends User {
+  _User._() : super._();
   factory _User(
       {@JsonKey(ignore: true)
           String uid,
@@ -227,7 +254,9 @@ abstract class _User implements User {
       @JsonKey(ignore: true)
           String displayName,
       @JsonKey(nullable: true)
-          Map<String, Map<String, Map<String, double>>> progress}) = _$_User;
+          Map<String, Map<String, Map<String, double>>> progress,
+      @JsonKey(nullable: true)
+          Map<String, List<String>> purchases}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
@@ -246,6 +275,9 @@ abstract class _User implements User {
   @override
   @JsonKey(nullable: true)
   Map<String, Map<String, Map<String, double>>> get progress;
+  @override
+  @JsonKey(nullable: true)
+  Map<String, List<String>> get purchases;
   @override
   _$UserCopyWith<_User> get copyWith;
 }

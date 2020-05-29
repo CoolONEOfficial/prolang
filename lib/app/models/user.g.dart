@@ -19,9 +19,13 @@ _$_User _$_$_UserFromJson(Map<String, dynamic> json) {
                 )),
           )),
     ),
+    purchases: (json['purchases'] as Map<String, dynamic>)?.map(
+      (k, e) => MapEntry(k, (e as List)?.map((e) => e as String)?.toList()),
+    ),
   );
 }
 
 Map<String, dynamic> _$_$_UserToJson(_$_User instance) => <String, dynamic>{
       'progress': instance.progress,
+      'purchases': instance.purchases,
     };

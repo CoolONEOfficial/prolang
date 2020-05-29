@@ -49,15 +49,25 @@
     "compounds": [
         {
             "name": "All Devices",
-            "configurations": ["Android", "iPhone11ProMax", "Chrome"],
+            "configurations": [
+                "Android",
+                "iPhone11ProMax",
+                "Chrome"
+            ],
         },
         {
             "name": "Phones",
-            "configurations": ["Android", "iPhone11ProMax"],
+            "configurations": [
+                "Android",
+                "iPhone11ProMax"
+            ],
         },
         {
             "name": "iPhones",
-            "configurations": ["iPhoneSE", "iPhone11ProMax"],
+            "configurations": [
+                "iPhoneSE",
+                "iPhone11ProMax"
+            ],
         }
     ]
 }

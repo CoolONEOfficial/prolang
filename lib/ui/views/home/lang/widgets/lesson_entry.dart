@@ -10,6 +10,7 @@ import 'package:prolang/app/services/firebase_auth_service.dart';
 import 'package:prolang/ui/views/home/lesson/lesson_view.dart';
 import 'package:prolang/ui/widgets/platform_card.dart';
 import 'package:prolang/ui/widgets/platform_card_button.dart';
+import 'package:prolang/ui/widgets/premium_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -108,11 +109,8 @@ class LessonEntry extends StatelessWidget {
                       ),
                     )
                   ]
-                : (FirebaseAuthService.cachedCurrentUser.progress
-                            ?.get(lang.documentId)
-                            ?.get(section.documentId)
-                            ?.get(lesson.documentId) ??
-                        0) > 2 / 3
+                : (FirebaseAuthService.cachedCurrentUser
+                        .lessonCompleted(lang, section, lesson)
                     ? [
                         Spacer(),
                         Icon(
@@ -120,14 +118,29 @@ class LessonEntry extends StatelessWidget {
                           color: Theme.of(context).textTheme.bodyText1.color,
                         ),
                       ]
-                    : []),
+                    : [])),
       ),
-      onPressed: () => Navigator.of(context).push(platformPageRoute(
-        context: context,
-        builder: (context) =>
-            LessonView(lesson: lesson, lang: lang, section: section),
-        iosTitle: section.title,
-      )),
+      onPressed: () {
+        final currentUser = FirebaseAuthService.cachedCurrentUser;
+        if (section.index != 0 &&
+            lang.adminId != currentUser.uid &&
+            !currentUser.sectionPurchased(lang, section)) {
+          showPlatformDialog(
+            context: context,
+            builder: (context) => PremiumDialog(lang, section),
+          );
+        } else {
+          Navigator.of(context).push(platformPageRoute(
+            context: context,
+            builder: (context) => LessonView(
+              lesson: lesson,
+              lang: lang,
+              section: section,
+            ),
+            iosTitle: section.title,
+          ));
+        }
+      },
     );
   }
 }

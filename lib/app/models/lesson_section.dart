@@ -14,6 +14,7 @@ abstract class LessonSection with _$LessonSection, IndexMixin {
     final String title,
     final String description,
     final String documentId,
+    final int price,
     final int index,
   }) = _LessonSection;
 
