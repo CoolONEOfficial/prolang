@@ -19,6 +19,14 @@ class LessonPhrasesViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+  bool _isAudioEnabled = true;
+  bool get isAudioEnabled => _isAudioEnabled;
+
+  void toggleAudio() {
+    _isAudioEnabled = !_isAudioEnabled;
+    notifyListeners();
+  }
+
   void _setLoading() {
     _isLoading = true;
     notifyListeners();

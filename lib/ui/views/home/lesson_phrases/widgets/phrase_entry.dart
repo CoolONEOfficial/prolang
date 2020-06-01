@@ -1,16 +1,20 @@
 import 'dart:ui';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:prolang/app/constants/firebase_paths.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
 import 'package:prolang/app/models/phrase.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:prolang/app/services/firebase_auth_service.dart';
+import 'package:prolang/app/services/firebase_storage_service.dart';
 import 'package:prolang/app/services/firestore_service.dart';
+import 'package:prolang/ui/views/form/lesson_phrase_form_view.dart';
 import 'package:prolang/ui/views/home/lesson_phrases/lesson_phrases_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -33,6 +37,8 @@ class _PhraseEntryState extends State<PhraseEntry>
   Animation<double> _animation;
   AnimationController _controller;
 
+  AudioPlayer audioPlayer = AudioPlayer();
+
   @override
   void initState() {
     super.initState();
@@ -50,9 +56,23 @@ class _PhraseEntryState extends State<PhraseEntry>
     _controller.dispose();
   }
 
+  _playAudio(
+    Lang lang,
+    LessonSection section,
+    Lesson lesson,
+  ) async {
+    AudioPlayer.logEnabled = true;
+    final path =
+        FirebasePaths.phrasePath(lang, section, lesson, widget.phrase) +
+            '/audio.mp3';
+    final url = await FirebaseStorageService.loadFromStorage(path);
+    audioPlayer.play(url);
+  }
+
   @override
   Widget build(BuildContext context) {
     final fs = context.watch<FirestoreService>();
+    final vm = context.watch<LessonPhrasesViewModel>();
     final lang = context.watch<Lang>();
     final section = context.watch<LessonSection>();
     final lesson = context.watch<Lesson>();
@@ -84,10 +104,14 @@ class _PhraseEntryState extends State<PhraseEntry>
                       _animation.status == AnimationStatus.completed) {
                     _controller.reverse();
                     _hidden = true;
+                    audioPlayer.stop();
                   } else if (_hidden == true &&
                       _animation.status == AnimationStatus.dismissed) {
                     _controller.forward();
                     _hidden = false;
+                    if (vm.isAudioEnabled) {
+                      _playAudio(lang, section, lesson);
+                    }
                   }
                 });
               },
@@ -96,6 +120,20 @@ class _PhraseEntryState extends State<PhraseEntry>
               1,
               FirebaseAuthService.cachedCurrentUser.uid == lang.adminId
                   ? [
+                      PlatformIconButton(
+                        icon: Icon(PlatformIcons(context).create),
+                        onPressed: () => Navigator.of(context).push(
+                          platformPageRoute(
+                            context: context,
+                            builder: (context) => LessonPhraseFormView(
+                              lang: lang,
+                              section: section,
+                              lesson: lesson,
+                              phrase: widget.phrase,
+                            ),
+                          ),
+                        ),
+                      ),
                       PlatformIconButton(
                         icon: Icon(PlatformIcons(context).delete),
                         onPressed: () => showPlatformDialog(

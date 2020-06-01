@@ -11,6 +11,7 @@ _$_Phrase _$_$_PhraseFromJson(Map<String, dynamic> json) {
     original: json['original'] as String,
     translated: json['translated'] as String,
     documentId: json['documentId'] as String,
+    audioBytes: json['audioBytes'] as int,
     index: json['index'] as int,
   );
 }
@@ -19,5 +20,6 @@ Map<String, dynamic> _$_$_PhraseToJson(_$_Phrase instance) => <String, dynamic>{
       'original': instance.original,
       'translated': instance.translated,
       'documentId': instance.documentId,
+      'audioBytes': instance.audioBytes,
       'index': instance.index,
     };

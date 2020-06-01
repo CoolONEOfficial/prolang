@@ -183,13 +183,11 @@ class _QuestionEntryState extends State<QuestionEntry> {
                         key: answerKeys[index],
                         onPressed: (bool enabled) {
                           setState(() {
-                            debugPrint("pre selected: $selectedAnswers");
                             if (enabled) {
                               selectedAnswers.add(index);
                             } else {
                               selectedAnswers.remove(index);
                             }
-                            debugPrint("selected: $selectedAnswers");
                           });
 
                           if (widget.question.correctAnswers.length == 1 && !toggleLock) {

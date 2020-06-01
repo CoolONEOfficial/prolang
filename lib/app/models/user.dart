@@ -10,6 +10,8 @@ import 'lang.dart';
 part 'user.freezed.dart';
 part 'user.g.dart';
 
+enum UserState { Loading, Done }
+
 @freezed
 abstract class User implements _$User {
   const User._();

@@ -50,30 +50,40 @@ class LessonPhrasesView extends StatelessWidget {
           section,
           lang,
         ),
-        builder: (context, child) => ResponsiveSafeArea(
+        builder: (context, child) {
+          final vm = context.watch<LessonPhrasesViewModel>();
+          return ResponsiveSafeArea(
           child: PlatformScaffold(
             backgroundColor: Colors.transparent,
             body: SafeArea(child: _LessonPhrasesViewBody._()),
             appBar: PlatformAppBar(
-              trailingActions:
-                  FirebaseAuthService.cachedCurrentUser.uid == lang.adminId
-                      ? <Widget>[
-                          PlatformIconButton(
-                            icon: Icon(PlatformIcons(context).add),
-                            onPressed: () => Navigator.of(context).push(
-                              platformPageRoute(
-                                context: context,
-                                builder: (context) => LessonPhraseFormView(
-                                  lang: lang,
-                                  section: section,
-                                  lesson: lesson,
-                                  insertPosition: 0,
-                                ),
-                              ),
+              trailingActions: FirebaseAuthService.cachedCurrentUser.uid ==
+                      lang.adminId
+                  ? <Widget>[
+                      PlatformIconButton(
+                        icon: Icon(
+                          vm.isAudioEnabled
+                              ? PlatformIcons(context).volumnnUp
+                              : PlatformIcons(context).volumnOff,
+                        ),
+                        onPressed: () => vm.toggleAudio(),
+                      ),
+                      PlatformIconButton(
+                        icon: Icon(PlatformIcons(context).add),
+                        onPressed: () => Navigator.of(context).push(
+                          platformPageRoute(
+                            context: context,
+                            builder: (context) => LessonPhraseFormView(
+                              lang: lang,
+                              section: section,
+                              lesson: lesson,
+                              insertPosition: 0,
                             ),
-                          )
-                        ]
-                      : [],
+                          ),
+                        ),
+                      )
+                    ]
+                  : [],
               title: Text("Грамматика"),
               material: (context, _) => MaterialAppBarData(
                 shape: appBarShape(context),
@@ -83,7 +93,8 @@ class LessonPhrasesView extends StatelessWidget {
               ),
             ),
           ),
-        ),
+        );
+        },
       ),
     );
   }

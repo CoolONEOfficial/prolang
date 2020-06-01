@@ -8,37 +8,30 @@ import 'app/app.dart';
 import 'app/models/user.dart';
 import 'app/services/firebase_auth_service.dart';
 
-enum UserState {
-  Loading,
-  Done
-}
+void main() => runApp(EasyLocalization(
+    supportedLocales: [Locale('en', 'US'), Locale('ru', 'RU')],
+    path: 'assets/translations',
+    fallbackLocale: Locale('en', 'US'),
 
-void main() => runApp(
-  EasyLocalization(
-      supportedLocales: [Locale('en', 'US'), Locale('ru', 'RU')],
-      path: 'assets/translations',
-      fallbackLocale: Locale('en', 'US'),
-      /// Inject the [FirebaseAuthService]
-      /// and provide a stream of [User]
-      ///
-      /// This needs to be above [MaterialApp]
-      /// At the top of the widget tree, to
-      /// accomodate for navigations in the app
-      child: MultiProvider(
-        providers: [
-          Provider(
-            create: (_) => FirebaseAuthService(),
-          ),
-          Provider(
-            create: (_) => FirestoreService(),
-          ),
-          StreamProvider(
-            initialData: Tuple2<UserState, User>(UserState.Loading, null),
-            create: (context) =>
-                context.read<FirebaseAuthService>().onAuthStateChanged,
-          ),
-        ],
-        child: MyApp(),
-      )
-    )
-    );
+    /// Inject the [FirebaseAuthService]
+    /// and provide a stream of [User]
+    ///
+    /// This needs to be above [MaterialApp]
+    /// At the top of the widget tree, to
+    /// accomodate for navigations in the app
+    child: MultiProvider(
+      providers: [
+        Provider(
+          create: (_) => FirebaseAuthService(),
+        ),
+        Provider(
+          create: (_) => FirestoreService(),
+        ),
+        StreamProvider(
+          initialData: Tuple2<UserState, User>(UserState.Loading, null),
+          create: (context) =>
+              context.read<FirebaseAuthService>().onAuthStateChanged,
+        ),
+      ],
+      child: MyApp(),
+    )));

@@ -16,11 +16,16 @@ class _$PhraseTearOff {
   const _$PhraseTearOff();
 
   _Phrase call(
-      {String original, String translated, String documentId, int index}) {
+      {String original,
+      String translated,
+      String documentId,
+      int audioBytes,
+      int index}) {
     return _Phrase(
       original: original,
       translated: translated,
       documentId: documentId,
+      audioBytes: audioBytes,
       index: index,
     );
   }
@@ -33,6 +38,7 @@ mixin _$Phrase {
   String get original;
   String get translated;
   String get documentId;
+  int get audioBytes;
   int get index;
 
   Map<String, dynamic> toJson();
@@ -42,7 +48,12 @@ mixin _$Phrase {
 abstract class $PhraseCopyWith<$Res> {
   factory $PhraseCopyWith(Phrase value, $Res Function(Phrase) then) =
       _$PhraseCopyWithImpl<$Res>;
-  $Res call({String original, String translated, String documentId, int index});
+  $Res call(
+      {String original,
+      String translated,
+      String documentId,
+      int audioBytes,
+      int index});
 }
 
 class _$PhraseCopyWithImpl<$Res> implements $PhraseCopyWith<$Res> {
@@ -57,6 +68,7 @@ class _$PhraseCopyWithImpl<$Res> implements $PhraseCopyWith<$Res> {
     Object original = freezed,
     Object translated = freezed,
     Object documentId = freezed,
+    Object audioBytes = freezed,
     Object index = freezed,
   }) {
     return _then(_value.copyWith(
@@ -65,6 +77,7 @@ class _$PhraseCopyWithImpl<$Res> implements $PhraseCopyWith<$Res> {
           translated == freezed ? _value.translated : translated as String,
       documentId:
           documentId == freezed ? _value.documentId : documentId as String,
+      audioBytes: audioBytes == freezed ? _value.audioBytes : audioBytes as int,
       index: index == freezed ? _value.index : index as int,
     ));
   }
@@ -74,7 +87,12 @@ abstract class _$PhraseCopyWith<$Res> implements $PhraseCopyWith<$Res> {
   factory _$PhraseCopyWith(_Phrase value, $Res Function(_Phrase) then) =
       __$PhraseCopyWithImpl<$Res>;
   @override
-  $Res call({String original, String translated, String documentId, int index});
+  $Res call(
+      {String original,
+      String translated,
+      String documentId,
+      int audioBytes,
+      int index});
 }
 
 class __$PhraseCopyWithImpl<$Res> extends _$PhraseCopyWithImpl<$Res>
@@ -90,6 +108,7 @@ class __$PhraseCopyWithImpl<$Res> extends _$PhraseCopyWithImpl<$Res>
     Object original = freezed,
     Object translated = freezed,
     Object documentId = freezed,
+    Object audioBytes = freezed,
     Object index = freezed,
   }) {
     return _then(_Phrase(
@@ -98,6 +117,7 @@ class __$PhraseCopyWithImpl<$Res> extends _$PhraseCopyWithImpl<$Res>
           translated == freezed ? _value.translated : translated as String,
       documentId:
           documentId == freezed ? _value.documentId : documentId as String,
+      audioBytes: audioBytes == freezed ? _value.audioBytes : audioBytes as int,
       index: index == freezed ? _value.index : index as int,
     ));
   }
@@ -105,7 +125,12 @@ class __$PhraseCopyWithImpl<$Res> extends _$PhraseCopyWithImpl<$Res>
 
 @JsonSerializable()
 class _$_Phrase with DiagnosticableTreeMixin implements _Phrase {
-  _$_Phrase({this.original, this.translated, this.documentId, this.index});
+  _$_Phrase(
+      {this.original,
+      this.translated,
+      this.documentId,
+      this.audioBytes,
+      this.index});
 
   factory _$_Phrase.fromJson(Map<String, dynamic> json) =>
       _$_$_PhraseFromJson(json);
@@ -117,11 +142,13 @@ class _$_Phrase with DiagnosticableTreeMixin implements _Phrase {
   @override
   final String documentId;
   @override
+  final int audioBytes;
+  @override
   final int index;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Phrase(original: $original, translated: $translated, documentId: $documentId, index: $index)';
+    return 'Phrase(original: $original, translated: $translated, documentId: $documentId, audioBytes: $audioBytes, index: $index)';
   }
 
   @override
@@ -132,6 +159,7 @@ class _$_Phrase with DiagnosticableTreeMixin implements _Phrase {
       ..add(DiagnosticsProperty('original', original))
       ..add(DiagnosticsProperty('translated', translated))
       ..add(DiagnosticsProperty('documentId', documentId))
+      ..add(DiagnosticsProperty('audioBytes', audioBytes))
       ..add(DiagnosticsProperty('index', index));
   }
 
@@ -148,6 +176,9 @@ class _$_Phrase with DiagnosticableTreeMixin implements _Phrase {
             (identical(other.documentId, documentId) ||
                 const DeepCollectionEquality()
                     .equals(other.documentId, documentId)) &&
+            (identical(other.audioBytes, audioBytes) ||
+                const DeepCollectionEquality()
+                    .equals(other.audioBytes, audioBytes)) &&
             (identical(other.index, index) ||
                 const DeepCollectionEquality().equals(other.index, index)));
   }
@@ -158,6 +189,7 @@ class _$_Phrase with DiagnosticableTreeMixin implements _Phrase {
       const DeepCollectionEquality().hash(original) ^
       const DeepCollectionEquality().hash(translated) ^
       const DeepCollectionEquality().hash(documentId) ^
+      const DeepCollectionEquality().hash(audioBytes) ^
       const DeepCollectionEquality().hash(index);
 
   @override
@@ -175,6 +207,7 @@ abstract class _Phrase implements Phrase {
       {String original,
       String translated,
       String documentId,
+      int audioBytes,
       int index}) = _$_Phrase;
 
   factory _Phrase.fromJson(Map<String, dynamic> json) = _$_Phrase.fromJson;
@@ -185,6 +218,8 @@ abstract class _Phrase implements Phrase {
   String get translated;
   @override
   String get documentId;
+  @override
+  int get audioBytes;
   @override
   int get index;
   @override

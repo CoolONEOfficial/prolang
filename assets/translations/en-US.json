@@ -148,6 +148,10 @@
             "translated": {
                 "label": "Translated",
                 "hint": "Translated sentence..."
+            },
+            "audio": {
+                "label": "Translated audio",
+                "unattach_confirmation": "Unattach audio?"
             }
         }
     },

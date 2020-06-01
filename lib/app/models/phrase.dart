@@ -14,6 +14,7 @@ abstract class Phrase with _$Phrase, IndexMixin {
     final String original,
     final String translated,
     final String documentId,
+    final int audioBytes,
     final int index,
   }) = _Phrase;
 

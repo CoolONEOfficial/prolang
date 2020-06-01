@@ -6,7 +6,7 @@ class FirebaseStorageService extends ChangeNotifier {
   FirebaseStorageService._();
   FirebaseStorageService();
 
-  static Future<String> loadFromStorage(String image) {
+  static Future<String> loadFromStorage(String path) {
     throw ("Platform not found");
   }
 

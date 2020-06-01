@@ -6,8 +6,8 @@ import 'package:flutter/widgets.dart';
 class FirebaseStorageService extends ChangeNotifier {
   FirebaseStorageService();
 
-  static Future<String> loadFromStorage(String image) async {
-    var url = await storage().ref(image).getDownloadURL();
+  static Future<String> loadFromStorage(String path) async {
+    var url = await storage().ref(path).getDownloadURL();
     return url.toString();
   }
 
