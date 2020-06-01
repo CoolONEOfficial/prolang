@@ -7,6 +7,7 @@
     "create": "Создать",
     "edit": "Применить",
     "cancel": "Отмена",
+    "attach": "Прикрепить",
     "unattach": "Открепить",
     "dismiss": "Скрыть",
     "required_field": "Это поле обязательно к заполнению.",
@@ -69,6 +70,44 @@
         "delete": {
             "confirmation": "Удалить вопрос?",
             "progress": "Удаляю вопрос..."
+        }
+    },
+    "lang_form": {
+        "create": {
+            "confirmation": "Создать язык?",
+            "progress": "Создаю язык...",
+            "title": "Добавление языка"
+        },
+        "edit": {
+            "confirmation": "Применить изменения?",
+            "progress": "Обновляю язык...",
+            "title": "Изменение языка"
+        },
+        "general": {
+            "label": "Основные",
+            "title": {
+                "label": "Название",
+                "hint": "Английский, Испанский, тд..."
+            },
+            "teacher": {
+                "label": "Преподаватель",
+                "hint": "Иван Иванов..."
+            },
+            "flag": {
+                "label": "Флаг",
+                "hint": "Иконка флага"
+            },
+            "avatar": {
+                "label": "Фото преподавателя",
+                "unattach_confirmation": "Открепить фото?"
+            },
+            "header": {
+                "label": "Фон заголовка",
+                "unattach_confirmation": "Открепить фон заголовка?"
+            },
+            "color": {
+                "label": "Цвет"
+            }
         }
     },
     "lesson_form": {

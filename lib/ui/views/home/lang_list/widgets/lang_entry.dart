@@ -95,8 +95,9 @@ class LangEntry extends StatelessWidget {
   }
 
   Widget _cardText(BuildContext context, Lang lang) {
+    
     return AutoSizeText(
-      lang.title[context.locale.languageCode],
+      lang.title,
       style: TextStyle(fontSize: 28, color: Colors.white),
       maxLines: 1,
     );

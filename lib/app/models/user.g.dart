@@ -8,6 +8,7 @@ part of 'user.dart';
 
 _$_User _$_$_UserFromJson(Map<String, dynamic> json) {
   return _$_User(
+    isAdmin: json['isAdmin'] as bool ?? false,
     progress: (json['progress'] as Map<String, dynamic>)?.map(
       (k, e) => MapEntry(
           k,
@@ -26,6 +27,7 @@ _$_User _$_$_UserFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$_$_UserToJson(_$_User instance) => <String, dynamic>{
+      'isAdmin': instance.isAdmin,
       'progress': instance.progress,
       'purchases': instance.purchases,
     };

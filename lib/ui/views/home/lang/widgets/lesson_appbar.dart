@@ -47,7 +47,7 @@ class LessonAppBar extends StatelessWidget {
               Flexible(
                 flex: 3,
                 child: Text(
-                  lang.title[context.locale.languageCode],
+                  lang.title,
                   textAlign: TextAlign.center,
                 ),
               ),

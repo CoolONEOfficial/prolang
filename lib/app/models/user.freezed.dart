@@ -24,6 +24,8 @@ class _$UserTearOff {
           String photoUrl,
       @JsonKey(ignore: true)
           String displayName,
+      @JsonKey(nullable: true, defaultValue: false)
+          bool isAdmin,
       @JsonKey(nullable: true)
           Map<String, Map<String, Map<String, double>>> progress,
       @JsonKey(nullable: true)
@@ -33,6 +35,7 @@ class _$UserTearOff {
       email: email,
       photoUrl: photoUrl,
       displayName: displayName,
+      isAdmin: isAdmin,
       progress: progress,
       purchases: purchases,
     );
@@ -51,6 +54,8 @@ mixin _$User {
   String get photoUrl;
   @JsonKey(ignore: true)
   String get displayName;
+  @JsonKey(nullable: true, defaultValue: false)
+  bool get isAdmin;
   @JsonKey(nullable: true)
   Map<String, Map<String, Map<String, double>>> get progress;
   @JsonKey(nullable: true)
@@ -72,6 +77,8 @@ abstract class $UserCopyWith<$Res> {
           String photoUrl,
       @JsonKey(ignore: true)
           String displayName,
+      @JsonKey(nullable: true, defaultValue: false)
+          bool isAdmin,
       @JsonKey(nullable: true)
           Map<String, Map<String, Map<String, double>>> progress,
       @JsonKey(nullable: true)
@@ -91,6 +98,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object email = freezed,
     Object photoUrl = freezed,
     Object displayName = freezed,
+    Object isAdmin = freezed,
     Object progress = freezed,
     Object purchases = freezed,
   }) {
@@ -100,6 +108,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
       photoUrl: photoUrl == freezed ? _value.photoUrl : photoUrl as String,
       displayName:
           displayName == freezed ? _value.displayName : displayName as String,
+      isAdmin: isAdmin == freezed ? _value.isAdmin : isAdmin as bool,
       progress: progress == freezed
           ? _value.progress
           : progress as Map<String, Map<String, Map<String, double>>>,
@@ -123,6 +132,8 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
           String photoUrl,
       @JsonKey(ignore: true)
           String displayName,
+      @JsonKey(nullable: true, defaultValue: false)
+          bool isAdmin,
       @JsonKey(nullable: true)
           Map<String, Map<String, Map<String, double>>> progress,
       @JsonKey(nullable: true)
@@ -143,6 +154,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object email = freezed,
     Object photoUrl = freezed,
     Object displayName = freezed,
+    Object isAdmin = freezed,
     Object progress = freezed,
     Object purchases = freezed,
   }) {
@@ -152,6 +164,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
       photoUrl: photoUrl == freezed ? _value.photoUrl : photoUrl as String,
       displayName:
           displayName == freezed ? _value.displayName : displayName as String,
+      isAdmin: isAdmin == freezed ? _value.isAdmin : isAdmin as bool,
       progress: progress == freezed
           ? _value.progress
           : progress as Map<String, Map<String, Map<String, double>>>,
@@ -169,6 +182,7 @@ class _$_User extends _User {
       @JsonKey(ignore: true) this.email,
       @JsonKey(ignore: true) this.photoUrl,
       @JsonKey(ignore: true) this.displayName,
+      @JsonKey(nullable: true, defaultValue: false) this.isAdmin,
       @JsonKey(nullable: true) this.progress,
       @JsonKey(nullable: true) this.purchases})
       : super._();
@@ -189,6 +203,9 @@ class _$_User extends _User {
   @JsonKey(ignore: true)
   final String displayName;
   @override
+  @JsonKey(nullable: true, defaultValue: false)
+  final bool isAdmin;
+  @override
   @JsonKey(nullable: true)
   final Map<String, Map<String, Map<String, double>>> progress;
   @override
@@ -197,7 +214,7 @@ class _$_User extends _User {
 
   @override
   String toString() {
-    return 'User(uid: $uid, email: $email, photoUrl: $photoUrl, displayName: $displayName, progress: $progress, purchases: $purchases)';
+    return 'User(uid: $uid, email: $email, photoUrl: $photoUrl, displayName: $displayName, isAdmin: $isAdmin, progress: $progress, purchases: $purchases)';
   }
 
   @override
@@ -214,6 +231,9 @@ class _$_User extends _User {
             (identical(other.displayName, displayName) ||
                 const DeepCollectionEquality()
                     .equals(other.displayName, displayName)) &&
+            (identical(other.isAdmin, isAdmin) ||
+                const DeepCollectionEquality()
+                    .equals(other.isAdmin, isAdmin)) &&
             (identical(other.progress, progress) ||
                 const DeepCollectionEquality()
                     .equals(other.progress, progress)) &&
@@ -229,6 +249,7 @@ class _$_User extends _User {
       const DeepCollectionEquality().hash(email) ^
       const DeepCollectionEquality().hash(photoUrl) ^
       const DeepCollectionEquality().hash(displayName) ^
+      const DeepCollectionEquality().hash(isAdmin) ^
       const DeepCollectionEquality().hash(progress) ^
       const DeepCollectionEquality().hash(purchases);
 
@@ -253,6 +274,8 @@ abstract class _User extends User {
           String photoUrl,
       @JsonKey(ignore: true)
           String displayName,
+      @JsonKey(nullable: true, defaultValue: false)
+          bool isAdmin,
       @JsonKey(nullable: true)
           Map<String, Map<String, Map<String, double>>> progress,
       @JsonKey(nullable: true)
@@ -272,6 +295,9 @@ abstract class _User extends User {
   @override
   @JsonKey(ignore: true)
   String get displayName;
+  @override
+  @JsonKey(nullable: true, defaultValue: false)
+  bool get isAdmin;
   @override
   @JsonKey(nullable: true)
   Map<String, Map<String, Map<String, double>>> get progress;

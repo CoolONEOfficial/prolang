@@ -7,6 +7,7 @@
     "create": "Create",
     "edit": "Confirm",
     "cancel": "Cancel",
+    "attach": "Attach",
     "unattach": "Unattach",
     "dismiss": "Dismiss",
     "required_field": "This field is required.",
@@ -69,6 +70,44 @@
         "delete": {
             "confirmation": "Delete question?",
             "progress": "Deleting question..."
+        }
+    },
+    "lang_form": {
+        "create": {
+            "confirmation": "Create language?",
+            "progress": "Creating language...",
+            "title": "Add lang"
+        },
+        "edit": {
+            "confirmation": "Apply changes?",
+            "progress": "Editing language...",
+            "title": "Edit language"
+        },
+        "general": {
+            "label": "General",
+            "title": {
+                "label": "Title",
+                "hint": "English, Spanish, etc..."
+            },
+            "teacher": {
+                "label": "Teacher",
+                "hint": "John Gates..."
+            },
+            "flag": {
+                "label": "Flag",
+                "hint": "Flag icon"
+            },
+            "avatar": {
+                "label": "Avatar",
+                "unattach_confirmation": "Unattach avatar image?"
+            },
+            "header": {
+                "label": "Header background",
+                "unattach_confirmation": "Unattach header background image?"
+            },
+            "color": {
+                "label": "Color"
+            }
         }
     },
     "lesson_form": {

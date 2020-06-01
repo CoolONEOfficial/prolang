@@ -20,6 +20,7 @@ abstract class User implements _$User {
     @JsonKey(ignore: true) final String email,
     @JsonKey(ignore: true) final String photoUrl,
     @JsonKey(ignore: true) final String displayName,
+    @JsonKey(nullable: true, defaultValue: false) final bool isAdmin,
     @JsonKey(nullable: true)
         final Map<String, Map<String, Map<String, double>>> progress,
     @JsonKey(nullable: true) final Map<String, List<String>> purchases,

@@ -95,6 +95,15 @@ class FirestoreService {
     );
   }
 
+  deleteLang([
+    Lang lang,
+  ]) async {
+    await _deleteDocWithIndex(
+      Firestore.instance.collection('langs'),
+      lang,
+    );
+  }
+
   deleteLesson([
     Lang lang,
     LessonSection section,
@@ -177,6 +186,19 @@ class FirestoreService {
     );
   }
 
+  Future<String> insertLang([
+    Lang lang,
+    int index,
+  ]) async {
+    lang = lang.copyWith(
+      index: index,
+    );
+    return _insertDocWithIndex(
+      Firestore.instance.collection('langs'),
+      lang,
+    );
+  }
+
   Future<String> insertLessonPhrase([
     Lang lang,
     LessonSection section,
@@ -218,6 +240,12 @@ class FirestoreService {
   }
 
   // Update
+
+  updateLang(
+    Lang lang,
+  ) {
+    FirebasePaths.langRef(lang).updateData(lang.toJson());
+  }
 
   updateLesson(
     Lang lang,

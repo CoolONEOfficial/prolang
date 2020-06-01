@@ -241,6 +241,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
+  crop:
+    dependency: "direct main"
+    description:
+      name: crop
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.1+1"
   crypto:
     dependency: transitive
     description:
@@ -276,6 +283,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.3.2"
+  emojis:
+    dependency: "direct main"
+    description:
+      name: emojis
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.8.1"
   expandable:
     dependency: "direct main"
     description:
@@ -584,7 +598,7 @@ packages:
     source: hosted
     version: "3.1.4"
   image:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: image
       url: "https://pub.dartlang.org"

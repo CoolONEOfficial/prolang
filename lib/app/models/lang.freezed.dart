@@ -16,12 +16,15 @@ class _$LangTearOff {
   const _$LangTearOff();
 
   _Lang call(
-      {@JsonKey(fromJson: parseJsonMap) Map<String, String> title,
+      {String title,
       String flag,
       String color,
       String documentId,
       String teacher,
-      String adminId}) {
+      String adminId,
+      int avatarBytes,
+      int headerBytes,
+      int index}) {
     return _Lang(
       title: title,
       flag: flag,
@@ -29,6 +32,9 @@ class _$LangTearOff {
       documentId: documentId,
       teacher: teacher,
       adminId: adminId,
+      avatarBytes: avatarBytes,
+      headerBytes: headerBytes,
+      index: index,
     );
   }
 }
@@ -37,13 +43,15 @@ class _$LangTearOff {
 const $Lang = _$LangTearOff();
 
 mixin _$Lang {
-  @JsonKey(fromJson: parseJsonMap)
-  Map<String, String> get title;
+  String get title;
   String get flag;
   String get color;
   String get documentId;
   String get teacher;
   String get adminId;
+  int get avatarBytes;
+  int get headerBytes;
+  int get index;
 
   Map<String, dynamic> toJson();
   $LangCopyWith<Lang> get copyWith;
@@ -53,12 +61,15 @@ abstract class $LangCopyWith<$Res> {
   factory $LangCopyWith(Lang value, $Res Function(Lang) then) =
       _$LangCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(fromJson: parseJsonMap) Map<String, String> title,
+      {String title,
       String flag,
       String color,
       String documentId,
       String teacher,
-      String adminId});
+      String adminId,
+      int avatarBytes,
+      int headerBytes,
+      int index});
 }
 
 class _$LangCopyWithImpl<$Res> implements $LangCopyWith<$Res> {
@@ -76,15 +87,23 @@ class _$LangCopyWithImpl<$Res> implements $LangCopyWith<$Res> {
     Object documentId = freezed,
     Object teacher = freezed,
     Object adminId = freezed,
+    Object avatarBytes = freezed,
+    Object headerBytes = freezed,
+    Object index = freezed,
   }) {
     return _then(_value.copyWith(
-      title: title == freezed ? _value.title : title as Map<String, String>,
+      title: title == freezed ? _value.title : title as String,
       flag: flag == freezed ? _value.flag : flag as String,
       color: color == freezed ? _value.color : color as String,
       documentId:
           documentId == freezed ? _value.documentId : documentId as String,
       teacher: teacher == freezed ? _value.teacher : teacher as String,
       adminId: adminId == freezed ? _value.adminId : adminId as String,
+      avatarBytes:
+          avatarBytes == freezed ? _value.avatarBytes : avatarBytes as int,
+      headerBytes:
+          headerBytes == freezed ? _value.headerBytes : headerBytes as int,
+      index: index == freezed ? _value.index : index as int,
     ));
   }
 }
@@ -94,12 +113,15 @@ abstract class _$LangCopyWith<$Res> implements $LangCopyWith<$Res> {
       __$LangCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(fromJson: parseJsonMap) Map<String, String> title,
+      {String title,
       String flag,
       String color,
       String documentId,
       String teacher,
-      String adminId});
+      String adminId,
+      int avatarBytes,
+      int headerBytes,
+      int index});
 }
 
 class __$LangCopyWithImpl<$Res> extends _$LangCopyWithImpl<$Res>
@@ -118,15 +140,23 @@ class __$LangCopyWithImpl<$Res> extends _$LangCopyWithImpl<$Res>
     Object documentId = freezed,
     Object teacher = freezed,
     Object adminId = freezed,
+    Object avatarBytes = freezed,
+    Object headerBytes = freezed,
+    Object index = freezed,
   }) {
     return _then(_Lang(
-      title: title == freezed ? _value.title : title as Map<String, String>,
+      title: title == freezed ? _value.title : title as String,
       flag: flag == freezed ? _value.flag : flag as String,
       color: color == freezed ? _value.color : color as String,
       documentId:
           documentId == freezed ? _value.documentId : documentId as String,
       teacher: teacher == freezed ? _value.teacher : teacher as String,
       adminId: adminId == freezed ? _value.adminId : adminId as String,
+      avatarBytes:
+          avatarBytes == freezed ? _value.avatarBytes : avatarBytes as int,
+      headerBytes:
+          headerBytes == freezed ? _value.headerBytes : headerBytes as int,
+      index: index == freezed ? _value.index : index as int,
     ));
   }
 }
@@ -134,19 +164,21 @@ class __$LangCopyWithImpl<$Res> extends _$LangCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Lang with DiagnosticableTreeMixin implements _Lang {
   _$_Lang(
-      {@JsonKey(fromJson: parseJsonMap) this.title,
+      {this.title,
       this.flag,
       this.color,
       this.documentId,
       this.teacher,
-      this.adminId});
+      this.adminId,
+      this.avatarBytes,
+      this.headerBytes,
+      this.index});
 
   factory _$_Lang.fromJson(Map<String, dynamic> json) =>
       _$_$_LangFromJson(json);
 
   @override
-  @JsonKey(fromJson: parseJsonMap)
-  final Map<String, String> title;
+  final String title;
   @override
   final String flag;
   @override
@@ -157,10 +189,16 @@ class _$_Lang with DiagnosticableTreeMixin implements _Lang {
   final String teacher;
   @override
   final String adminId;
+  @override
+  final int avatarBytes;
+  @override
+  final int headerBytes;
+  @override
+  final int index;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Lang(title: $title, flag: $flag, color: $color, documentId: $documentId, teacher: $teacher, adminId: $adminId)';
+    return 'Lang(title: $title, flag: $flag, color: $color, documentId: $documentId, teacher: $teacher, adminId: $adminId, avatarBytes: $avatarBytes, headerBytes: $headerBytes, index: $index)';
   }
 
   @override
@@ -173,7 +211,10 @@ class _$_Lang with DiagnosticableTreeMixin implements _Lang {
       ..add(DiagnosticsProperty('color', color))
       ..add(DiagnosticsProperty('documentId', documentId))
       ..add(DiagnosticsProperty('teacher', teacher))
-      ..add(DiagnosticsProperty('adminId', adminId));
+      ..add(DiagnosticsProperty('adminId', adminId))
+      ..add(DiagnosticsProperty('avatarBytes', avatarBytes))
+      ..add(DiagnosticsProperty('headerBytes', headerBytes))
+      ..add(DiagnosticsProperty('index', index));
   }
 
   @override
@@ -193,7 +234,16 @@ class _$_Lang with DiagnosticableTreeMixin implements _Lang {
                 const DeepCollectionEquality()
                     .equals(other.teacher, teacher)) &&
             (identical(other.adminId, adminId) ||
-                const DeepCollectionEquality().equals(other.adminId, adminId)));
+                const DeepCollectionEquality()
+                    .equals(other.adminId, adminId)) &&
+            (identical(other.avatarBytes, avatarBytes) ||
+                const DeepCollectionEquality()
+                    .equals(other.avatarBytes, avatarBytes)) &&
+            (identical(other.headerBytes, headerBytes) ||
+                const DeepCollectionEquality()
+                    .equals(other.headerBytes, headerBytes)) &&
+            (identical(other.index, index) ||
+                const DeepCollectionEquality().equals(other.index, index)));
   }
 
   @override
@@ -204,7 +254,10 @@ class _$_Lang with DiagnosticableTreeMixin implements _Lang {
       const DeepCollectionEquality().hash(color) ^
       const DeepCollectionEquality().hash(documentId) ^
       const DeepCollectionEquality().hash(teacher) ^
-      const DeepCollectionEquality().hash(adminId);
+      const DeepCollectionEquality().hash(adminId) ^
+      const DeepCollectionEquality().hash(avatarBytes) ^
+      const DeepCollectionEquality().hash(headerBytes) ^
+      const DeepCollectionEquality().hash(index);
 
   @override
   _$LangCopyWith<_Lang> get copyWith =>
@@ -218,18 +271,20 @@ class _$_Lang with DiagnosticableTreeMixin implements _Lang {
 
 abstract class _Lang implements Lang {
   factory _Lang(
-      {@JsonKey(fromJson: parseJsonMap) Map<String, String> title,
+      {String title,
       String flag,
       String color,
       String documentId,
       String teacher,
-      String adminId}) = _$_Lang;
+      String adminId,
+      int avatarBytes,
+      int headerBytes,
+      int index}) = _$_Lang;
 
   factory _Lang.fromJson(Map<String, dynamic> json) = _$_Lang.fromJson;
 
   @override
-  @JsonKey(fromJson: parseJsonMap)
-  Map<String, String> get title;
+  String get title;
   @override
   String get flag;
   @override
@@ -240,6 +295,12 @@ abstract class _Lang implements Lang {
   String get teacher;
   @override
   String get adminId;
+  @override
+  int get avatarBytes;
+  @override
+  int get headerBytes;
+  @override
+  int get index;
   @override
   _$LangCopyWith<_Lang> get copyWith;
 }

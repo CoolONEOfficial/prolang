@@ -3,8 +3,10 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:prolang/app/helpers/app_bar_shape.dart';
 import 'package:prolang/app/services/firebase_auth_service.dart';
+import 'package:prolang/ui/views/form/lang_form_view.dart';
 import 'package:prolang/ui/views/home/lang_list/widgets/lang_entry.dart';
 import 'package:prolang/ui/widgets/loading_indicator.dart';
+import 'package:prolang/ui/widgets/platform_card.dart';
 import 'package:prolang/ui/widgets/responsive_safe_area.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_grid/responsive_grid.dart';
@@ -64,7 +66,37 @@ class _LangListViewBody extends StatelessWidget {
     return ResponsiveGridList(
       desiredItemWidth: material ? 170.0 : 150.0,
       minSpacing: 0,
-      children: langList.map((lang) => LangEntry(lang)).toList(),
+      children: langList.map<Widget>((lang) => LangEntry(lang)).toList()
+        ..addAll(
+          FirebaseAuthService.cachedCurrentUser.isAdmin
+              ? <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: PlatformCard(
+                      color: Theme.of(context).primaryColor,
+                      child: AspectRatio(
+                        aspectRatio: 1,
+                        child: Center(
+                          child: Icon(
+                            PlatformIcons(context).add,
+                            size: 60,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      onPressed: () => Navigator.of(context).push(
+                        platformPageRoute(
+                          context: context,
+                          builder: (context) => LangFormView(
+                            insertPosition: langList.length,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ]
+              : [],
+        ),
     );
   }
 }
