@@ -31,7 +31,10 @@ class LessonAppBar extends StatelessWidget {
       leading: ModalRoute.of(context).canPop
           ? null
           : PlatformIconButton(
-              icon: Icon(PlatformIcons(context).flag),
+              icon: Icon(
+                PlatformIcons(context).flag,
+                color: Colors.white,
+              ),
               onPressed: () => Navigator.of(context).pushReplacement(
                 platformPageRoute(
                   context: context,
