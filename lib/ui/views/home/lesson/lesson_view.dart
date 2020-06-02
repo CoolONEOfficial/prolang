@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
-import 'package:prolang/app/constants/theme_colors.dart';
 import 'package:prolang/app/helpers/app_bar_shape.dart';
 import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
+import 'package:prolang/app/services/firestore_service.dart';
 import 'package:prolang/ui/views/home/lesson/lesson_view_model.dart';
 import 'package:prolang/ui/views/home/lesson_phrases/lesson_phrases_view.dart';
 import 'package:prolang/ui/views/home/lesson_test/lesson_test_view.dart';
@@ -79,6 +79,14 @@ class _LessonViewBody extends StatefulWidget {
 class _LessonViewBodyState extends State<_LessonViewBody> {
   VideoPlayerController _videoPlayerController;
   ChewieController _chewieController;
+
+  @override
+  void initState() {
+    final fs = context.read<FirestoreService>();
+    final lang = context.read<Lang>();
+    fs.updateUserCurrentLang(lang);
+    super.initState();
+  }
 
   @override
   void dispose() {

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/widgets.dart';
 import 'package:prolang/app/constants/firebase_paths.dart';
 import 'package:prolang/app/mixins/index_mixin.dart';
 import 'package:prolang/app/models/lang.dart';
@@ -6,7 +7,6 @@ import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
 import 'package:prolang/app/models/phrase.dart';
 import 'package:prolang/app/models/question.dart';
-import 'package:prolang/app/models/user.dart';
 import 'package:prolang/app/services/firebase_auth_service.dart';
 
 class FirestoreService {
@@ -242,6 +242,14 @@ class FirestoreService {
   }
 
   // Update
+
+  updateUserCurrentLang(Lang lang) async {
+    FirebaseAuthService.cachedCurrentUser = FirebaseAuthService
+        .cachedCurrentUser
+        .copyWith(currentLang: lang.documentId);
+    await FirebasePaths.currentUserRef()
+        .updateData(FirebaseAuthService.cachedCurrentUser.toJson());
+  }
 
   updateLang(
     Lang lang,

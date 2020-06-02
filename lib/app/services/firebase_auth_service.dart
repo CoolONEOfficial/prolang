@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:prolang/app/constants/firebase_paths.dart';
 import 'package:prolang/app/models/user.dart';
-import 'package:prolang/main.dart';
 import 'package:tuple/tuple.dart';
 
 class FirebaseAuthService {

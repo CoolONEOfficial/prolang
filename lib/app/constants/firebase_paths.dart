@@ -60,7 +60,12 @@ class FirebasePaths {
   static DocumentReference langRef(
     Lang lang,
   ) =>
-      Firestore.instance.collection('langs').document(lang.documentId);
+      langRefById(lang.documentId);
+
+  static DocumentReference langRefById(
+    String langId,
+  ) =>
+      Firestore.instance.collection('langs').document(langId);
 
   static DocumentReference lessonSectionRef(
     Lang lang,

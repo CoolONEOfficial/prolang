@@ -6,6 +6,7 @@ import 'package:prolang/app/helpers/app_bar_shape.dart';
 import 'package:prolang/app/services/firebase_auth_service.dart';
 import 'package:prolang/ui/views/form/lang_form_view.dart';
 import 'package:prolang/ui/views/home/lang_list/widgets/lang_entry.dart';
+import 'package:prolang/ui/views/intro/intro_view.dart';
 import 'package:prolang/ui/widgets/loading_indicator.dart';
 import 'package:prolang/ui/widgets/platform_card.dart';
 import 'package:prolang/ui/widgets/responsive_safe_area.dart';
@@ -40,25 +41,28 @@ class _LangListViewBody extends StatelessWidget {
       child: PlatformScaffold(
         backgroundColor: Colors.transparent,
         appBar: PlatformAppBar(
-          title: Text("lang_list.title").tr(context: context),
-          material: (context, _) => MaterialAppBarData(
-            centerTitle: true,
-            shape: appBarShape(context),
-          ),
-          leading: PlatformIconButton(
-            icon: Icon(
-              isMaterial(context) ? Ionicons.md_exit : Ionicons.ios_exit,
-              color: Colors.white
-            ),
-            color: Colors.transparent,
-            onPressed: () {
-              context.read<FirebaseAuthService>().signOut();
-            },
-          ),
-          // trailingActions: <Widget>[
-
-          // ],
-        ),
+            title: Text("lang_list.title").tr(context: context),
+            material: (context, _) => MaterialAppBarData(
+                  centerTitle: true,
+                  shape: appBarShape(context),
+                ),
+            leading: PlatformIconButton(
+              padding: EdgeInsets.zero,
+              icon: Icon(
+                isMaterial(context) ? Ionicons.md_exit : Ionicons.ios_exit,
+                color: Colors.white,
+              ),
+              color: Colors.transparent,
+              onPressed: () {
+                context.read<FirebaseAuthService>().signOut();
+                Navigator.of(context).pushReplacement(
+                  platformPageRoute(
+                    context: context,
+                    builder: (context) => IntroView(),
+                  ),
+                );
+              },
+            )),
         body: isLoading ? LoadingIndicator() : _langList(context),
       ),
     );

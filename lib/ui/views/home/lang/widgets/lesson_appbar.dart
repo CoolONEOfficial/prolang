@@ -6,6 +6,7 @@ import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/services/firebase_auth_service.dart';
 import 'package:prolang/app/services/firestore_service.dart';
 import 'package:prolang/ui/views/form/lang_form_view.dart';
+import 'package:prolang/ui/views/home/lang_list/lang_list_view.dart';
 import 'package:prolang/ui/widgets/firebase_image.dart';
 import 'package:prolang/ui/widgets/platform_progress_dialog.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -27,6 +28,17 @@ class LessonAppBar extends StatelessWidget {
     final lang = context.watch<Lang>();
     final fs = context.watch<FirestoreService>();
     return SliverAppBar(
+      leading: ModalRoute.of(context).canPop
+          ? null
+          : PlatformIconButton(
+              icon: Icon(PlatformIcons(context).flag),
+              onPressed: () => Navigator.of(context).pushReplacement(
+                platformPageRoute(
+                  context: context,
+                  builder: (context) => LangListView(),
+                ),
+              ),
+            ),
       shape: appBarShape(context),
       expandedHeight: expandedHeight,
       pinned: true,
@@ -34,7 +46,7 @@ class LessonAppBar extends StatelessWidget {
               FirebaseAuthService.cachedCurrentUser.isAdmin
           ? <Widget>[
               PlatformIconButton(
-                icon: Icon(PlatformIcons(context).delete),
+                icon: Icon(PlatformIcons(context).delete, color: Colors.white),
                 onPressed: () async {
                   showPlatformDialog(
                     context: context,
@@ -77,7 +89,10 @@ class LessonAppBar extends StatelessWidget {
                 },
               ),
               PlatformIconButton(
-                icon: Icon(PlatformIcons(context).create),
+                icon: Icon(
+                  PlatformIcons(context).create,
+                  color: Colors.white,
+                ),
                 onPressed: () async {
                   if (await Navigator.of(context).push(
                         platformPageRoute(

@@ -24,6 +24,7 @@ abstract class User implements _$User {
     @JsonKey(nullable: true)
         final Map<String, Map<String, Map<String, double>>> progress,
     @JsonKey(nullable: true) final Map<String, List<String>> purchases,
+    @JsonKey(nullable: true) final String currentLang,
   }) = _User;
 
   bool sectionPurchased(Lang lang, LessonSection section) =>

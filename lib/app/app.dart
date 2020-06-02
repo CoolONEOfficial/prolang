@@ -3,7 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:prolang/app/constants/firebase_paths.dart';
+import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/user.dart';
+import 'package:prolang/app/services/firestore_service.dart';
+import 'package:prolang/ui/views/home/lang/lang_view.dart';
 import 'package:prolang/ui/views/home/lang_list/lang_list_view.dart';
 import 'package:prolang/ui/views/intro/intro_view.dart';
 import 'package:prolang/ui/widgets/splashscreen.dart';
@@ -62,6 +66,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    final fs = context.watch<FirestoreService>();
     final lightTheme = ThemeData(
       brightness: WidgetsBinding.instance.window.platformBrightness,
       primaryColor: ThemeColors.primaryLight,
@@ -111,20 +116,28 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                   color: ThemeColors.textColor(),
                 ),
                 primaryColor: ThemeColors.primaryLight,
-                pickerTextStyle: TextStyle(
-                  color: Colors.black
-                )
+                pickerTextStyle: TextStyle(color: Colors.black),
               ),
             ),
           );
         },
         home: Consumer<Tuple2<UserState, User>>(
           builder: (_, user, __) {
-            switch (user.item1) { 
+            switch (user.item1) {
               case UserState.Done:
                 return user.item2 == null
                     ? const IntroView()
-                    : const LangListView();
+                    : user.item2.currentLang != null
+                        ? FutureBuilder(
+                            future: FirebasePaths.langRefById(
+                                    user.item2.currentLang)
+                                .get(),
+                            builder: (context, ss) =>
+                                ss.connectionState == ConnectionState.done
+                                    ? LangView(Lang.fromSnapshot(ss.data))
+                                    : SplashScreen(),
+                          )
+                        : const LangListView();
               default:
                 return SplashScreen();
             }
