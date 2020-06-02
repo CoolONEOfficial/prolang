@@ -6,6 +6,7 @@ import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
 import 'package:prolang/app/models/phrase.dart';
 import 'package:prolang/app/models/question.dart';
+import 'package:prolang/app/models/user.dart';
 import 'package:prolang/app/services/firebase_auth_service.dart';
 
 class FirestoreService {
@@ -36,7 +37,8 @@ class FirestoreService {
   // Load
 
   Future<List<Lang>> loadLangList() async {
-    var langListSnapshot = await _firestore.collection('langs').getDocuments();
+    var langListSnapshot =
+        await _firestore.collection('langs').orderBy('index').getDocuments();
     return langListSnapshot.documents
         .map((langSnapshot) => Lang.fromSnapshot(langSnapshot))
         .toList();

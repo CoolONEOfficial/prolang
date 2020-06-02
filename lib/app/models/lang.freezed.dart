@@ -20,8 +20,8 @@ class _$LangTearOff {
       String flag,
       String color,
       String documentId,
-      String teacher,
-      String adminId,
+      String initials,
+      String teacherId,
       int avatarBytes,
       int headerBytes,
       int index}) {
@@ -30,8 +30,8 @@ class _$LangTearOff {
       flag: flag,
       color: color,
       documentId: documentId,
-      teacher: teacher,
-      adminId: adminId,
+      initials: initials,
+      teacherId: teacherId,
       avatarBytes: avatarBytes,
       headerBytes: headerBytes,
       index: index,
@@ -47,8 +47,8 @@ mixin _$Lang {
   String get flag;
   String get color;
   String get documentId;
-  String get teacher;
-  String get adminId;
+  String get initials;
+  String get teacherId;
   int get avatarBytes;
   int get headerBytes;
   int get index;
@@ -65,8 +65,8 @@ abstract class $LangCopyWith<$Res> {
       String flag,
       String color,
       String documentId,
-      String teacher,
-      String adminId,
+      String initials,
+      String teacherId,
       int avatarBytes,
       int headerBytes,
       int index});
@@ -85,8 +85,8 @@ class _$LangCopyWithImpl<$Res> implements $LangCopyWith<$Res> {
     Object flag = freezed,
     Object color = freezed,
     Object documentId = freezed,
-    Object teacher = freezed,
-    Object adminId = freezed,
+    Object initials = freezed,
+    Object teacherId = freezed,
     Object avatarBytes = freezed,
     Object headerBytes = freezed,
     Object index = freezed,
@@ -97,8 +97,8 @@ class _$LangCopyWithImpl<$Res> implements $LangCopyWith<$Res> {
       color: color == freezed ? _value.color : color as String,
       documentId:
           documentId == freezed ? _value.documentId : documentId as String,
-      teacher: teacher == freezed ? _value.teacher : teacher as String,
-      adminId: adminId == freezed ? _value.adminId : adminId as String,
+      initials: initials == freezed ? _value.initials : initials as String,
+      teacherId: teacherId == freezed ? _value.teacherId : teacherId as String,
       avatarBytes:
           avatarBytes == freezed ? _value.avatarBytes : avatarBytes as int,
       headerBytes:
@@ -117,8 +117,8 @@ abstract class _$LangCopyWith<$Res> implements $LangCopyWith<$Res> {
       String flag,
       String color,
       String documentId,
-      String teacher,
-      String adminId,
+      String initials,
+      String teacherId,
       int avatarBytes,
       int headerBytes,
       int index});
@@ -138,8 +138,8 @@ class __$LangCopyWithImpl<$Res> extends _$LangCopyWithImpl<$Res>
     Object flag = freezed,
     Object color = freezed,
     Object documentId = freezed,
-    Object teacher = freezed,
-    Object adminId = freezed,
+    Object initials = freezed,
+    Object teacherId = freezed,
     Object avatarBytes = freezed,
     Object headerBytes = freezed,
     Object index = freezed,
@@ -150,8 +150,8 @@ class __$LangCopyWithImpl<$Res> extends _$LangCopyWithImpl<$Res>
       color: color == freezed ? _value.color : color as String,
       documentId:
           documentId == freezed ? _value.documentId : documentId as String,
-      teacher: teacher == freezed ? _value.teacher : teacher as String,
-      adminId: adminId == freezed ? _value.adminId : adminId as String,
+      initials: initials == freezed ? _value.initials : initials as String,
+      teacherId: teacherId == freezed ? _value.teacherId : teacherId as String,
       avatarBytes:
           avatarBytes == freezed ? _value.avatarBytes : avatarBytes as int,
       headerBytes:
@@ -168,8 +168,8 @@ class _$_Lang with DiagnosticableTreeMixin implements _Lang {
       this.flag,
       this.color,
       this.documentId,
-      this.teacher,
-      this.adminId,
+      this.initials,
+      this.teacherId,
       this.avatarBytes,
       this.headerBytes,
       this.index});
@@ -186,9 +186,9 @@ class _$_Lang with DiagnosticableTreeMixin implements _Lang {
   @override
   final String documentId;
   @override
-  final String teacher;
+  final String initials;
   @override
-  final String adminId;
+  final String teacherId;
   @override
   final int avatarBytes;
   @override
@@ -198,7 +198,7 @@ class _$_Lang with DiagnosticableTreeMixin implements _Lang {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Lang(title: $title, flag: $flag, color: $color, documentId: $documentId, teacher: $teacher, adminId: $adminId, avatarBytes: $avatarBytes, headerBytes: $headerBytes, index: $index)';
+    return 'Lang(title: $title, flag: $flag, color: $color, documentId: $documentId, initials: $initials, teacherId: $teacherId, avatarBytes: $avatarBytes, headerBytes: $headerBytes, index: $index)';
   }
 
   @override
@@ -210,8 +210,8 @@ class _$_Lang with DiagnosticableTreeMixin implements _Lang {
       ..add(DiagnosticsProperty('flag', flag))
       ..add(DiagnosticsProperty('color', color))
       ..add(DiagnosticsProperty('documentId', documentId))
-      ..add(DiagnosticsProperty('teacher', teacher))
-      ..add(DiagnosticsProperty('adminId', adminId))
+      ..add(DiagnosticsProperty('initials', initials))
+      ..add(DiagnosticsProperty('teacherId', teacherId))
       ..add(DiagnosticsProperty('avatarBytes', avatarBytes))
       ..add(DiagnosticsProperty('headerBytes', headerBytes))
       ..add(DiagnosticsProperty('index', index));
@@ -230,12 +230,12 @@ class _$_Lang with DiagnosticableTreeMixin implements _Lang {
             (identical(other.documentId, documentId) ||
                 const DeepCollectionEquality()
                     .equals(other.documentId, documentId)) &&
-            (identical(other.teacher, teacher) ||
+            (identical(other.initials, initials) ||
                 const DeepCollectionEquality()
-                    .equals(other.teacher, teacher)) &&
-            (identical(other.adminId, adminId) ||
+                    .equals(other.initials, initials)) &&
+            (identical(other.teacherId, teacherId) ||
                 const DeepCollectionEquality()
-                    .equals(other.adminId, adminId)) &&
+                    .equals(other.teacherId, teacherId)) &&
             (identical(other.avatarBytes, avatarBytes) ||
                 const DeepCollectionEquality()
                     .equals(other.avatarBytes, avatarBytes)) &&
@@ -253,8 +253,8 @@ class _$_Lang with DiagnosticableTreeMixin implements _Lang {
       const DeepCollectionEquality().hash(flag) ^
       const DeepCollectionEquality().hash(color) ^
       const DeepCollectionEquality().hash(documentId) ^
-      const DeepCollectionEquality().hash(teacher) ^
-      const DeepCollectionEquality().hash(adminId) ^
+      const DeepCollectionEquality().hash(initials) ^
+      const DeepCollectionEquality().hash(teacherId) ^
       const DeepCollectionEquality().hash(avatarBytes) ^
       const DeepCollectionEquality().hash(headerBytes) ^
       const DeepCollectionEquality().hash(index);
@@ -275,8 +275,8 @@ abstract class _Lang implements Lang {
       String flag,
       String color,
       String documentId,
-      String teacher,
-      String adminId,
+      String initials,
+      String teacherId,
       int avatarBytes,
       int headerBytes,
       int index}) = _$_Lang;
@@ -292,9 +292,9 @@ abstract class _Lang implements Lang {
   @override
   String get documentId;
   @override
-  String get teacher;
+  String get initials;
   @override
-  String get adminId;
+  String get teacherId;
   @override
   int get avatarBytes;
   @override

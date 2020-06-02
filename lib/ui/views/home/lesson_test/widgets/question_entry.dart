@@ -97,7 +97,7 @@ class _QuestionEntryState extends State<QuestionEntry> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        FirebaseAuthService.cachedCurrentUser.uid == lang.adminId
+        FirebaseAuthService.cachedCurrentUser.uid == lang.teacherId
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -206,7 +206,7 @@ class _QuestionEntryState extends State<QuestionEntry> {
             ),
           ),
         ),
-        FirebaseAuthService.cachedCurrentUser.uid == lang.adminId
+        FirebaseAuthService.cachedCurrentUser.uid == lang.teacherId
             ? Container()
             : Padding(
                 padding: EdgeInsets.all(16.0).add(EdgeInsets.only(

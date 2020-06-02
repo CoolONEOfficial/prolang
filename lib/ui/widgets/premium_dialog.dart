@@ -156,16 +156,19 @@ class PremiumDialog extends StatelessWidget {
       if (kIsWeb) {
         launch(url);
         Navigator.pop(context);
-        showPlatformDialog(context: context, builder: (context) => PlatformAlertDialog(
-          title: Text("Подтверждение покупки"),
-          content: Text("После подтверждения оплаты доступ к курсу будет предоставлен."),
-          actions: <Widget>[
-            PlatformDialogAction(
-              child: Text("dismiss".tr()),
-              onPressed: () => Navigator.of(context).pop(),
-            )
-          ]
-        ));
+        showPlatformDialog(
+          context: context,
+          builder: (context) => PlatformAlertDialog(
+              title: Text("Подтверждение покупки"),
+              content: Text(
+                  "После подтверждения оплаты доступ к курсу будет предоставлен."),
+              actions: <Widget>[
+                PlatformDialogAction(
+                  child: Text("dismiss".tr()),
+                  onPressed: () => Navigator.of(context).pop(),
+                )
+              ]),
+        );
       } else {
         final listenSubscription = flutterWebviewPlugin.onUrlChanged.listen(
           (String url) async {

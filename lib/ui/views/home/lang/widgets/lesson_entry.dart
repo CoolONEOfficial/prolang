@@ -74,7 +74,7 @@ class LessonEntry extends StatelessWidget {
                 lesson.title,
               ),
             ] +
-            (FirebaseAuthService.cachedCurrentUser.uid == lang.adminId
+            (FirebaseAuthService.cachedCurrentUser.uid == lang.teacherId
                 ? [
                     Spacer(),
                     PlatformIconButton(
@@ -123,7 +123,7 @@ class LessonEntry extends StatelessWidget {
       onPressed: () {
         final currentUser = FirebaseAuthService.cachedCurrentUser;
         if (section.index != 0 &&
-            lang.adminId != currentUser.uid &&
+            lang.teacherId != currentUser.uid &&
             !currentUser.sectionPurchased(lang, section)) {
           showPlatformDialog(
             context: context,

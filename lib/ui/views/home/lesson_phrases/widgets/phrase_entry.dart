@@ -118,7 +118,7 @@ class _PhraseEntryState extends State<PhraseEntry>
             ),
           ]..insertAll(
               1,
-              FirebaseAuthService.cachedCurrentUser.uid == lang.adminId
+              FirebaseAuthService.cachedCurrentUser.uid == lang.teacherId
                   ? [
                       PlatformIconButton(
                         icon: Icon(PlatformIcons(context).create),

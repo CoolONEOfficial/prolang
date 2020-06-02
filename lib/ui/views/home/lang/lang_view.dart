@@ -72,9 +72,15 @@ class LangView extends StatelessWidget {
   }) async {
     showPlatformDialog(
       context: context,
-      builder: (_) => PlatformProgressDialog(text: "lang.delete.progress".tr()),
+      builder: (_) => PlatformProgressDialog(
+        text: "lang.delete.progress".tr(),
+      ),
     );
-    await context.read<FirestoreService>().deleteLesson(lang, section, lesson);
+    await context.read<FirestoreService>().deleteLesson(
+          lang,
+          section,
+          lesson,
+        );
     context.read<LangViewModel>().loadLessonList();
     Navigator.pop(context);
   }
@@ -160,102 +166,104 @@ class _LangViewBody extends StatelessWidget {
     return ScrollConfiguration(
       behavior: ClampingBehavior(),
       child: StreamBuilder<Object>(
-        stream: FirebasePaths.currentUserRef().snapshots(),
-        builder: (context, snapshot) {
-          return LessonFab(
-            expandedHeight: expandedHeight,
-            avatarSize: avatarSize,
-            basePath: basePath,
-            slivers: <Widget>[
-                  SliverPadding(
-                    padding: EdgeInsets.only(
-                      bottom: getValueForScreenType(
-                        context: context,
-                        mobile: avatarSize / 2,
-                        tablet: 0,
-                      ),
-                    ),
-                    sliver: LessonAppBar(
-                      expandedHeight: expandedHeight,
-                      basePath: basePath,
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: headTextAlign,
-                        children: <Widget>[
-                          Text(
-                            "Преподаватель",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText2
-                                .copyWith(color: ThemeColors.textColor()),
-                          ),
-                          Text(
-                            lang.teacher,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline4
-                                .copyWith(color: ThemeColors.textColor()),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ] +
-                sectionList.asMap().entries.map((entry) {
-                  final index = entry.key;
-                  final section = entry.value;
-                  bool enabled;
-                  if (index == 0 || FirebaseAuthService.cachedCurrentUser.uid == lang.adminId) {
-                    enabled = true;
-                  } else {
-                    final prevSection = sectionList[index - 1];
-                    final sectionProgress = FirebaseAuthService
-                        .cachedCurrentUser.progress
-                        ?.get(lang.documentId)
-                        ?.get(prevSection.key.documentId);
-                    enabled = (sectionProgress?.keys?.length ??
-                        0) == prevSection.value.length &&
-                            sectionProgress.values
-                                .every((result) => result > 2 / 3);
-                  }
-                  return LessonSliver(
-                    section,
-                    enabled: enabled,
-                  );
-                }).toList() +
-                (FirebaseAuthService.cachedCurrentUser.uid == lang.adminId
-                    ? [
-                        SliverToBoxAdapter(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(30.0),
-                                child: PlatformIconButton(
-                                  icon: Icon(
-                                    PlatformIcons(context).add,
-                                    color: ThemeColors.iconColor(),
-                                    size: 40,
-                                  ),
-                                  onPressed: () => LangView.showLessonSectionForm(
-                                    context,
-                                    insertPosition: sectionList.length,
-                                    lang: lang,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
+          stream: FirebasePaths.currentUserRef().snapshots(),
+          builder: (context, snapshot) {
+            return LessonFab(
+              expandedHeight: expandedHeight,
+              avatarSize: avatarSize,
+              basePath: basePath,
+              slivers: <Widget>[
+                    SliverPadding(
+                      padding: EdgeInsets.only(
+                        bottom: getValueForScreenType(
+                          context: context,
+                          mobile: avatarSize / 2,
+                          tablet: 0,
                         ),
-                      ]
-                    : []),
-          );
-        }
-      ),
+                      ),
+                      sliver: LessonAppBar(
+                        expandedHeight: expandedHeight,
+                        basePath: basePath,
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: headTextAlign,
+                          children: <Widget>[
+                            Text(
+                              "Преподаватель",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2
+                                  .copyWith(color: ThemeColors.textColor()),
+                            ),
+                            Text(
+                              lang.initials,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline4
+                                  .copyWith(color: ThemeColors.textColor()),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ] +
+                  sectionList.asMap().entries.map((entry) {
+                    final index = entry.key;
+                    final section = entry.value;
+                    bool enabled;
+                    if (index == 0 ||
+                        FirebaseAuthService.cachedCurrentUser.uid ==
+                            lang.teacherId) {
+                      enabled = true;
+                    } else {
+                      final prevSection = sectionList[index - 1];
+                      final sectionProgress = FirebaseAuthService
+                          .cachedCurrentUser.progress
+                          ?.get(lang.documentId)
+                          ?.get(prevSection.key.documentId);
+                      enabled = (sectionProgress?.keys?.length ?? 0) ==
+                              prevSection.value.length &&
+                          sectionProgress.values
+                              .every((result) => result > 2 / 3);
+                    }
+                    return LessonSliver(
+                      section,
+                      enabled: enabled,
+                    );
+                  }).toList() +
+                  (FirebaseAuthService.cachedCurrentUser.uid == lang.teacherId
+                      ? [
+                          SliverToBoxAdapter(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(30.0),
+                                  child: PlatformIconButton(
+                                    icon: Icon(
+                                      PlatformIcons(context).add,
+                                      color: ThemeColors.iconColor(),
+                                      size: 40,
+                                    ),
+                                    onPressed: () =>
+                                        LangView.showLessonSectionForm(
+                                      context,
+                                      insertPosition: sectionList.length,
+                                      lang: lang,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ]
+                      : []),
+            );
+          }),
     );
   }
 }

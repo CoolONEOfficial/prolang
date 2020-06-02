@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
-class PlatformCard extends PlatformWidgetBase<CupertinoButton, Card> {
+class PlatformCard extends PlatformWidgetBase<GestureDetector, Card> {
   PlatformCard({
     Key key,
     this.color,
@@ -15,6 +15,7 @@ class PlatformCard extends PlatformWidgetBase<CupertinoButton, Card> {
     this.semanticContainer = true,
     this.enabled = true,
     this.onPressed,
+    this.onLongPressed,
   })  : assert(borderOnForeground != null),
         super(key: key);
 
@@ -28,8 +29,10 @@ class PlatformCard extends PlatformWidgetBase<CupertinoButton, Card> {
 
   final bool enabled;
   final VoidCallback onPressed;
+  final VoidCallback onLongPressed;
 
   VoidCallback get _onPressed => enabled ? onPressed : null;
+  VoidCallback get _onLongPressed => enabled ? onLongPressed : null;
   Color _color(BuildContext context) => enabled
       ? color ?? Theme.of(context).cardColor
       : Theme.of(context).disabledColor;
@@ -45,30 +48,34 @@ class PlatformCard extends PlatformWidgetBase<CupertinoButton, Card> {
       semanticContainer: semanticContainer,
       child: InkWell(
         onTap: _onPressed,
+        onLongPress: _onLongPressed,
         child: child,
       ),
     );
   }
 
   @override
-  CupertinoButton createCupertinoWidget(BuildContext context) {
-    return CupertinoButton(
-      padding: EdgeInsets.zero,
-      onPressed: _onPressed,
-      child: Container(
-        width: double.infinity,
-        child: Card(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+  GestureDetector createCupertinoWidget(BuildContext context) {
+    return GestureDetector(
+      onLongPress: _onLongPressed,
+      child: CupertinoButton(
+        padding: EdgeInsets.zero,
+        onPressed: _onPressed,
+        child: Container(
+          width: double.infinity,
+          child: Card(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            color: _color(context),
+            shadowColor: shadowColor,
+            borderOnForeground: borderOnForeground,
+            clipBehavior: clipBehavior,
+            margin: margin,
+            semanticContainer: semanticContainer,
+            child: child,
           ),
-          color: _color(context),
-          shadowColor: shadowColor,
-          borderOnForeground: borderOnForeground,
-          clipBehavior: clipBehavior,
-          margin: margin,
-          semanticContainer: semanticContainer,
-          child: child,
         ),
       ),
     );

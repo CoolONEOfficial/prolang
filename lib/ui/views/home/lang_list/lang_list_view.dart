@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:prolang/app/helpers/app_bar_shape.dart';
@@ -44,15 +45,19 @@ class _LangListViewBody extends StatelessWidget {
             centerTitle: true,
             shape: appBarShape(context),
           ),
-          trailingActions: <Widget>[
-            PlatformButton(
-              child: Text("Signout"),
-              color: Colors.transparent,
-              onPressed: () {
-                context.read<FirebaseAuthService>().signOut();
-              },
-            )
-          ],
+          leading: PlatformIconButton(
+            icon: Icon(
+              isMaterial(context) ? Ionicons.md_exit : Ionicons.ios_exit,
+              color: Colors.white
+            ),
+            color: Colors.transparent,
+            onPressed: () {
+              context.read<FirebaseAuthService>().signOut();
+            },
+          ),
+          // trailingActions: <Widget>[
+
+          // ],
         ),
         body: isLoading ? LoadingIndicator() : _langList(context),
       ),
@@ -84,14 +89,19 @@ class _LangListViewBody extends StatelessWidget {
                           ),
                         ),
                       ),
-                      onPressed: () => Navigator.of(context).push(
-                        platformPageRoute(
-                          context: context,
-                          builder: (context) => LangFormView(
-                            insertPosition: langList.length,
-                          ),
-                        ),
-                      ),
+                      onPressed: () async {
+                        if (await Navigator.of(context).push(
+                              platformPageRoute(
+                                context: context,
+                                builder: (context) => LangFormView(
+                                  insertPosition: langList.length,
+                                ),
+                              ),
+                            ) ==
+                            true) {
+                          context.read<LangListViewModel>().loadLangList();
+                        }
+                      },
                     ),
                   ),
                 ]

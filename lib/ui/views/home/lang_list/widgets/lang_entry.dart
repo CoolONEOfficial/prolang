@@ -7,6 +7,9 @@ import 'package:prolang/ui/views/home/lang/lang_view.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:prolang/ui/widgets/platform_card.dart';
 import 'package:tinycolor/tinycolor.dart';
+import 'package:provider/provider.dart';
+
+import '../lang_list_view_model.dart';
 
 class LangEntry extends StatelessWidget {
   final Lang lang;
@@ -42,8 +45,8 @@ class LangEntry extends StatelessWidget {
             ),
           ),
         ),
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          if (await Navigator.push(
             context,
             platformPageRoute(
               context: context,
@@ -52,7 +55,9 @@ class LangEntry extends StatelessWidget {
                 iosTitle: "lang_list.title".tr(),
               ),
             ),
-          );
+          ) == true) {
+            context.read<LangListViewModel>().loadLangList();
+          }
         },
       ),
     );
@@ -95,7 +100,6 @@ class LangEntry extends StatelessWidget {
   }
 
   Widget _cardText(BuildContext context, Lang lang) {
-    
     return AutoSizeText(
       lang.title,
       style: TextStyle(fontSize: 28, color: Colors.white),

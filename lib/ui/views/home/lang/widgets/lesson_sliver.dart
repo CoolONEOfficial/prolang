@@ -62,7 +62,7 @@ class LessonSliver extends StatelessWidget {
                                   (index == 0 ||
                                       FirebaseAuthService
                                               .cachedCurrentUser.uid ==
-                                          lang.adminId ||
+                                          lang.teacherId ||
                                       FirebaseAuthService.cachedCurrentUser
                                           .lessonCompleted(lang, section.key,
                                               section.value[index - 1])),
@@ -71,7 +71,7 @@ class LessonSliver extends StatelessWidget {
                         );
                       },
                     ).toList() +
-                    (FirebaseAuthService.cachedCurrentUser.uid == lang.adminId
+                    (FirebaseAuthService.cachedCurrentUser.uid == lang.teacherId
                         ? [
                             ResponsiveGridCol(
                               lg: 6,

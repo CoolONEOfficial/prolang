@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:prolang/app/constants/theme_colors.dart';
 import 'package:prolang/app/helpers/app_bar_shape.dart';
 import 'package:prolang/app/models/lang.dart';
+import 'package:prolang/app/services/firebase_auth_service.dart';
+import 'package:prolang/app/services/firestore_service.dart';
+import 'package:prolang/ui/views/form/lang_form_view.dart';
 import 'package:prolang/ui/widgets/firebase_image.dart';
+import 'package:prolang/ui/widgets/platform_progress_dialog.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
-
-import '../lang_view.dart';
 
 class LessonAppBar extends StatelessWidget {
   final String basePath;
@@ -24,10 +25,75 @@ class LessonAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final lang = context.watch<Lang>();
+    final fs = context.watch<FirestoreService>();
     return SliverAppBar(
       shape: appBarShape(context),
       expandedHeight: expandedHeight,
       pinned: true,
+      actions: lang.teacherId == FirebaseAuthService.cachedCurrentUser.uid ||
+              FirebaseAuthService.cachedCurrentUser.isAdmin
+          ? <Widget>[
+              PlatformIconButton(
+                icon: Icon(PlatformIcons(context).delete),
+                onPressed: () async {
+                  showPlatformDialog(
+                    context: context,
+                    builder: (_) => PlatformAlertDialog(
+                      title: Text("lang.delete.confirmation".tr()),
+                      actions: <Widget>[
+                        PlatformDialogAction(
+                          child: PlatformText(
+                            "cancel".tr(),
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor),
+                          ),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                        PlatformDialogAction(
+                          cupertino: (_, __) => CupertinoDialogActionData(
+                            isDestructiveAction: true,
+                          ),
+                          child: PlatformText(
+                            "delete".tr(),
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor),
+                          ),
+                          onPressed: () async {
+                            Navigator.pop(context);
+                            showPlatformDialog(
+                              context: context,
+                              builder: (_) => PlatformProgressDialog(
+                                text: "lang.delete.progress".tr(),
+                              ),
+                            );
+                            await fs.deleteLang(lang);
+                            Navigator.pop(context);
+                            Navigator.pop(context, true);
+                          },
+                        )
+                      ],
+                    ),
+                  );
+                },
+              ),
+              PlatformIconButton(
+                icon: Icon(PlatformIcons(context).create),
+                onPressed: () async {
+                  if (await Navigator.of(context).push(
+                        platformPageRoute(
+                          context: context,
+                          builder: (context) => LangFormView(
+                            lang: lang,
+                          ),
+                        ),
+                      ) ==
+                      true) {
+                    Navigator.pop(context);
+                  }
+                },
+              )
+            ]
+          : [],
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: EdgeInsets.zero,
         title: SafeArea(

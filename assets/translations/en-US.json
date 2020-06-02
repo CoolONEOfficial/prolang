@@ -8,6 +8,8 @@
     "edit": "Confirm",
     "cancel": "Cancel",
     "attach": "Attach",
+    "crop": "Crop",
+    "no_crop": "Keep original",
     "unattach": "Unattach",
     "dismiss": "Dismiss",
     "required_field": "This field is required.",
@@ -48,6 +50,12 @@
     "lang_list": {
         "title": "Languages"
     },
+    "lang": {
+        "delete": {
+            "confirmation": "Delete language?",
+            "progress": "Deleting language..."
+        }
+    },
     "lesson": {
         "delete": {
             "confirmation": "Delete lesson?",
@@ -76,7 +84,7 @@
         "create": {
             "confirmation": "Create language?",
             "progress": "Creating language...",
-            "title": "Add lang"
+            "title": "Add language"
         },
         "edit": {
             "confirmation": "Apply changes?",
@@ -89,8 +97,8 @@
                 "label": "Title",
                 "hint": "English, Spanish, etc..."
             },
-            "teacher": {
-                "label": "Teacher",
+            "initials": {
+                "label": "Initials",
                 "hint": "John Gates..."
             },
             "flag": {
@@ -107,6 +115,10 @@
             },
             "color": {
                 "label": "Color"
+            },
+            "teacher": {
+                "label": "Admin",
+                "hint": "Select user mail"
             }
         }
     },

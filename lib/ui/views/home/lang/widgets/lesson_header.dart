@@ -112,7 +112,7 @@ class LessonHeader extends StatelessWidget {
               )
             ]..insertAll(
                 1,
-                FirebaseAuthService.cachedCurrentUser.uid == lang.adminId
+                FirebaseAuthService.cachedCurrentUser.uid == lang.teacherId
                     ? [
                         PlatformIconButton(
                           icon: Icon(

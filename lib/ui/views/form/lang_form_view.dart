@@ -2,19 +2,23 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:card_settings/card_settings.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:emojis/emoji.dart';
 import 'package:file_picker_cross/file_picker_cross.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:image/image.dart' as Image;
+import 'package:image/image.dart' as I;
 import 'package:prolang/app/constants/firebase_paths.dart';
 import 'package:prolang/app/helpers/form_localization.dart';
 import 'package:prolang/app/models/lang.dart';
+import 'package:prolang/app/extensions/map_get.dart';
 import 'package:prolang/app/services/firebase_storage_service.dart';
 import 'package:prolang/app/services/firestore_service.dart';
 import 'package:prolang/ui/views/form/widgets/image_crop_dialog.dart';
+import 'package:prolang/ui/widgets/loading_indicator.dart';
 import 'package:prolang/ui/widgets/platform_progress_dialog.dart';
 import 'package:prolang/ui/widgets/required_indicator.dart';
 import 'package:prolang/ui/widgets/responsive_safe_area.dart';
@@ -51,10 +55,11 @@ class _LangFormState extends State<LangFormView> {
   // if you only have one orientation, the _formKey is sufficient
   final GlobalKey<FormState> _titleKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _flagKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _teacherKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _initialsKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _colorKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _headerKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _avatarKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _teacherKey = GlobalKey<FormState>();
 
   _LangFormState(this._langModel);
 
@@ -97,11 +102,12 @@ class _LangFormState extends State<LangFormView> {
           ),
           children: <Widget>[
             _buildCardSettingsText_Title(),
+            _buildCardSettingsText_Initials(),
             _buildCardSettingsTeacher(),
-            _buildCardSettingsColor(),
             _buildCardSettingsAvatar(),
             _buildCardSettingsHeader(),
             _buildCardSettingsFlag(),
+            _buildCardSettingsColor(),
           ],
         ),
       ],
@@ -119,11 +125,13 @@ class _LangFormState extends State<LangFormView> {
           ),
           children: <Widget>[
             _buildCardSettingsText_Title(),
+            _buildCardSettingsText_Initials(),
             _buildCardSettingsTeacher(),
-            _buildCardSettingsColor(),
             _buildCardSettingsAvatar(),
             _buildCardSettingsHeader(),
             _buildCardSettingsFlag(),
+            _buildCardSettingsColor(),
+
             // CardFieldLayout(
             //   <Widget>[
             //     _buildCardSettingsRadioPicker_Gender(),
@@ -157,9 +165,57 @@ class _LangFormState extends State<LangFormView> {
     );
   }
 
+  Widget _buildCardSettingsTeacher() {
+    return FutureProvider(
+      create: (_) => CloudFunctions.instance
+          .getHttpsCallable(
+            functionName: 'listUsers',
+          )
+          .call(),
+      builder: (_, __) => Consumer<HttpsCallableResult>(
+        builder: (context, result, __) {
+          final data = result?.data as Map;
+          final Iterable users = (data?.get("users") as List)
+              ?.where((user) => user["email"] != null);
+
+          return users != null
+              ? CardSettingsSelectionPicker(
+                  options: users.map<String>((user) => user["email"]).toList(),
+                  values: users.map<String>((user) => user["uid"]).toList(),
+                  icon: Icon(PlatformIcons(context).person),
+                  key: _teacherKey,
+                  label: 'lang_form.general.teacher.label'.tr(),
+                  hintText: 'lang_form.general.teacher.hint'.tr(),
+                  initialValue: _langModel.teacherId,
+                  requiredIndicator: RequiredIndicator(),
+                  validator: (value) {
+                    if (value == null || value.isEmpty)
+                      return 'required_field'.tr();
+                    return null;
+                  },
+                  onSaved: (value) => _langModel = _langModel.copyWith(
+                    teacherId: value,
+                  ),
+                  onChanged: (value) {
+                    setState(
+                      () => _langModel = _langModel.copyWith(
+                        teacherId: value,
+                      ),
+                    );
+                  },
+                )
+              : LoadingIndicator();
+        },
+      ),
+    );
+  }
+
   CardSettingsSelectionPicker _buildCardSettingsFlag() {
     return CardSettingsSelectionPicker(
       options: Emoji.byGroup(EmojiGroup.flags)
+          .map<String>((emoji) => "${emoji.char} ${emoji.name}")
+          .toList(),
+      values: Emoji.byGroup(EmojiGroup.flags)
           .map<String>((emoji) => emoji.char)
           .toList(),
       icon: Icon(PlatformIcons(context).flag),
@@ -181,21 +237,21 @@ class _LangFormState extends State<LangFormView> {
     );
   }
 
-  CardSettingsText _buildCardSettingsTeacher() {
+  CardSettingsText _buildCardSettingsText_Initials() {
     return CardSettingsText(
-      key: _teacherKey,
-      label: 'lang_form.general.teacher.label'.tr(),
-      hintText: 'lang_form.general.teacher.hint'.tr(),
-      initialValue: _langModel.teacher,
+      key: _initialsKey,
+      label: 'lang_form.general.initials.label'.tr(),
+      hintText: 'lang_form.general.initials.hint'.tr(),
+      initialValue: _langModel.initials,
       requiredIndicator: RequiredIndicator(),
       validator: (value) {
         if (value == null || value.length == 0) return 'required_field'.tr();
         return null;
       },
-      onSaved: (value) => _langModel = _langModel.copyWith(teacher: value),
+      onSaved: (value) => _langModel = _langModel.copyWith(initials: value),
       onChanged: (value) {
         setState(() {
-          _langModel = _langModel.copyWith(teacher: value);
+          _langModel = _langModel.copyWith(initials: value);
         });
       },
     );
@@ -215,12 +271,12 @@ class _LangFormState extends State<LangFormView> {
         return null;
       },
       onSaved: (value) => _langModel = _langModel.copyWith(
-        color: '#${value.value.toRadixString(16)}',
+        color: '#${value.value.toRadixString(16).substring(2)}',
       ),
       onChanged: (value) {
         setState(() {
           _langModel = _langModel.copyWith(
-            color: '#${value.value.toRadixString(16)}',
+            color: '#${value.value.toRadixString(16).substring(2)}',
           );
         });
       },
@@ -228,12 +284,13 @@ class _LangFormState extends State<LangFormView> {
   }
 
   CardSettingsFilePicker _buildCardSettingsAvatar() {
+    debugPrint("bytes: ${widget.lang?.avatarBytes}");
     return CardSettingsFilePicker(
       key: _avatarKey,
       label: 'lang_form.general.avatar.label'.tr(),
       icon: Icon(PlatformIcons(context).person),
       initialValue:
-          widget.lang != null ? Uint8List(widget.lang.avatarBytes) : null,
+          widget.lang?.avatarBytes != null ? Uint8List(widget.lang.avatarBytes) : null,
       unattachDialogTitle:
           'lang_form.general.avatar.unattach_confirmation'.tr(),
       unattachDialogCancel: 'cancel'.tr(),
@@ -246,25 +303,11 @@ class _LangFormState extends State<LangFormView> {
       },
       onChanged: (value) async {
         if (value != null) {
-          ui.Image cropped = await Navigator.of(context).push(
-            platformPageRoute(
-              context: context,
-              builder: (context) => ImageCropDialog(value),
-            ),
+          I.Image image = await showPlatformDialog(
+            context: context,
+            builder: (context) => ImageCropDialog(value),
           );
-          if (cropped == null) {
-            return;
-          }
-          final byteData = await cropped.toByteData();
-          var image = Image.Image.fromBytes(
-            cropped.width,
-            cropped.height,
-            byteData.buffer.asUint8List(
-              byteData.offsetInBytes,
-              byteData.lengthInBytes,
-            ),
-          );
-          _avatarFile = Image.encodePng(image);
+          _avatarFile = I.encodePng(image);
         } else {
           _avatarFile = null;
         }
@@ -294,8 +337,8 @@ class _LangFormState extends State<LangFormView> {
         return null;
       },
       onChanged: (value) {
-        final image = Image.decodeImage(value);
-        _headerFile = Image.encodeJpg(image, quality: 85);
+        final image = I.decodeImage(value);
+        _headerFile = I.encodeJpg(image, quality: 85);
         _headerChanged = true;
         _langModel = _langModel.copyWith(headerBytes: value.length);
       },

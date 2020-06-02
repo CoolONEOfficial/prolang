@@ -111,6 +111,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                   color: ThemeColors.textColor(),
                 ),
                 primaryColor: ThemeColors.primaryLight,
+                pickerTextStyle: TextStyle(
+                  color: Colors.black
+                )
               ),
             ),
           );

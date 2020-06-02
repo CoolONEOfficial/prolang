@@ -58,7 +58,7 @@ class LessonPhrasesView extends StatelessWidget {
             body: SafeArea(child: _LessonPhrasesViewBody._()),
             appBar: PlatformAppBar(
               trailingActions: FirebaseAuthService.cachedCurrentUser.uid ==
-                      lang.adminId
+                      lang.teacherId
                   ? <Widget>[
                       PlatformIconButton(
                         icon: Icon(

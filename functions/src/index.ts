@@ -5,6 +5,7 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 
 const db = admin.firestore();
+const auth = admin.auth();
 
 export const buySection = functions.https.onCall(async ({ langId, sectionId }, context) => {
 
@@ -60,4 +61,31 @@ export const paymentNotify = functions.https.onRequest(async (req, res) => {
     }, { merge: true });
 
     res.status(200).send();
+});
+
+export const listUsers = functions.https.onCall(async (data, context) => {
+
+    if (!context.auth) {
+        return { message: 'Authentication Required!', code: 401 };
+    }
+
+    const user = (await db.doc(`users/${context.auth.uid}`).get()).data();
+
+    if (user["isAdmin"] !== true) {
+        return { message: 'Admin permission Required!', code: 401 };
+    }
+
+    const users = await auth.listUsers(1000);
+
+    console.log('users', users);
+
+    return { 'users': users.users };
+
+    // auth.listUsers(1000).then((userRecords: any) => {
+    //     userRecords.users.forEach((user: any) => console.log(user.toJSON()));
+    //     return { 'users': userRecords.users };
+    // }).catch((error: any) => {
+    //     return console.log(error);
+    // });
+
 });

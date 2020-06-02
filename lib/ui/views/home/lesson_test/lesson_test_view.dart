@@ -65,7 +65,7 @@ class LessonTestView extends StatelessWidget {
               body: SafeArea(child: _LessonTestViewBody._()),
               appBar: PlatformAppBar(
                 trailingActions: FirebaseAuthService.cachedCurrentUser.uid ==
-                        lang.adminId
+                        lang.teacherId
                     ? <Widget>[
                         PlatformIconButton(
                           icon: Icon(PlatformIcons(context).add),
@@ -164,7 +164,7 @@ class _LessonTestViewBodyState extends State<_LessonTestViewBody> {
                   totalSteps: questionList.length,
                   currentStep: step,
                   size: (roundAppBar ? 10 : 5) +
-                      (FirebaseAuthService.cachedCurrentUser.uid == lang.adminId
+                      (FirebaseAuthService.cachedCurrentUser.uid == lang.teacherId
                           ? 10.0
                           : 0.0),
                   padding: 1,
@@ -183,7 +183,7 @@ class _LessonTestViewBodyState extends State<_LessonTestViewBody> {
                             ? TinyColor(color).darken(10).color
                             : color,
                         child: FirebaseAuthService.cachedCurrentUser.uid ==
-                                lang.adminId
+                                lang.teacherId
                             ? Text(
                                 questionList[index].title,
                                 textAlign: TextAlign.center,
@@ -192,7 +192,7 @@ class _LessonTestViewBodyState extends State<_LessonTestViewBody> {
                       ),
                       onTap: () {
                         if (FirebaseAuthService.cachedCurrentUser.uid ==
-                            lang.adminId) {
+                            lang.teacherId) {
                           setState(() {
                             vm.step = index;
                           });
