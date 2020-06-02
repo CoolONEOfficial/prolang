@@ -23,7 +23,7 @@ _$_User _$_$_UserFromJson(Map<String, dynamic> json) {
     purchases: (json['purchases'] as Map<String, dynamic>)?.map(
       (k, e) => MapEntry(k, (e as List)?.map((e) => e as String)?.toList()),
     ),
-    currentLang: json['currentLang'] as String,
+    currentLangId: json['currentLangId'] as String,
   );
 }
 
@@ -31,5 +31,5 @@ Map<String, dynamic> _$_$_UserToJson(_$_User instance) => <String, dynamic>{
       'isAdmin': instance.isAdmin,
       'progress': instance.progress,
       'purchases': instance.purchases,
-      'currentLang': instance.currentLang,
+      'currentLangId': instance.currentLangId,
     };

@@ -10,8 +10,8 @@ class GoogleSignInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return buttons.GoogleSignInButton(
-      onPressed: () {
-        context.read<FirebaseAuthService>().signInWithGoogle();
+      onPressed: () async {
+        await context.read<FirebaseAuthService>().signInWithGoogle();
       },
       darkMode: true,
       text: "intro.auth.button.google".tr(),

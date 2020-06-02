@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:prolang/app/constants/firebase_paths.dart';
 import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
 import 'package:prolang/app/extensions/map_get.dart';
+import 'package:prolang/app/services/firestore_service.dart';
 
 import 'lang.dart';
 
@@ -20,11 +22,12 @@ abstract class User implements _$User {
     @JsonKey(ignore: true) final String email,
     @JsonKey(ignore: true) final String photoUrl,
     @JsonKey(ignore: true) final String displayName,
+    @JsonKey(ignore: true) final Lang currentLang,
     @JsonKey(nullable: true, defaultValue: false) final bool isAdmin,
     @JsonKey(nullable: true)
         final Map<String, Map<String, Map<String, double>>> progress,
     @JsonKey(nullable: true) final Map<String, List<String>> purchases,
-    @JsonKey(nullable: true) final String currentLang,
+    @JsonKey(nullable: true) final String currentLangId,
   }) = _User;
 
   bool sectionPurchased(Lang lang, LessonSection section) =>
@@ -41,7 +44,9 @@ abstract class User implements _$User {
       0;
 
   factory User.fromSnapshotAndUser(
-      DocumentSnapshot snapshot, FirebaseUser user) {
+    DocumentSnapshot snapshot,
+    FirebaseUser user,
+  ) {
     return User.fromJson(snapshot.data ?? Map()).copyWith(
       uid: user.uid,
       email: user.email,

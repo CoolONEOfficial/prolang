@@ -44,7 +44,8 @@
             "button": {
                 "anonymous": "Войти анонимно",
                 "google": "Войти с Google"
-            }
+            },
+            "progress": "Авторизируюсь..."
         }
     },
     "lang_list": {

@@ -128,15 +128,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 return user.item2 == null
                     ? const IntroView()
                     : user.item2.currentLang != null
-                        ? FutureBuilder(
-                            future: FirebasePaths.langRefById(
-                                    user.item2.currentLang)
-                                .get(),
-                            builder: (context, ss) =>
-                                ss.connectionState == ConnectionState.done
-                                    ? LangView(Lang.fromSnapshot(ss.data))
-                                    : SplashScreen(),
-                          )
+                        ? LangView(user.item2.currentLang)
                         : const LangListView();
               default:
                 return SplashScreen();

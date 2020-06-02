@@ -44,7 +44,8 @@
             "button": {
                 "anonymous": "Anonimous sign in",
                 "google": "Sign in with Google"
-            }
+            },
+            "progress": "Authorizing..."
         }
     },
     "lang_list": {

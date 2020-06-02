@@ -53,14 +53,11 @@ class _LangListViewBody extends StatelessWidget {
                 color: Colors.white,
               ),
               color: Colors.transparent,
-              onPressed: () {
-                context.read<FirebaseAuthService>().signOut();
-                Navigator.of(context).pushReplacement(
-                  platformPageRoute(
-                    context: context,
-                    builder: (context) => IntroView(),
-                  ),
-                );
+              onPressed: () async {
+                await context.read<FirebaseAuthService>().signOut();
+                if (Navigator.of(context).canPop()) {
+                  Navigator.of(context).pop();
+                }
               },
             )),
         body: isLoading ? LoadingIndicator() : _langList(context),

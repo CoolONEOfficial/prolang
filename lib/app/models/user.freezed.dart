@@ -24,6 +24,8 @@ class _$UserTearOff {
           String photoUrl,
       @JsonKey(ignore: true)
           String displayName,
+      @JsonKey(ignore: true)
+          Lang currentLang,
       @JsonKey(nullable: true, defaultValue: false)
           bool isAdmin,
       @JsonKey(nullable: true)
@@ -31,16 +33,17 @@ class _$UserTearOff {
       @JsonKey(nullable: true)
           Map<String, List<String>> purchases,
       @JsonKey(nullable: true)
-          String currentLang}) {
+          String currentLangId}) {
     return _User(
       uid: uid,
       email: email,
       photoUrl: photoUrl,
       displayName: displayName,
+      currentLang: currentLang,
       isAdmin: isAdmin,
       progress: progress,
       purchases: purchases,
-      currentLang: currentLang,
+      currentLangId: currentLangId,
     );
   }
 }
@@ -57,6 +60,8 @@ mixin _$User {
   String get photoUrl;
   @JsonKey(ignore: true)
   String get displayName;
+  @JsonKey(ignore: true)
+  Lang get currentLang;
   @JsonKey(nullable: true, defaultValue: false)
   bool get isAdmin;
   @JsonKey(nullable: true)
@@ -64,7 +69,7 @@ mixin _$User {
   @JsonKey(nullable: true)
   Map<String, List<String>> get purchases;
   @JsonKey(nullable: true)
-  String get currentLang;
+  String get currentLangId;
 
   Map<String, dynamic> toJson();
   $UserCopyWith<User> get copyWith;
@@ -82,6 +87,8 @@ abstract class $UserCopyWith<$Res> {
           String photoUrl,
       @JsonKey(ignore: true)
           String displayName,
+      @JsonKey(ignore: true)
+          Lang currentLang,
       @JsonKey(nullable: true, defaultValue: false)
           bool isAdmin,
       @JsonKey(nullable: true)
@@ -89,7 +96,9 @@ abstract class $UserCopyWith<$Res> {
       @JsonKey(nullable: true)
           Map<String, List<String>> purchases,
       @JsonKey(nullable: true)
-          String currentLang});
+          String currentLangId});
+
+  $LangCopyWith<$Res> get currentLang;
 }
 
 class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
@@ -105,10 +114,11 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object email = freezed,
     Object photoUrl = freezed,
     Object displayName = freezed,
+    Object currentLang = freezed,
     Object isAdmin = freezed,
     Object progress = freezed,
     Object purchases = freezed,
-    Object currentLang = freezed,
+    Object currentLangId = freezed,
   }) {
     return _then(_value.copyWith(
       uid: uid == freezed ? _value.uid : uid as String,
@@ -116,6 +126,8 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
       photoUrl: photoUrl == freezed ? _value.photoUrl : photoUrl as String,
       displayName:
           displayName == freezed ? _value.displayName : displayName as String,
+      currentLang:
+          currentLang == freezed ? _value.currentLang : currentLang as Lang,
       isAdmin: isAdmin == freezed ? _value.isAdmin : isAdmin as bool,
       progress: progress == freezed
           ? _value.progress
@@ -123,9 +135,20 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
       purchases: purchases == freezed
           ? _value.purchases
           : purchases as Map<String, List<String>>,
-      currentLang:
-          currentLang == freezed ? _value.currentLang : currentLang as String,
+      currentLangId: currentLangId == freezed
+          ? _value.currentLangId
+          : currentLangId as String,
     ));
+  }
+
+  @override
+  $LangCopyWith<$Res> get currentLang {
+    if (_value.currentLang == null) {
+      return null;
+    }
+    return $LangCopyWith<$Res>(_value.currentLang, (value) {
+      return _then(_value.copyWith(currentLang: value));
+    });
   }
 }
 
@@ -142,6 +165,8 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
           String photoUrl,
       @JsonKey(ignore: true)
           String displayName,
+      @JsonKey(ignore: true)
+          Lang currentLang,
       @JsonKey(nullable: true, defaultValue: false)
           bool isAdmin,
       @JsonKey(nullable: true)
@@ -149,7 +174,10 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       @JsonKey(nullable: true)
           Map<String, List<String>> purchases,
       @JsonKey(nullable: true)
-          String currentLang});
+          String currentLangId});
+
+  @override
+  $LangCopyWith<$Res> get currentLang;
 }
 
 class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
@@ -166,10 +194,11 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object email = freezed,
     Object photoUrl = freezed,
     Object displayName = freezed,
+    Object currentLang = freezed,
     Object isAdmin = freezed,
     Object progress = freezed,
     Object purchases = freezed,
-    Object currentLang = freezed,
+    Object currentLangId = freezed,
   }) {
     return _then(_User(
       uid: uid == freezed ? _value.uid : uid as String,
@@ -177,6 +206,8 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
       photoUrl: photoUrl == freezed ? _value.photoUrl : photoUrl as String,
       displayName:
           displayName == freezed ? _value.displayName : displayName as String,
+      currentLang:
+          currentLang == freezed ? _value.currentLang : currentLang as Lang,
       isAdmin: isAdmin == freezed ? _value.isAdmin : isAdmin as bool,
       progress: progress == freezed
           ? _value.progress
@@ -184,8 +215,9 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
       purchases: purchases == freezed
           ? _value.purchases
           : purchases as Map<String, List<String>>,
-      currentLang:
-          currentLang == freezed ? _value.currentLang : currentLang as String,
+      currentLangId: currentLangId == freezed
+          ? _value.currentLangId
+          : currentLangId as String,
     ));
   }
 }
@@ -197,10 +229,11 @@ class _$_User extends _User {
       @JsonKey(ignore: true) this.email,
       @JsonKey(ignore: true) this.photoUrl,
       @JsonKey(ignore: true) this.displayName,
+      @JsonKey(ignore: true) this.currentLang,
       @JsonKey(nullable: true, defaultValue: false) this.isAdmin,
       @JsonKey(nullable: true) this.progress,
       @JsonKey(nullable: true) this.purchases,
-      @JsonKey(nullable: true) this.currentLang})
+      @JsonKey(nullable: true) this.currentLangId})
       : super._();
 
   factory _$_User.fromJson(Map<String, dynamic> json) =>
@@ -219,6 +252,9 @@ class _$_User extends _User {
   @JsonKey(ignore: true)
   final String displayName;
   @override
+  @JsonKey(ignore: true)
+  final Lang currentLang;
+  @override
   @JsonKey(nullable: true, defaultValue: false)
   final bool isAdmin;
   @override
@@ -229,11 +265,11 @@ class _$_User extends _User {
   final Map<String, List<String>> purchases;
   @override
   @JsonKey(nullable: true)
-  final String currentLang;
+  final String currentLangId;
 
   @override
   String toString() {
-    return 'User(uid: $uid, email: $email, photoUrl: $photoUrl, displayName: $displayName, isAdmin: $isAdmin, progress: $progress, purchases: $purchases, currentLang: $currentLang)';
+    return 'User(uid: $uid, email: $email, photoUrl: $photoUrl, displayName: $displayName, currentLang: $currentLang, isAdmin: $isAdmin, progress: $progress, purchases: $purchases, currentLangId: $currentLangId)';
   }
 
   @override
@@ -250,6 +286,9 @@ class _$_User extends _User {
             (identical(other.displayName, displayName) ||
                 const DeepCollectionEquality()
                     .equals(other.displayName, displayName)) &&
+            (identical(other.currentLang, currentLang) ||
+                const DeepCollectionEquality()
+                    .equals(other.currentLang, currentLang)) &&
             (identical(other.isAdmin, isAdmin) ||
                 const DeepCollectionEquality()
                     .equals(other.isAdmin, isAdmin)) &&
@@ -259,9 +298,9 @@ class _$_User extends _User {
             (identical(other.purchases, purchases) ||
                 const DeepCollectionEquality()
                     .equals(other.purchases, purchases)) &&
-            (identical(other.currentLang, currentLang) ||
+            (identical(other.currentLangId, currentLangId) ||
                 const DeepCollectionEquality()
-                    .equals(other.currentLang, currentLang)));
+                    .equals(other.currentLangId, currentLangId)));
   }
 
   @override
@@ -271,10 +310,11 @@ class _$_User extends _User {
       const DeepCollectionEquality().hash(email) ^
       const DeepCollectionEquality().hash(photoUrl) ^
       const DeepCollectionEquality().hash(displayName) ^
+      const DeepCollectionEquality().hash(currentLang) ^
       const DeepCollectionEquality().hash(isAdmin) ^
       const DeepCollectionEquality().hash(progress) ^
       const DeepCollectionEquality().hash(purchases) ^
-      const DeepCollectionEquality().hash(currentLang);
+      const DeepCollectionEquality().hash(currentLangId);
 
   @override
   _$UserCopyWith<_User> get copyWith =>
@@ -297,6 +337,8 @@ abstract class _User extends User {
           String photoUrl,
       @JsonKey(ignore: true)
           String displayName,
+      @JsonKey(ignore: true)
+          Lang currentLang,
       @JsonKey(nullable: true, defaultValue: false)
           bool isAdmin,
       @JsonKey(nullable: true)
@@ -304,7 +346,7 @@ abstract class _User extends User {
       @JsonKey(nullable: true)
           Map<String, List<String>> purchases,
       @JsonKey(nullable: true)
-          String currentLang}) = _$_User;
+          String currentLangId}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
@@ -321,6 +363,9 @@ abstract class _User extends User {
   @JsonKey(ignore: true)
   String get displayName;
   @override
+  @JsonKey(ignore: true)
+  Lang get currentLang;
+  @override
   @JsonKey(nullable: true, defaultValue: false)
   bool get isAdmin;
   @override
@@ -331,7 +376,7 @@ abstract class _User extends User {
   Map<String, List<String>> get purchases;
   @override
   @JsonKey(nullable: true)
-  String get currentLang;
+  String get currentLangId;
   @override
   _$UserCopyWith<_User> get copyWith;
 }

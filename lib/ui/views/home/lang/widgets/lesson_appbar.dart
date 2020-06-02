@@ -35,12 +35,14 @@ class LessonAppBar extends StatelessWidget {
                 PlatformIcons(context).flag,
                 color: Colors.white,
               ),
-              onPressed: () => Navigator.of(context).pushReplacement(
-                platformPageRoute(
-                  context: context,
-                  builder: (context) => LangListView(),
-                ),
-              ),
+              onPressed: () {
+                Navigator.of(context).push(
+                  platformPageRoute(
+                    context: context,
+                    builder: (context) => LangListView(),
+                  ),
+                );
+              },
             ),
       shape: appBarShape(context),
       expandedHeight: expandedHeight,

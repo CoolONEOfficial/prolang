@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:prolang/app/constants/firebase_paths.dart';
+import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/user.dart';
 import 'package:tuple/tuple.dart';
 
@@ -15,14 +16,21 @@ class FirebaseAuthService {
         _googleSignIn = googleSignin ?? GoogleSignIn();
 
   Future<Tuple2<UserState, User>> _userFromFirebase(FirebaseUser user) async {
+    var model = user == null
+        ? null
+        : User.fromSnapshotAndUser(
+            await FirebasePaths.userRefFromId(user.uid).get(),
+            user,
+          );
+    if (model?.currentLangId != null) {
+      model = model?.copyWith(
+        currentLang: Lang.fromSnapshot(
+            await FirebasePaths.langRefById(model.currentLangId).get()),
+      );
+    }
     final userModel = Tuple2(
       UserState.Done,
-      user == null
-          ? null
-          : User.fromSnapshotAndUser(
-              await FirebasePaths.userRefFromId(user.uid).get(),
-              user,
-            ),
+      model,
     );
     cachedCurrentUser = userModel.item2;
     return userModel;

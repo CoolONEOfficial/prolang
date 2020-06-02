@@ -244,11 +244,12 @@ class FirestoreService {
   // Update
 
   updateUserCurrentLang(Lang lang) async {
-    FirebaseAuthService.cachedCurrentUser = FirebaseAuthService
-        .cachedCurrentUser
-        .copyWith(currentLang: lang.documentId);
-    await FirebasePaths.currentUserRef()
-        .updateData(FirebaseAuthService.cachedCurrentUser.toJson());
+    final user = FirebaseAuthService.cachedCurrentUser.copyWith(
+      currentLangId: lang.documentId,
+      currentLang: lang,
+    );
+    await FirebasePaths.currentUserRef().updateData(user.toJson());
+    FirebaseAuthService.cachedCurrentUser = user;
   }
 
   updateLang(

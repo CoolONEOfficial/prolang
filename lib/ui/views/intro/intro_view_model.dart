@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:prolang/app/services/firebase_auth_service.dart';
 import 'package:provider/provider.dart';
 
 class IntroViewModel extends ChangeNotifier {
@@ -9,12 +8,6 @@ class IntroViewModel extends ChangeNotifier {
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-
-  Future<void> signInAnonymously() async {
-    _setLoading();
-    await locator<FirebaseAuthService>().signInAnonymously();
-    _setNotLoading();
-  }
 
   void _setLoading() {
     _isLoading = true;
