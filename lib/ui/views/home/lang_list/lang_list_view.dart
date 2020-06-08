@@ -4,9 +4,9 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:prolang/app/helpers/app_bar_shape.dart';
 import 'package:prolang/app/services/firebase_auth_service.dart';
+import 'package:prolang/app/services/firestore_service.dart';
 import 'package:prolang/ui/views/form/lang_form_view.dart';
 import 'package:prolang/ui/views/home/lang_list/widgets/lang_entry.dart';
-import 'package:prolang/ui/views/intro/intro_view.dart';
 import 'package:prolang/ui/widgets/loading_indicator.dart';
 import 'package:prolang/ui/widgets/platform_card.dart';
 import 'package:prolang/ui/widgets/responsive_safe_area.dart';
@@ -21,7 +21,11 @@ class LangListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<LangListViewModel>(
-      create: (_) => LangListViewModel(context.read),
+      create: (_) => LangListViewModel(
+        context.read,
+        context.watch<FirestoreService>(),
+        context.watch<FirebaseAuthService>(),
+      ),
       builder: (_, child) => const Scaffold(
         body: _LangListViewBody._(),
       ),
@@ -34,32 +38,32 @@ class _LangListViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading =
-        context.select((LangListViewModel viewModel) => viewModel.isLoading);
+    final isLoading = context.watch<LangListViewModel>().isLoading;
     return ResponsiveSafeArea(
       bottom: false,
       child: PlatformScaffold(
         backgroundColor: Colors.transparent,
         appBar: PlatformAppBar(
-            title: Text("lang_list.title").tr(context: context),
-            material: (context, _) => MaterialAppBarData(
-                  centerTitle: true,
-                  shape: appBarShape(context),
-                ),
-            leading: PlatformIconButton(
-              padding: EdgeInsets.zero,
-              icon: Icon(
-                isMaterial(context) ? Ionicons.md_exit : Ionicons.ios_exit,
-                color: Colors.white,
-              ),
-              color: Colors.transparent,
-              onPressed: () async {
-                await context.read<FirebaseAuthService>().signOut();
-                if (Navigator.of(context).canPop()) {
-                  Navigator.of(context).pop();
-                }
-              },
-            )),
+          title: Text("lang_list.title").tr(context: context),
+          material: (context, _) => MaterialAppBarData(
+            centerTitle: true,
+            shape: appBarShape(context),
+          ),
+          leading: PlatformIconButton(
+            padding: EdgeInsets.zero,
+            icon: Icon(
+              isMaterial(context) ? Ionicons.md_exit : Ionicons.ios_exit,
+              color: Colors.white,
+            ),
+            color: Colors.transparent,
+            onPressed: () async {
+              await context.read<FirebaseAuthService>().signOut();
+              if (Navigator.of(context).canPop()) {
+                Navigator.of(context).pop();
+              }
+            },
+          ),
+        ),
         body: isLoading ? LoadingIndicator() : _langList(context),
       ),
     );

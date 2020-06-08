@@ -5,11 +5,13 @@ import 'package:prolang/app/services/firestore_service.dart';
 import 'package:provider/provider.dart';
 
 class LangListViewModel extends ChangeNotifier {
-  LangListViewModel(this.locator) {
+  LangListViewModel(this.locator, this.fs, this.auth) {
     loadLangList();
   }
 
   final Locator locator;
+  final FirestoreService fs;
+  final FirebaseAuthService auth;
 
   bool _isLoading = true;
   bool get isLoading => _isLoading;
@@ -18,12 +20,14 @@ class LangListViewModel extends ChangeNotifier {
 
   Future<void> loadLangList() async {
     _setLoading();
-    langList = await locator<FirestoreService>().loadLangList();
+    debugPrint("pre");
+    langList = await fs.loadLangList();
+    debugPrint("post");
     _setNotLoading();
   }
 
   Future<void> signout() {
-    return locator<FirebaseAuthService>().signOut();
+    return auth.signOut();
   }
 
   void _setLoading() {

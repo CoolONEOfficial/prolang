@@ -38,7 +38,11 @@ class LangView extends StatelessWidget {
     return Provider<Lang>(
       create: (_) => lang,
       child: ChangeNotifierProvider<LangViewModel>(
-        create: (_) => LangViewModel(context.read, lang),
+        create: (_) => LangViewModel(
+          context.read,
+          lang,
+          context.watch<FirestoreService>(),
+        ),
         builder: (_, child) {
           return PlatformScaffold(
             body: _LangViewBody._(iosTitle),

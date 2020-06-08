@@ -38,11 +38,12 @@
             "request": "launch",
             "type": "dart",
             "deviceId": "chrome",
+            "flutterMode": "release",
             "args": [
                 "--web-hostname",
                 "localhost",
                 "--web-port",
-                "5000",
+                "5000"
             ]
         },
     ],

@@ -9,7 +9,13 @@ import 'package:prolang/app/services/firestore_service.dart';
 import 'package:provider/provider.dart';
 
 class LessonTestViewModel extends ChangeNotifier {
-  LessonTestViewModel(this.locator, this.lesson, this.section, this.lang) {
+  LessonTestViewModel(
+    this.locator,
+    this.lesson,
+    this.section,
+    this.lang,
+    this.fs,
+  ) {
     loadQuestionList();
   }
 
@@ -17,6 +23,7 @@ class LessonTestViewModel extends ChangeNotifier {
   final Lesson lesson;
   final LessonSection section;
   final Lang lang;
+  final FirestoreService fs;
 
   int step = 0;
   List<Question> questionList;
@@ -26,8 +33,6 @@ class LessonTestViewModel extends ChangeNotifier {
 
   deleteQuestion(Question question) async {
     _setLoading();
-
-    final fs = locator<FirestoreService>();
 
     questionList = await fs.deleteLessonQuestion(
       lang,
@@ -46,8 +51,6 @@ class LessonTestViewModel extends ChangeNotifier {
 
   loadQuestionList() async {
     _setLoading();
-
-    final fs = locator<FirestoreService>();
 
     questionList = await fs.loadQuestionList(lang, section, lesson);
 

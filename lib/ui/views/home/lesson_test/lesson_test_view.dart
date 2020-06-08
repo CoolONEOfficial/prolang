@@ -56,6 +56,7 @@ class LessonTestView extends StatelessWidget {
           lesson,
           section,
           lang,
+          context.watch<FirestoreService>(),
         ),
         builder: (context, child) {
           final vm = context.watch<LessonTestViewModel>();

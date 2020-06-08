@@ -7,12 +7,17 @@ import 'package:prolang/app/services/firestore_service.dart';
 import 'package:provider/provider.dart';
 
 class LangViewModel extends ChangeNotifier {
-  LangViewModel(this.locator, this.lang) {
+  LangViewModel(
+    this.locator,
+    this.lang,
+    this.fs,
+  ) {
     loadLessonList();
   }
 
   final Locator locator;
   final Lang lang;
+  final FirestoreService fs;
 
   bool _isLoading = true;
   bool get isLoading => _isLoading;
@@ -21,8 +26,6 @@ class LangViewModel extends ChangeNotifier {
 
   loadLessonList() async {
     _setLoading();
-
-    final fs = locator<FirestoreService>();
 
     sectionList = [];
     for (var section in await fs.loadSectionList(lang)) {
