@@ -12,13 +12,13 @@ void main() => runApp(
       EasyLocalization(
         supportedLocales: [Locale('en', 'US'), Locale('ru', 'RU')],
         path: 'assets/translations',
-        fallbackLocale: Locale('en', 'US'),
+        fallbackLocale: Locale('ru', 'RU'),
 
         /// Inject the [FirebaseAuthService]
         /// and provide a stream of [User]
         ///
         /// This needs to be above [MaterialApp]
-        /// At the top of the widget tree, to
+        /// At the top of the widget tree, toc
         /// accomodate for navigations in the app
         child: MultiProvider(
           providers: [

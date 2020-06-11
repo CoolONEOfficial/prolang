@@ -50,74 +50,73 @@ class _ImageCropDialogState extends State<ImageCropDialog> {
           }),
         ),
       ),
-      actions: kIsWeb
-          ? <Widget>[
-              PlatformDialogAction(
-                child: Icon(Icons.rotate_left),
-                onPressed: () async {
-                  setState(() {
-                    controller.rotation--;
-                  });
-                },
-              ),
-              PlatformDialogAction(
-                child: Icon(Icons.rotate_right),
-                onPressed: () async {
-                  setState(() {
-                    controller.rotation++;
-                  });
-                },
-              ),
-              PlatformDialogAction(
-                child: Icon(Icons.zoom_in),
-                onPressed: () async {
-                  setState(() {
-                    controller.scale += 0.5;
-                  });
-                },
-              ),
-              PlatformDialogAction(
-                child: Icon(Icons.zoom_out),
-                onPressed: () async {
-                  setState(() {
-                    controller.scale -= 0.5;
-                  });
-                },
-              ),
-            ]
-          : <Widget>[] +
-              <Widget>[
-                PlatformDialogAction(
-                  child: Text("no_crop".tr()),
-                  onPressed: () async {
-                    Navigator.pop(context, I.decodeImage(widget.image));
-                  },
-                ),
-                PlatformDialogAction(
-                  child: Text("crop".tr()),
-                  onPressed: () async {
-                    final pixelRatio = MediaQuery.of(context).devicePixelRatio;
-                    final cropped =
-                        await controller.crop(pixelRatio: pixelRatio);
+      actions: (kIsWeb
+              ? <Widget>[
+                  PlatformDialogAction(
+                    child: Icon(Icons.rotate_left),
+                    onPressed: () async {
+                      setState(() {
+                        controller.rotation--;
+                      });
+                    },
+                  ),
+                  PlatformDialogAction(
+                    child: Icon(Icons.rotate_right),
+                    onPressed: () async {
+                      setState(() {
+                        controller.rotation++;
+                      });
+                    },
+                  ),
+                  PlatformDialogAction(
+                    child: Icon(Icons.zoom_in),
+                    onPressed: () async {
+                      setState(() {
+                        controller.scale += 0.5;
+                      });
+                    },
+                  ),
+                  PlatformDialogAction(
+                    child: Icon(Icons.zoom_out),
+                    onPressed: () async {
+                      setState(() {
+                        controller.scale -= 0.5;
+                      });
+                    },
+                  ),
+                ]
+              : <Widget>[]) +
+          <Widget>[
+            PlatformDialogAction(
+              child: Text("no_crop".tr()),
+              onPressed: () async {
+                Navigator.pop(context, I.decodeImage(widget.image));
+              },
+            ),
+            PlatformDialogAction(
+              child: Text("crop".tr()),
+              onPressed: () async {
+                final pixelRatio = MediaQuery.of(context).devicePixelRatio;
+                final cropped = await controller.crop(pixelRatio: pixelRatio);
 
-                    if (cropped == null) {
-                      Navigator.pop(context, null);
-                      return;
-                    }
-                    final byteData = await cropped.toByteData();
-                    var image = I.Image.fromBytes(
-                      cropped.width,
-                      cropped.height,
-                      byteData.buffer.asUint8List(
-                        byteData.offsetInBytes,
-                        byteData.lengthInBytes,
-                      ),
-                    );
+                if (cropped == null) {
+                  Navigator.pop(context, null);
+                  return;
+                }
+                final byteData = await cropped.toByteData();
+                var image = I.Image.fromBytes(
+                  cropped.width,
+                  cropped.height,
+                  byteData.buffer.asUint8List(
+                    byteData.offsetInBytes,
+                    byteData.lengthInBytes,
+                  ),
+                );
 
-                    Navigator.pop(context, image);
-                  },
-                )
-              ],
+                Navigator.pop(context, image);
+              },
+            )
+          ],
     );
   }
 }
