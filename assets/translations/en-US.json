@@ -43,9 +43,35 @@
             "description": "To start learning, log in with Google or try out basic functionality using the anonymous login.",
             "button": {
                 "anonymous": "Anonimous sign in",
-                "google": "Sign in with Google"
+                "google": "Sign in with Google",
+                "apple": "Sign in with Apple",
+                "email": "Sign in with e-mail"
             },
-            "progress": "Authorizing..."
+            "progress": "Authorizing...",
+            "email": {
+                "title": "Authentication",
+                "email": {
+                    "label": "E-Mail",
+                    "hint": "yourmail@example.com",
+                    "error": {
+                        "incorrect": "Incorrect mail."
+                    }
+                },
+                "password": {
+                    "label": "Password",
+                    "hint": "Enter password",
+                    "error": {
+                        "small": "Password length must be >6 symbols."
+                    }
+                },
+                "password_confirm": {
+                    "label": "Password confirmation",
+                    "hint": "Enter password again",
+                    "error": {
+                        "same": "Passwords must be same."
+                    }
+                }
+            }
         }
     },
     "lang_list": {

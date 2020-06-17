@@ -23,8 +23,8 @@ class LangListView extends StatelessWidget {
     return ChangeNotifierProvider<LangListViewModel>(
       create: (_) => LangListViewModel(
         context.read,
-        context.watch<FirestoreService>(),
-        context.watch<FirebaseAuthService>(),
+        context.read<FirestoreService>(),
+        context.read<FirebaseAuthService>(),
       ),
       builder: (_, child) => const Scaffold(
         body: _LangListViewBody._(),

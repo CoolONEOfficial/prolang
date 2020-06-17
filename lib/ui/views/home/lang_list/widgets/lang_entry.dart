@@ -46,7 +46,7 @@ class LangEntry extends StatelessWidget {
           ),
         ),
         onPressed: () async {
-          if (await Navigator.push(
+          final res = await Navigator.push(
             context,
             platformPageRoute(
               context: context,
@@ -55,7 +55,8 @@ class LangEntry extends StatelessWidget {
                 iosTitle: "lang_list.title".tr(),
               ),
             ),
-          ) == true) {
+          );
+          if (res == true) {
             context.read<LangListViewModel>().loadLangList();
           }
         },

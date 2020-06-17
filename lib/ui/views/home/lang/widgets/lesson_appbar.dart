@@ -52,46 +52,44 @@ class LessonAppBar extends StatelessWidget {
           ? <Widget>[
               PlatformIconButton(
                 icon: Icon(PlatformIcons(context).delete, color: Colors.white),
-                onPressed: () async {
-                  showPlatformDialog(
-                    context: context,
-                    builder: (_) => PlatformAlertDialog(
-                      title: Text("lang.delete.confirmation".tr()),
-                      actions: <Widget>[
-                        PlatformDialogAction(
-                          child: PlatformText(
-                            "cancel".tr(),
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor),
-                          ),
-                          onPressed: () => Navigator.pop(context),
+                onPressed: () => showPlatformDialog(
+                  context: context,
+                  builder: (_) => PlatformAlertDialog(
+                    title: Text("lang.delete.confirmation".tr()),
+                    actions: <Widget>[
+                      PlatformDialogAction(
+                        child: PlatformText(
+                          "cancel".tr(),
+                          style:
+                              TextStyle(color: Theme.of(context).primaryColor),
                         ),
-                        PlatformDialogAction(
-                          cupertino: (_, __) => CupertinoDialogActionData(
-                            isDestructiveAction: true,
-                          ),
-                          child: PlatformText(
-                            "delete".tr(),
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor),
-                          ),
-                          onPressed: () async {
-                            Navigator.pop(context);
-                            showPlatformDialog(
-                              context: context,
-                              builder: (_) => PlatformProgressDialog(
-                                text: "lang.delete.progress".tr(),
-                              ),
-                            );
-                            await fs.deleteLang(lang);
-                            Navigator.pop(context);
-                            Navigator.pop(context, true);
-                          },
-                        )
-                      ],
-                    ),
-                  );
-                },
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                      PlatformDialogAction(
+                        cupertino: (_, __) => CupertinoDialogActionData(
+                          isDestructiveAction: true,
+                        ),
+                        child: PlatformText(
+                          "delete".tr(),
+                          style:
+                              TextStyle(color: Theme.of(context).primaryColor),
+                        ),
+                        onPressed: () async {
+                          Navigator.pop(context);
+                          showPlatformDialog(
+                            context: context,
+                            builder: (_) => PlatformProgressDialog(
+                              text: "lang.delete.progress".tr(),
+                            ),
+                          );
+                          await fs.deleteLang(lang);
+                          Navigator.pop(context);
+                          Navigator.pop(context, true);
+                        },
+                      )
+                    ],
+                  ),
+                ),
               ),
               PlatformIconButton(
                 icon: Icon(
@@ -108,7 +106,7 @@ class LessonAppBar extends StatelessWidget {
                         ),
                       ) ==
                       true) {
-                    Navigator.pop(context);
+                    Navigator.pop(context, true);
                   }
                 },
               )

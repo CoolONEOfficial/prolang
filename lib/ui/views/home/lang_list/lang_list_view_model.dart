@@ -20,9 +20,7 @@ class LangListViewModel extends ChangeNotifier {
 
   Future<void> loadLangList() async {
     _setLoading();
-    debugPrint("pre");
     langList = await fs.loadLangList();
-    debugPrint("post");
     _setNotLoading();
   }
 

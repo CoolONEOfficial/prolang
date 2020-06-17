@@ -1,18 +1,23 @@
+import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
-import 'package:prolang/app/constants/theme_colors.dart';
+import 'package:prolang/ui/views/intro/widgets/email_sign_in_button.dart';
+import 'package:prolang/ui/widgets/responsive_content.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:responsive_grid/responsive_grid.dart';
 import 'package:tuple/tuple.dart';
 
 import 'intro_view_model.dart';
 import 'widgets/anonymous_sign_in_button.dart';
+import 'widgets/apple_sign_in_button.dart';
 import 'widgets/google_sign_in_button.dart';
 
 class IntroView extends StatelessWidget {
@@ -167,13 +172,76 @@ class _SignInViewBodyState extends State<_IntroViewBody> {
     );
   }
 
-  static Row _signInButtons() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        const AnonymousSignInButton(),
-        const GoogleSignInButton(),
-      ],
+  static Widget _signInButtons() {
+    return ResponsiveContent(
+      child: ResponsiveGridRow(
+        children: (kIsWeb
+                ? [
+                    ResponsiveGridCol(
+                      xs: 6,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const GoogleSignInButton(),
+                        ],
+                      ),
+                    ),
+                    ResponsiveGridCol(
+                      xs: 6,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const AppleSignInButton(),
+                        ],
+                      ),
+                    ),
+                  ]
+                : Platform.isAndroid
+                    ? [
+                        ResponsiveGridCol(
+                          xs: 12,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              const GoogleSignInButton(),
+                            ],
+                          ),
+                        ),
+                      ]
+                    : [
+                        ResponsiveGridCol(
+                          xs: 12,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              const AppleSignInButton(),
+                            ],
+                          ),
+                        ),
+                      ]) +
+            [
+              ResponsiveGridCol(
+                xs: 12,
+                md: 6,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const AnonymousSignInButton(),
+                  ],
+                ),
+              ),
+              ResponsiveGridCol(
+                xs: 12,
+                md: 6,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const EmailSignInButton(),
+                  ],
+                ),
+              )
+            ],
+      ),
     );
   }
 }

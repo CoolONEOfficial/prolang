@@ -15,6 +15,30 @@ class FirebaseAuthService {
       : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
         _googleSignIn = googleSignin ?? GoogleSignIn();
 
+  Future<bool> isMailRegistered(String email) async {
+    final methods = await _firebaseAuth.fetchSignInMethodsForEmail(
+      email: email,
+    );
+    return methods.contains("password");
+  }
+
+  Future<AuthResult> registerEmailAndPassword(
+      String email, String password) async {
+    final res = await _firebaseAuth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    await sendConfirmationMail();
+    return res;
+  }
+
+  Future<AuthResult> loginEmailAndPassword(
+          String email, String password) async =>
+      _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
   Future<Tuple2<UserState, User>> _userFromFirebase(FirebaseUser user) async {
     var model = user == null
         ? null
@@ -36,9 +60,12 @@ class FirebaseAuthService {
     return userModel;
   }
 
-  Stream<Tuple2<UserState, User>> get onAuthStateChanged {
-    return _firebaseAuth.onAuthStateChanged.asyncMap(_userFromFirebase);
+  Future<void> sendConfirmationMail() async {
+    await (await _firebaseAuth.currentUser()).sendEmailVerification();
   }
+
+  Stream<Tuple2<UserState, User>> get onAuthStateChanged =>
+      _firebaseAuth.onAuthStateChanged.asyncMap(_userFromFirebase);
 
   Future<User> signInAnonymously() async {
     final authResult = await _firebaseAuth.signInAnonymously();

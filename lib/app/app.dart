@@ -10,6 +10,7 @@ import 'package:prolang/app/models/user.dart';
 import 'package:prolang/app/services/firestore_service.dart';
 import 'package:prolang/ui/views/home/lang/lang_view.dart';
 import 'package:prolang/ui/views/home/lang_list/lang_list_view.dart';
+import 'package:prolang/ui/views/intro/email/email_sign_in_confirmation.dart';
 import 'package:prolang/ui/views/intro/intro_view.dart';
 import 'package:prolang/ui/widgets/splashscreen.dart';
 import 'package:provider/provider.dart';
@@ -21,9 +22,15 @@ import 'constants/theme_colors.dart';
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
+
+  static void restartApp(BuildContext context) {
+    context.findAncestorStateOfType<_MyAppState>().restartApp();
+  }
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  Key key = UniqueKey();
+
   @override
   void initState() {
     super.initState();
@@ -31,6 +38,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     if (!kIsWeb) {
       initOneSignal();
     }
+  }
+
+  void restartApp() {
+    setState(() {
+      key = UniqueKey();
+    });
   }
 
   initOneSignal() async {
@@ -69,7 +82,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    final fs = context.watch<FirestoreService>();
     final lightTheme = ThemeData(
       brightness: WidgetsBinding.instance.window.platformBrightness,
       primaryColor: ThemeColors.primaryLight,
@@ -89,54 +101,59 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       ),
       fontFamily: 'TTNorms',
     );
-    return Theme(
-      data: lightTheme,
-      child: PlatformApp(
-        title: 'ProЯзыки',
-        localizationsDelegates: [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          EasyLocalization.of(context).delegate,
-        ],
-        material: (context, _) {
-          return MaterialAppData(
-            theme: lightTheme,
-            darkTheme: lightTheme.copyWith(
-              brightness: Brightness.dark,
-              primaryColor: ThemeColors.primaryDark,
-              accentColor: ThemeColors.accentDark,
-            ),
-          );
-        },
-        cupertino: (context, _) {
-          return CupertinoAppData(
-            theme: CupertinoThemeData(
-              primaryColor: ThemeColors.primaryLight,
-              primaryContrastingColor: ThemeColors.accentLight,
-              textTheme: CupertinoTextThemeData(
-                textStyle: TextStyle(
-                  fontFamily: 'TTNorms',
-                  color: ThemeColors.textColor(),
-                ),
-                primaryColor: ThemeColors.primaryLight,
-                pickerTextStyle: TextStyle(color: Colors.black),
+    return KeyedSubtree(
+      key: key,
+      child: Theme(
+        data: lightTheme,
+        child: PlatformApp(
+          title: 'ProЯзыки',
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            EasyLocalization.of(context).delegate,
+          ],
+          material: (context, _) {
+            return MaterialAppData(
+              theme: lightTheme,
+              darkTheme: lightTheme.copyWith(
+                brightness: Brightness.dark,
+                primaryColor: ThemeColors.primaryDark,
+                accentColor: ThemeColors.accentDark,
               ),
-            ),
-          );
-        },
-        home: Consumer<Tuple2<UserState, User>>(
-          builder: (_, user, __) {
-            switch (user.item1) {
-              case UserState.Done:
-                return user.item2 == null
-                    ? const IntroView()
-                    : user.item2.currentLang != null
-                        ? LangView(user.item2.currentLang)
-                        : const LangListView();
-              default:
-                return SplashScreen();
-            }
+            );
           },
+          cupertino: (context, _) {
+            return CupertinoAppData(
+              theme: CupertinoThemeData(
+                primaryColor: ThemeColors.primaryLight,
+                primaryContrastingColor: ThemeColors.accentLight,
+                textTheme: CupertinoTextThemeData(
+                  textStyle: TextStyle(
+                    fontFamily: 'TTNorms',
+                    color: ThemeColors.textColor(),
+                  ),
+                  primaryColor: ThemeColors.primaryLight,
+                  pickerTextStyle: TextStyle(color: Colors.black),
+                ),
+              ),
+            );
+          },
+          home: Consumer<Tuple2<UserState, User>>(
+            builder: (_, user, __) {
+              switch (user.item1) {
+                case UserState.Done:
+                  return user.item2 == null
+                      ? const IntroView()
+                      : user.item2.isMailConfirmed 
+                        //? user.item2.currentLang != null
+                          ? LangView(user.item2.currentLang)
+                          : const LangListView();
+                        //: const EmailSignInConfirmation();
+                default:
+                  return SplashScreen();
+              }
+            },
+          ),
         ),
       ),
     );

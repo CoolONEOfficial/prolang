@@ -26,6 +26,8 @@ class _$UserTearOff {
           String displayName,
       @JsonKey(ignore: true)
           Lang currentLang,
+      @JsonKey(ignore: true)
+          bool isMailConfirmed,
       @JsonKey(nullable: true, defaultValue: false)
           bool isAdmin,
       @JsonKey(nullable: true)
@@ -40,6 +42,7 @@ class _$UserTearOff {
       photoUrl: photoUrl,
       displayName: displayName,
       currentLang: currentLang,
+      isMailConfirmed: isMailConfirmed,
       isAdmin: isAdmin,
       progress: progress,
       purchases: purchases,
@@ -62,6 +65,8 @@ mixin _$User {
   String get displayName;
   @JsonKey(ignore: true)
   Lang get currentLang;
+  @JsonKey(ignore: true)
+  bool get isMailConfirmed;
   @JsonKey(nullable: true, defaultValue: false)
   bool get isAdmin;
   @JsonKey(nullable: true)
@@ -89,6 +94,8 @@ abstract class $UserCopyWith<$Res> {
           String displayName,
       @JsonKey(ignore: true)
           Lang currentLang,
+      @JsonKey(ignore: true)
+          bool isMailConfirmed,
       @JsonKey(nullable: true, defaultValue: false)
           bool isAdmin,
       @JsonKey(nullable: true)
@@ -115,6 +122,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object photoUrl = freezed,
     Object displayName = freezed,
     Object currentLang = freezed,
+    Object isMailConfirmed = freezed,
     Object isAdmin = freezed,
     Object progress = freezed,
     Object purchases = freezed,
@@ -128,6 +136,9 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           displayName == freezed ? _value.displayName : displayName as String,
       currentLang:
           currentLang == freezed ? _value.currentLang : currentLang as Lang,
+      isMailConfirmed: isMailConfirmed == freezed
+          ? _value.isMailConfirmed
+          : isMailConfirmed as bool,
       isAdmin: isAdmin == freezed ? _value.isAdmin : isAdmin as bool,
       progress: progress == freezed
           ? _value.progress
@@ -167,6 +178,8 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
           String displayName,
       @JsonKey(ignore: true)
           Lang currentLang,
+      @JsonKey(ignore: true)
+          bool isMailConfirmed,
       @JsonKey(nullable: true, defaultValue: false)
           bool isAdmin,
       @JsonKey(nullable: true)
@@ -195,6 +208,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object photoUrl = freezed,
     Object displayName = freezed,
     Object currentLang = freezed,
+    Object isMailConfirmed = freezed,
     Object isAdmin = freezed,
     Object progress = freezed,
     Object purchases = freezed,
@@ -208,6 +222,9 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           displayName == freezed ? _value.displayName : displayName as String,
       currentLang:
           currentLang == freezed ? _value.currentLang : currentLang as Lang,
+      isMailConfirmed: isMailConfirmed == freezed
+          ? _value.isMailConfirmed
+          : isMailConfirmed as bool,
       isAdmin: isAdmin == freezed ? _value.isAdmin : isAdmin as bool,
       progress: progress == freezed
           ? _value.progress
@@ -230,6 +247,7 @@ class _$_User extends _User {
       @JsonKey(ignore: true) this.photoUrl,
       @JsonKey(ignore: true) this.displayName,
       @JsonKey(ignore: true) this.currentLang,
+      @JsonKey(ignore: true) this.isMailConfirmed,
       @JsonKey(nullable: true, defaultValue: false) this.isAdmin,
       @JsonKey(nullable: true) this.progress,
       @JsonKey(nullable: true) this.purchases,
@@ -255,6 +273,9 @@ class _$_User extends _User {
   @JsonKey(ignore: true)
   final Lang currentLang;
   @override
+  @JsonKey(ignore: true)
+  final bool isMailConfirmed;
+  @override
   @JsonKey(nullable: true, defaultValue: false)
   final bool isAdmin;
   @override
@@ -269,7 +290,7 @@ class _$_User extends _User {
 
   @override
   String toString() {
-    return 'User(uid: $uid, email: $email, photoUrl: $photoUrl, displayName: $displayName, currentLang: $currentLang, isAdmin: $isAdmin, progress: $progress, purchases: $purchases, currentLangId: $currentLangId)';
+    return 'User(uid: $uid, email: $email, photoUrl: $photoUrl, displayName: $displayName, currentLang: $currentLang, isMailConfirmed: $isMailConfirmed, isAdmin: $isAdmin, progress: $progress, purchases: $purchases, currentLangId: $currentLangId)';
   }
 
   @override
@@ -289,6 +310,9 @@ class _$_User extends _User {
             (identical(other.currentLang, currentLang) ||
                 const DeepCollectionEquality()
                     .equals(other.currentLang, currentLang)) &&
+            (identical(other.isMailConfirmed, isMailConfirmed) ||
+                const DeepCollectionEquality()
+                    .equals(other.isMailConfirmed, isMailConfirmed)) &&
             (identical(other.isAdmin, isAdmin) ||
                 const DeepCollectionEquality()
                     .equals(other.isAdmin, isAdmin)) &&
@@ -311,6 +335,7 @@ class _$_User extends _User {
       const DeepCollectionEquality().hash(photoUrl) ^
       const DeepCollectionEquality().hash(displayName) ^
       const DeepCollectionEquality().hash(currentLang) ^
+      const DeepCollectionEquality().hash(isMailConfirmed) ^
       const DeepCollectionEquality().hash(isAdmin) ^
       const DeepCollectionEquality().hash(progress) ^
       const DeepCollectionEquality().hash(purchases) ^
@@ -339,6 +364,8 @@ abstract class _User extends User {
           String displayName,
       @JsonKey(ignore: true)
           Lang currentLang,
+      @JsonKey(ignore: true)
+          bool isMailConfirmed,
       @JsonKey(nullable: true, defaultValue: false)
           bool isAdmin,
       @JsonKey(nullable: true)
@@ -365,6 +392,9 @@ abstract class _User extends User {
   @override
   @JsonKey(ignore: true)
   Lang get currentLang;
+  @override
+  @JsonKey(ignore: true)
+  bool get isMailConfirmed;
   @override
   @JsonKey(nullable: true, defaultValue: false)
   bool get isAdmin;

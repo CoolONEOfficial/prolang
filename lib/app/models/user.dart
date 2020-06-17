@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/widgets.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:prolang/app/constants/firebase_paths.dart';
 import 'package:prolang/app/models/lesson.dart';
@@ -23,6 +24,7 @@ abstract class User implements _$User {
     @JsonKey(ignore: true) final String photoUrl,
     @JsonKey(ignore: true) final String displayName,
     @JsonKey(ignore: true) final Lang currentLang,
+    @JsonKey(ignore: true) final bool isMailConfirmed,
     @JsonKey(nullable: true, defaultValue: false) final bool isAdmin,
     @JsonKey(nullable: true)
         final Map<String, Map<String, Map<String, double>>> progress,
@@ -52,6 +54,12 @@ abstract class User implements _$User {
       email: user.email,
       photoUrl: user.photoUrl,
       displayName: user.displayName,
+      isMailConfirmed: user.providerData.firstWhere(
+                (element) => element.providerId == "password",
+                orElse: () => null,
+              ) !=
+              null &&
+          user.isEmailVerified,
     );
   }
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

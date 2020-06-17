@@ -41,13 +41,11 @@ class LangView extends StatelessWidget {
         create: (_) => LangViewModel(
           context.read,
           lang,
-          context.watch<FirestoreService>(),
+          context.read<FirestoreService>(),
         ),
-        builder: (_, child) {
-          return PlatformScaffold(
-            body: _LangViewBody._(iosTitle),
-          );
-        },
+        builder: (_, child) => PlatformScaffold(
+          body: _LangViewBody._(iosTitle),
+        ),
       ),
     );
   }
