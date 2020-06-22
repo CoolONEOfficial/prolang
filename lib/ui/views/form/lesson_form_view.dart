@@ -46,6 +46,12 @@ class _LessonFormState extends State<LessonFormView> {
   bool _videoChanged = false;
   Uint8List _grammarSchemeFile;
   bool _grammarChanged = false;
+  Uint8List _pdfFile;
+  bool _pdfChanged = false;
+  Uint8List _imageFile;
+  bool _imageChanged = false;
+  Uint8List _audioFile;
+  bool _audioChanged = false;
 
   // control state only works if the field order never changes.
   // to support orientation changes, we assign a unique key to each field
@@ -54,6 +60,9 @@ class _LessonFormState extends State<LessonFormView> {
   final GlobalKey<FormState> _descriptionKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _videoKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _grammarKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _pdfKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _audioKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _imageKey = GlobalKey<FormState>();
 
   _LessonFormState(this._lessonModel);
 
@@ -98,7 +107,10 @@ class _LessonFormState extends State<LessonFormView> {
             _buildCardSettingsText_Title(),
             _buildCardSettingsText_Description(),
             _buildCardSettingsVideo(),
-            _buildCardSettingsGrammaticalScheme()
+            _buildCardSettingsImage(),
+            _buildCardSettingsAudio(),
+            _buildCardSettingsPdf(),
+            _buildCardSettingsGrammaticalScheme(),
           ],
         ),
       ],
@@ -118,7 +130,10 @@ class _LessonFormState extends State<LessonFormView> {
             _buildCardSettingsText_Title(),
             _buildCardSettingsText_Description(),
             _buildCardSettingsVideo(),
-            _buildCardSettingsGrammaticalScheme()
+            _buildCardSettingsImage(),
+            _buildCardSettingsAudio(),
+            _buildCardSettingsPdf(),
+            _buildCardSettingsGrammaticalScheme(),
             // CardFieldLayout(
             //   <Widget>[
             //     _buildCardSettingsRadioPicker_Gender(),
@@ -158,11 +173,6 @@ class _LessonFormState extends State<LessonFormView> {
       label: 'lesson_form.general.description.label'.tr(),
       hintText: 'lesson_form.general.description.hint'.tr(),
       initialValue: _lessonModel.description,
-      requiredIndicator: RequiredIndicator(),
-      validator: (value) {
-        if (value == null || value.isEmpty) return 'required_field'.tr();
-        return null;
-      },
       onSaved: (value) =>
           _lessonModel = _lessonModel.copyWith(description: value),
       onChanged: (value) {
@@ -178,23 +188,84 @@ class _LessonFormState extends State<LessonFormView> {
       key: _videoKey,
       label: 'lesson_form.general.video.label'.tr(),
       icon: Icon(PlatformIcons(context).videoCamera),
-      initialValue:
-          widget.lesson != null ? Uint8List(widget.lesson.videoBytes) : null,
+      initialValue: widget.lesson != null && widget.lesson.videoBytes > 0
+          ? Uint8List(widget.lesson.videoBytes)
+          : null,
       unattachDialogTitle:
           'lesson_form.general.video.unattach_confirmation'.tr(),
       unattachDialogCancel: 'cancel'.tr(),
       unattachDialogConfirm: 'unattach'.tr(),
-      requiredIndicator: RequiredIndicator(),
       fileExtension: ".mp4",
       fileType: FileTypeCross.custom,
-      validator: (value) {
-        if (value == null || value.length == 0) return 'required_field'.tr();
-        return null;
-      },
       onChanged: (value) {
         _videoFile = value;
         _videoChanged = true;
         _lessonModel = _lessonModel.copyWith(videoBytes: value.length);
+      },
+    );
+  }
+
+  CardSettingsFilePicker _buildCardSettingsPdf() {
+    return CardSettingsFilePicker(
+      key: _pdfKey,
+      label: 'lesson_form.general.pdf.label'.tr(),
+      icon: Icon(PlatformIcons(context).book),
+      initialValue: widget.lesson != null && widget.lesson.pdfBytes > 0
+          ? Uint8List(widget.lesson.pdfBytes)
+          : null,
+      unattachDialogTitle: 'lesson_form.general.pdf.unattach_confirmation'.tr(),
+      unattachDialogCancel: 'cancel'.tr(),
+      unattachDialogConfirm: 'unattach'.tr(),
+      fileExtension: ".pdf",
+      fileType: FileTypeCross.custom,
+      onChanged: (value) {
+        _pdfFile = value;
+        _pdfChanged = true;
+        _lessonModel = _lessonModel.copyWith(pdfBytes: value.length);
+      },
+    );
+  }
+
+  CardSettingsFilePicker _buildCardSettingsAudio() {
+    return CardSettingsFilePicker(
+      key: _audioKey,
+      label: 'lesson_form.general.audio.label'.tr(),
+      icon: Icon(PlatformIcons(context).musicNote),
+      initialValue: widget.lesson != null && widget.lesson.audioBytes > 0
+          ? Uint8List(widget.lesson.audioBytes)
+          : null,
+      unattachDialogTitle:
+          'lesson_form.general.audio.unattach_confirmation'.tr(),
+      unattachDialogCancel: 'cancel'.tr(),
+      unattachDialogConfirm: 'unattach'.tr(),
+      fileExtension: ".mp3",
+      fileType: FileTypeCross.custom,
+      onChanged: (value) {
+        _audioFile = value;
+        _audioChanged = true;
+        _lessonModel = _lessonModel.copyWith(audioBytes: value.length);
+      },
+    );
+  }
+
+  CardSettingsFilePicker _buildCardSettingsImage() {
+    return CardSettingsFilePicker(
+      key: _imageKey,
+      label: 'lesson_form.general.image.label'.tr(),
+      icon: Icon(PlatformIcons(context).photoCamera),
+      initialValue: widget.lesson != null && widget.lesson.imageBytes > 0
+          ? Uint8List(widget.lesson.imageBytes)
+          : null,
+      unattachDialogTitle:
+          'lesson_form.general.image.unattach_confirmation'.tr(),
+      unattachDialogCancel: 'cancel'.tr(),
+      unattachDialogConfirm: 'unattach'.tr(),
+      fileExtension: ".jpg",
+      fileType: FileTypeCross.custom,
+      onChanged: (value) {
+        _imageFile = value;
+        _imageChanged = true;
+        _lessonModel = _lessonModel.copyWith(imageBytes: value.length);
       },
     );
   }
@@ -204,19 +275,15 @@ class _LessonFormState extends State<LessonFormView> {
       key: _grammarKey,
       label: 'lesson_form.general.grammar.label'.tr(),
       icon: Icon(PlatformIcons(context).photoCamera),
-      initialValue:
-          widget.lesson != null ? Uint8List(widget.lesson.grammarBytes) : null,
+      initialValue: widget.lesson != null && widget.lesson.grammarBytes > 0
+          ? Uint8List(widget.lesson.grammarBytes)
+          : null,
       unattachDialogTitle:
           'lesson_form.general.grammar.unattach_confirmation'.tr(),
       unattachDialogCancel: 'cancel'.tr(),
       unattachDialogConfirm: 'unattach'.tr(),
-      requiredIndicator: RequiredIndicator(),
       fileExtension: ".jpg",
       fileType: FileTypeCross.custom,
-      validator: (value) {
-        if (value == null || value.length == 0) return 'required_field'.tr();
-        return null;
-      },
       onChanged: (value) {
         _grammarSchemeFile = value;
         _grammarChanged = true;
@@ -284,7 +351,10 @@ class _LessonFormState extends State<LessonFormView> {
     }
 
     final basePath = FirebasePaths.lessonPath(
-        widget.lang, widget.lessonSection, _lessonModel);
+      widget.lang,
+      widget.lessonSection,
+      _lessonModel,
+    );
 
     if (_videoChanged && _videoFile != null) {
       await FirebaseStorageService.uploadToStorage(
@@ -297,6 +367,27 @@ class _LessonFormState extends State<LessonFormView> {
       await FirebaseStorageService.uploadToStorage(
         _grammarSchemeFile,
         "$basePath/grammar.jpg",
+      );
+    }
+
+    if (_audioChanged && _audioFile != null) {
+      await FirebaseStorageService.uploadToStorage(
+        _audioFile,
+        "$basePath/audio.mp3",
+      );
+    }
+
+    if (_imageChanged && _imageFile != null) {
+      await FirebaseStorageService.uploadToStorage(
+        _imageFile,
+        "$basePath/image.jpg",
+      );
+    }
+
+    if (_pdfChanged && _pdfFile != null) {
+      await FirebaseStorageService.uploadToStorage(
+        _pdfFile,
+        "$basePath/pdf.pdf",
       );
     }
 

@@ -196,29 +196,26 @@ class _SignInViewBodyState extends State<_IntroViewBody> {
                       ),
                     ),
                   ]
-                : Platform.isAndroid
-                    ? [
-                        ResponsiveGridCol(
-                          xs: 12,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              const GoogleSignInButton(),
-                            ],
-                          ),
-                        ),
-                      ]
-                    : [
-                        ResponsiveGridCol(
-                          xs: 12,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              const AppleSignInButton(),
-                            ],
-                          ),
-                        ),
-                      ]) +
+                : [
+                    ResponsiveGridCol(
+                      xs: 12,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const GoogleSignInButton(),
+                        ],
+                      ),
+                    ),
+                    ResponsiveGridCol(
+                      xs: 12,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const AppleSignInButton(),
+                        ],
+                      ),
+                    )
+                  ]) +
             [
               ResponsiveGridCol(
                 xs: 12,

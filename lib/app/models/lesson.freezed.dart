@@ -19,8 +19,11 @@ class _$LessonTearOff {
       {String title,
       String description,
       String documentId,
-      int videoBytes,
-      int grammarBytes,
+      @JsonKey(nullable: true, defaultValue: 0) int videoBytes,
+      @JsonKey(nullable: true, defaultValue: 0) int grammarBytes,
+      @JsonKey(nullable: true, defaultValue: 0) int pdfBytes,
+      @JsonKey(nullable: true, defaultValue: 0) int imageBytes,
+      @JsonKey(nullable: true, defaultValue: 0) int audioBytes,
       int index}) {
     return _Lesson(
       title: title,
@@ -28,6 +31,9 @@ class _$LessonTearOff {
       documentId: documentId,
       videoBytes: videoBytes,
       grammarBytes: grammarBytes,
+      pdfBytes: pdfBytes,
+      imageBytes: imageBytes,
+      audioBytes: audioBytes,
       index: index,
     );
   }
@@ -40,8 +46,16 @@ mixin _$Lesson {
   String get title;
   String get description;
   String get documentId;
+  @JsonKey(nullable: true, defaultValue: 0)
   int get videoBytes;
+  @JsonKey(nullable: true, defaultValue: 0)
   int get grammarBytes;
+  @JsonKey(nullable: true, defaultValue: 0)
+  int get pdfBytes;
+  @JsonKey(nullable: true, defaultValue: 0)
+  int get imageBytes;
+  @JsonKey(nullable: true, defaultValue: 0)
+  int get audioBytes;
   int get index;
 
   Map<String, dynamic> toJson();
@@ -55,8 +69,11 @@ abstract class $LessonCopyWith<$Res> {
       {String title,
       String description,
       String documentId,
-      int videoBytes,
-      int grammarBytes,
+      @JsonKey(nullable: true, defaultValue: 0) int videoBytes,
+      @JsonKey(nullable: true, defaultValue: 0) int grammarBytes,
+      @JsonKey(nullable: true, defaultValue: 0) int pdfBytes,
+      @JsonKey(nullable: true, defaultValue: 0) int imageBytes,
+      @JsonKey(nullable: true, defaultValue: 0) int audioBytes,
       int index});
 }
 
@@ -74,6 +91,9 @@ class _$LessonCopyWithImpl<$Res> implements $LessonCopyWith<$Res> {
     Object documentId = freezed,
     Object videoBytes = freezed,
     Object grammarBytes = freezed,
+    Object pdfBytes = freezed,
+    Object imageBytes = freezed,
+    Object audioBytes = freezed,
     Object index = freezed,
   }) {
     return _then(_value.copyWith(
@@ -85,6 +105,9 @@ class _$LessonCopyWithImpl<$Res> implements $LessonCopyWith<$Res> {
       videoBytes: videoBytes == freezed ? _value.videoBytes : videoBytes as int,
       grammarBytes:
           grammarBytes == freezed ? _value.grammarBytes : grammarBytes as int,
+      pdfBytes: pdfBytes == freezed ? _value.pdfBytes : pdfBytes as int,
+      imageBytes: imageBytes == freezed ? _value.imageBytes : imageBytes as int,
+      audioBytes: audioBytes == freezed ? _value.audioBytes : audioBytes as int,
       index: index == freezed ? _value.index : index as int,
     ));
   }
@@ -98,8 +121,11 @@ abstract class _$LessonCopyWith<$Res> implements $LessonCopyWith<$Res> {
       {String title,
       String description,
       String documentId,
-      int videoBytes,
-      int grammarBytes,
+      @JsonKey(nullable: true, defaultValue: 0) int videoBytes,
+      @JsonKey(nullable: true, defaultValue: 0) int grammarBytes,
+      @JsonKey(nullable: true, defaultValue: 0) int pdfBytes,
+      @JsonKey(nullable: true, defaultValue: 0) int imageBytes,
+      @JsonKey(nullable: true, defaultValue: 0) int audioBytes,
       int index});
 }
 
@@ -118,6 +144,9 @@ class __$LessonCopyWithImpl<$Res> extends _$LessonCopyWithImpl<$Res>
     Object documentId = freezed,
     Object videoBytes = freezed,
     Object grammarBytes = freezed,
+    Object pdfBytes = freezed,
+    Object imageBytes = freezed,
+    Object audioBytes = freezed,
     Object index = freezed,
   }) {
     return _then(_Lesson(
@@ -129,6 +158,9 @@ class __$LessonCopyWithImpl<$Res> extends _$LessonCopyWithImpl<$Res>
       videoBytes: videoBytes == freezed ? _value.videoBytes : videoBytes as int,
       grammarBytes:
           grammarBytes == freezed ? _value.grammarBytes : grammarBytes as int,
+      pdfBytes: pdfBytes == freezed ? _value.pdfBytes : pdfBytes as int,
+      imageBytes: imageBytes == freezed ? _value.imageBytes : imageBytes as int,
+      audioBytes: audioBytes == freezed ? _value.audioBytes : audioBytes as int,
       index: index == freezed ? _value.index : index as int,
     ));
   }
@@ -140,8 +172,11 @@ class _$_Lesson with DiagnosticableTreeMixin implements _Lesson {
       {this.title,
       this.description,
       this.documentId,
-      this.videoBytes,
-      this.grammarBytes,
+      @JsonKey(nullable: true, defaultValue: 0) this.videoBytes,
+      @JsonKey(nullable: true, defaultValue: 0) this.grammarBytes,
+      @JsonKey(nullable: true, defaultValue: 0) this.pdfBytes,
+      @JsonKey(nullable: true, defaultValue: 0) this.imageBytes,
+      @JsonKey(nullable: true, defaultValue: 0) this.audioBytes,
       this.index});
 
   factory _$_Lesson.fromJson(Map<String, dynamic> json) =>
@@ -154,15 +189,26 @@ class _$_Lesson with DiagnosticableTreeMixin implements _Lesson {
   @override
   final String documentId;
   @override
+  @JsonKey(nullable: true, defaultValue: 0)
   final int videoBytes;
   @override
+  @JsonKey(nullable: true, defaultValue: 0)
   final int grammarBytes;
+  @override
+  @JsonKey(nullable: true, defaultValue: 0)
+  final int pdfBytes;
+  @override
+  @JsonKey(nullable: true, defaultValue: 0)
+  final int imageBytes;
+  @override
+  @JsonKey(nullable: true, defaultValue: 0)
+  final int audioBytes;
   @override
   final int index;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Lesson(title: $title, description: $description, documentId: $documentId, videoBytes: $videoBytes, grammarBytes: $grammarBytes, index: $index)';
+    return 'Lesson(title: $title, description: $description, documentId: $documentId, videoBytes: $videoBytes, grammarBytes: $grammarBytes, pdfBytes: $pdfBytes, imageBytes: $imageBytes, audioBytes: $audioBytes, index: $index)';
   }
 
   @override
@@ -175,6 +221,9 @@ class _$_Lesson with DiagnosticableTreeMixin implements _Lesson {
       ..add(DiagnosticsProperty('documentId', documentId))
       ..add(DiagnosticsProperty('videoBytes', videoBytes))
       ..add(DiagnosticsProperty('grammarBytes', grammarBytes))
+      ..add(DiagnosticsProperty('pdfBytes', pdfBytes))
+      ..add(DiagnosticsProperty('imageBytes', imageBytes))
+      ..add(DiagnosticsProperty('audioBytes', audioBytes))
       ..add(DiagnosticsProperty('index', index));
   }
 
@@ -196,6 +245,15 @@ class _$_Lesson with DiagnosticableTreeMixin implements _Lesson {
             (identical(other.grammarBytes, grammarBytes) ||
                 const DeepCollectionEquality()
                     .equals(other.grammarBytes, grammarBytes)) &&
+            (identical(other.pdfBytes, pdfBytes) ||
+                const DeepCollectionEquality()
+                    .equals(other.pdfBytes, pdfBytes)) &&
+            (identical(other.imageBytes, imageBytes) ||
+                const DeepCollectionEquality()
+                    .equals(other.imageBytes, imageBytes)) &&
+            (identical(other.audioBytes, audioBytes) ||
+                const DeepCollectionEquality()
+                    .equals(other.audioBytes, audioBytes)) &&
             (identical(other.index, index) ||
                 const DeepCollectionEquality().equals(other.index, index)));
   }
@@ -208,6 +266,9 @@ class _$_Lesson with DiagnosticableTreeMixin implements _Lesson {
       const DeepCollectionEquality().hash(documentId) ^
       const DeepCollectionEquality().hash(videoBytes) ^
       const DeepCollectionEquality().hash(grammarBytes) ^
+      const DeepCollectionEquality().hash(pdfBytes) ^
+      const DeepCollectionEquality().hash(imageBytes) ^
+      const DeepCollectionEquality().hash(audioBytes) ^
       const DeepCollectionEquality().hash(index);
 
   @override
@@ -225,8 +286,11 @@ abstract class _Lesson implements Lesson {
       {String title,
       String description,
       String documentId,
-      int videoBytes,
-      int grammarBytes,
+      @JsonKey(nullable: true, defaultValue: 0) int videoBytes,
+      @JsonKey(nullable: true, defaultValue: 0) int grammarBytes,
+      @JsonKey(nullable: true, defaultValue: 0) int pdfBytes,
+      @JsonKey(nullable: true, defaultValue: 0) int imageBytes,
+      @JsonKey(nullable: true, defaultValue: 0) int audioBytes,
       int index}) = _$_Lesson;
 
   factory _Lesson.fromJson(Map<String, dynamic> json) = _$_Lesson.fromJson;
@@ -238,9 +302,20 @@ abstract class _Lesson implements Lesson {
   @override
   String get documentId;
   @override
+  @JsonKey(nullable: true, defaultValue: 0)
   int get videoBytes;
   @override
+  @JsonKey(nullable: true, defaultValue: 0)
   int get grammarBytes;
+  @override
+  @JsonKey(nullable: true, defaultValue: 0)
+  int get pdfBytes;
+  @override
+  @JsonKey(nullable: true, defaultValue: 0)
+  int get imageBytes;
+  @override
+  @JsonKey(nullable: true, defaultValue: 0)
+  int get audioBytes;
   @override
   int get index;
   @override

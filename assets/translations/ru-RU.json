@@ -174,6 +174,18 @@
                 "label": "Видео",
                 "unattach_confirmation": "Открепить видео?"
             },
+            "audio": {
+                "label": "Аудио",
+                "unattach_confirmation": "Открепить аудио?"
+            },
+            "pdf": {
+                "label": "PDF",
+                "unattach_confirmation": "Открепить PDF?"
+            },
+            "image": {
+                "label": "Изображение",
+                "unattach_confirmation": "Открепить изображение?"
+            },
             "grammar": {
                 "label": "Грамматическая схема",
                 "unattach_confirmation": "Открепить грамматическую схему?"

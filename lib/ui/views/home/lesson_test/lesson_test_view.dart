@@ -124,10 +124,10 @@ class _LessonTestViewBodyState extends State<_LessonTestViewBody> {
   }
 
   Widget _test(BuildContext context) {
-    final vm = context.watch<LessonTestViewModel>();
-    final lang = context.watch<Lang>();
-    final section = context.watch<LessonSection>();
-    final lesson = context.watch<Lesson>();
+    final vm = context.read<LessonTestViewModel>();
+    final lang = context.read<Lang>();
+    final section = context.read<LessonSection>();
+    final lesson = context.read<Lesson>();
     final questionList = vm.questionList;
     final step = vm.step;
 

@@ -9,7 +9,12 @@ import 'package:prolang/app/services/firebase_storage_service.dart';
 import 'package:provider/provider.dart';
 
 class LessonViewModel extends ChangeNotifier {
-  LessonViewModel(this.locator, this.lesson, this.section, this.lang) {
+  LessonViewModel(
+    this.locator,
+    this.lesson,
+    this.section,
+    this.lang,
+  ) {
     loadLessonList();
   }
 
@@ -22,13 +27,28 @@ class LessonViewModel extends ChangeNotifier {
   bool get isLoading => _isLoading;
 
   String videoUrl;
+  String audioUrl;
+  String imageUrl;
 
   loadLessonList() async {
     _setLoading();
 
-    videoUrl = await FirebaseStorageService.loadFromStorage(
-      "${FirebasePaths.lessonPath(lang, section, lesson)}/video.mp4",
-    );
+    final basePath = FirebasePaths.lessonPath(lang, section, lesson);
+    if (lesson.videoBytes > 0) {
+      videoUrl = await FirebaseStorageService.loadFromStorage(
+        "$basePath/video.mp4",
+      );
+    }
+    if (lesson.audioBytes > 0) {
+      audioUrl = await FirebaseStorageService.loadFromStorage(
+        "$basePath/audio.mp3",
+      );
+    }
+    if (lesson.imageBytes > 0) {
+      imageUrl = await FirebaseStorageService.loadFromStorage(
+        "$basePath/image.jpg",
+      );
+    }
 
     _setNotLoading();
   }

@@ -6,7 +6,6 @@ import 'package:prolang/app/constants/firebase_paths.dart';
 import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
 import 'package:prolang/app/extensions/map_get.dart';
-import 'package:prolang/app/services/firestore_service.dart';
 
 import 'lang.dart';
 

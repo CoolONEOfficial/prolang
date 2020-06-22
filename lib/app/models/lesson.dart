@@ -14,8 +14,16 @@ abstract class Lesson with _$Lesson, IndexMixin {
     final String title,
     final String description,
     final String documentId,
+    @JsonKey(nullable: true, defaultValue: 0)
     final int videoBytes,
+    @JsonKey(nullable: true, defaultValue: 0)
     final int grammarBytes,
+    @JsonKey(nullable: true, defaultValue: 0)
+    final int pdfBytes,
+    @JsonKey(nullable: true, defaultValue: 0)
+    final int imageBytes,
+    @JsonKey(nullable: true, defaultValue: 0)
+    final int audioBytes,
     final int index,
   }) = _Lesson;
 
