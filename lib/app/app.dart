@@ -4,13 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
-import 'package:prolang/app/constants/firebase_paths.dart';
-import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/user.dart';
-import 'package:prolang/app/services/firestore_service.dart';
 import 'package:prolang/ui/views/home/lang/lang_view.dart';
 import 'package:prolang/ui/views/home/lang_list/lang_list_view.dart';
-import 'package:prolang/ui/views/intro/email/email_sign_in_confirmation.dart';
 import 'package:prolang/ui/views/intro/intro_view.dart';
 import 'package:prolang/ui/widgets/splashscreen.dart';
 import 'package:provider/provider.dart';
@@ -99,56 +95,54 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         labelStyle: TextStyle(color: ThemeColors.textColor()),
         hintStyle: TextStyle(color: ThemeColors.textColor().withOpacity(0.8)),
       ),
-      fontFamily: 'TTNorms',
+      //fontFamily: 'TTNorms',
     );
     return KeyedSubtree(
       key: key,
       child: Theme(
         data: lightTheme,
         child: PlatformApp(
+          color: ThemeColors.primaryLight,
+          debugShowCheckedModeBanner: false,
           title: 'ProЯзыки',
           localizationsDelegates: [
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             EasyLocalization.of(context).delegate,
           ],
-          material: (context, _) {
-            return MaterialAppData(
-              theme: lightTheme,
-              darkTheme: lightTheme.copyWith(
-                brightness: Brightness.dark,
-                primaryColor: ThemeColors.primaryDark,
-                accentColor: ThemeColors.accentDark,
-              ),
-            );
-          },
-          cupertino: (context, _) {
-            return CupertinoAppData(
+          material: (context, _) => MaterialAppData(
+            theme: lightTheme,
+            darkTheme: lightTheme.copyWith(
+              brightness: Brightness.dark,
+              primaryColor: ThemeColors.primaryDark,
+              accentColor: ThemeColors.accentDark,
+            ),
+          ),
+          cupertino: (context, _) => CupertinoAppData(
               theme: CupertinoThemeData(
                 primaryColor: ThemeColors.primaryLight,
                 primaryContrastingColor: ThemeColors.accentLight,
                 textTheme: CupertinoTextThemeData(
                   textStyle: TextStyle(
-                    fontFamily: 'TTNorms',
+                    //fontFamily: 'TTNorms',
                     color: ThemeColors.textColor(),
                   ),
                   primaryColor: ThemeColors.primaryLight,
                   pickerTextStyle: TextStyle(color: Colors.black),
                 ),
               ),
-            );
-          },
+            ),
           home: Consumer<Tuple2<UserState, User>>(
             builder: (_, user, __) {
               switch (user.item1) {
                 case UserState.Done:
                   return user.item2 == null
                       ? const IntroView()
-                      : user.item2.isMailConfirmed 
-                        //? user.item2.currentLang != null
+                      : user.item2.isMailConfirmed
+                          //? user.item2.currentLang != null
                           ? LangView(user.item2.currentLang)
                           : const LangListView();
-                        //: const EmailSignInConfirmation();
+                //: const EmailSignInConfirmation();
                 default:
                   return SplashScreen();
               }

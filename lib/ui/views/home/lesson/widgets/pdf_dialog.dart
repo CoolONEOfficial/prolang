@@ -10,6 +10,7 @@ import 'package:prolang/app/models/lang.dart';
 import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
 import 'package:prolang/app/services/firebase_storage_service.dart';
+import 'package:prolang/ui/views/home/lesson/widgets/download_button.dart';
 import 'package:prolang/ui/widgets/loading_indicator.dart';
 import 'package:prolang/ui/widgets/responsive_safe_area.dart';
 import 'package:http/http.dart' as http;
@@ -40,10 +41,7 @@ class LessonPdfDialog extends StatelessWidget {
         body: SafeArea(
           child: FutureBuilder<Uint8List>(
             future: FirebaseStorageService.loadFromStorage("$path/pdf.pdf")
-                .then((value) async {
-              debugPrint("val: $value");
-              return (await http.get(value)).bodyBytes;
-            }),
+                .then((value) async => (await http.get(value)).bodyBytes),
             builder: (context, snapshot) {
               debugPrint("error: ${snapshot.error.toString()}");
               return snapshot.connectionState == ConnectionState.done &&
@@ -55,6 +53,12 @@ class LessonPdfDialog extends StatelessWidget {
         ),
         appBar: PlatformAppBar(
           title: Text("PDF"),
+          trailingActions: <Widget>[
+            DownloadButton(
+              url: FirebaseStorageService.loadFromStorage("$path/pdf.pdf"),
+              fileName: "${lesson.documentId}.pdf",
+            )
+          ],
           material: (context, _) => MaterialAppBarData(
             shape: appBarShape(context),
           ),
@@ -103,5 +107,9 @@ class _LessonPdfState extends State<_LessonPdf> {
         controller: _pdfController,
         documentLoader: LoadingIndicator(),
         pageLoader: LoadingIndicator(),
+        onDocumentLoaded: (document) {
+          debugPrint("srcname: ${document.sourceName}");
+          
+        },
       );
 }
