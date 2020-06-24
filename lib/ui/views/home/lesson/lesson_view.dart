@@ -11,6 +11,7 @@ import 'package:prolang/app/models/lesson.dart';
 import 'package:prolang/app/models/lesson_section.dart';
 import 'package:prolang/app/services/firestore_service.dart';
 import 'package:prolang/ui/views/home/lesson/lesson_view_model.dart';
+import 'package:prolang/ui/views/home/lesson/widgets/download_button.dart';
 import 'package:prolang/ui/views/home/lesson/widgets/pdf_dialog.dart';
 import 'package:prolang/ui/views/home/lesson_phrases/lesson_phrases_view.dart';
 import 'package:prolang/ui/views/home/lesson_test/lesson_test_view.dart';
@@ -178,18 +179,30 @@ class _LessonViewBodyState extends State<_LessonViewBody> {
             ] +
             (lesson.imageBytes > 0
                 ? <Widget>[
-                    Container(
-                      color: Colors.black,
-                      height: 250,
-                      child: FullScreenWidget(
-                        child: Hero(
-                          tag: "smallImage",
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
-                            child: Image.network(
-                              vm.imageUrl,
-                              fit: BoxFit.contain,
-                            ),
+                    FullScreenWidget(
+                      child: SafeArea(
+                        child: Container(
+                          height: 300,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Expanded(child: Container()),
+                              Hero(
+                                tag: "smallImage",
+                                child: Image.network(
+                                  vm.imageUrl,
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                              Expanded(
+                                child: DownloadButton(
+                                  url: Future.value(vm.imageUrl),
+                                  fileName: "${vm.lesson.documentId}.jpg",
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),

@@ -16,11 +16,13 @@ import 'package:url_launcher/url_launcher.dart';
 class DownloadButton extends StatefulWidget {
   final Future<String> url;
   final String fileName;
+  final Color color;
 
   const DownloadButton({
     Key key,
     this.url,
     this.fileName,
+    this.color,
   }) : super(key: key);
 
   @override
@@ -62,9 +64,9 @@ class _DownloadButtonState extends State<DownloadButton> {
       // if (debug) {
       print('UI Isolate Callback: $data');
       // }
-      String id = data[0];
+      //String id = data[0];
       DownloadTaskStatus status = data[1];
-      int progress = data[2];
+      //int progress = data[2];
 
       // final task = _tasks?.firstWhere((task) => task.taskId == id);
       // if (task != null) {
@@ -129,7 +131,10 @@ class _DownloadButtonState extends State<DownloadButton> {
   Widget build(BuildContext context) {
     return kIsWeb
         ? PlatformIconButton(
-            icon: Icon(PlatformIcons(context).downArrow),
+            icon: Icon(
+              PlatformIcons(context).downArrow,
+              color: widget.color,
+            ),
             onPressed: () async => launch(await widget.url),
           )
         : isLoading == true
@@ -140,36 +145,41 @@ class _DownloadButtonState extends State<DownloadButton> {
                       File(localPath + Platform.pathSeparator + widget.fileName)
                           .exists(),
                 ),
-                builder: (context, snapshot) {
-                  return snapshot.connectionState == ConnectionState.done &&
-                          !snapshot.hasError
-                      ? snapshot.data
-                          ? PlatformIconButton(
-                              icon: Icon(PlatformIcons(context).folderOpen),
-                              onPressed: () async => OpenFile.open(
-                                await _getLocalPath() +
-                                    Platform.pathSeparator +
-                                    widget.fileName,
-                              ),
-                            )
-                          : PlatformIconButton(
-                              icon: Icon(PlatformIcons(context).downArrow),
-                              onPressed: () async {
-                                await _prepare();
-                                FlutterDownloader.enqueue(
-                                  url: await widget.url,
-                                  savedDir: await _getLocalPath(),
-                                  fileName: widget.fileName,
-                                  showNotification: true,
-                                  openFileFromNotification: true,
-                                );
-                                setState(() {
-                                  isLoading = true;
-                                });
-                              },
-                            )
-                      : LoadingIndicator();
-                },
+                builder: (context, snapshot) =>
+                    snapshot.connectionState == ConnectionState.done &&
+                            !snapshot.hasError
+                        ? snapshot.data
+                            ? PlatformIconButton(
+                                icon: Icon(
+                                  PlatformIcons(context).folderOpen,
+                                  color: widget.color,
+                                ),
+                                onPressed: () async => OpenFile.open(
+                                  await _getLocalPath() +
+                                      Platform.pathSeparator +
+                                      widget.fileName,
+                                ),
+                              )
+                            : PlatformIconButton(
+                                icon: Icon(
+                                  PlatformIcons(context).downArrow,
+                                  color: widget.color,
+                                ),
+                                onPressed: () async {
+                                  await _prepare();
+                                  FlutterDownloader.enqueue(
+                                    url: await widget.url,
+                                    savedDir: await _getLocalPath(),
+                                    fileName: widget.fileName,
+                                    showNotification: true,
+                                    openFileFromNotification: true,
+                                  );
+                                  setState(() {
+                                    isLoading = true;
+                                  });
+                                },
+                              )
+                        : LoadingIndicator(),
               );
   }
 }

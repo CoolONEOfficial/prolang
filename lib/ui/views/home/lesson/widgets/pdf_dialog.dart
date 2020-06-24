@@ -107,9 +107,5 @@ class _LessonPdfState extends State<_LessonPdf> {
         controller: _pdfController,
         documentLoader: LoadingIndicator(),
         pageLoader: LoadingIndicator(),
-        onDocumentLoaded: (document) {
-          debugPrint("srcname: ${document.sourceName}");
-          
-        },
       );
 }
