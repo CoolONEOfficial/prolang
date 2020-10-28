@@ -41,7 +41,7 @@ dependencies:
   freezed_annotation: ^0.11.0
   chewie: ^0.9.10
   chewie_audio: ^1.0.0+1
-  video_player: ^0.10.11+1
+  video_player: ^0.11.0
   auto_orientation: ^1.0.6
   file_picker_cross: ^2.0.0
   paginate_firestore: ^0.1.0
