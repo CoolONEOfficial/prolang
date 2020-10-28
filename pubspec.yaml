@@ -38,7 +38,7 @@ dependencies:
   card_settings:
     git:
       url: git://github.com/CoolONEOfficial/card_settings.git
-  freezed_annotation: ^0.11.0
+  freezed_annotation: ^0.12.0
   chewie: ^0.9.10
   chewie_audio: ^1.0.0+1
   video_player: ^0.10.11+1
