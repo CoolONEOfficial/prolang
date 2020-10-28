@@ -27,7 +27,7 @@ dependencies:
   auto_size_text: ^2.1.0
   responsive_grid: ^1.1.1
   json_annotation: ^3.0.1
-  responsive_builder: ^0.2.0+2
+  responsive_builder: ^0.3.0
   tuple: ^1.0.3
   intro_slider: ^2.3.1
   flutter_icons: ^1.1.0
